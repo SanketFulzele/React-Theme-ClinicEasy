@@ -73,9 +73,19 @@ const JwtLogin = () => {
   const [inputOtp, setInputOtp] = useState();
   const [hideError, setHideError] = useState(false)
 
-  // const { login } = useAuth();
+  const { login } = useAuth();
 
   const handleFormSubmit = async (values) => {
+
+    // extra code
+    setLoading(true);
+    try {
+      await login(values.email, values.password);
+      navigate('/');
+    } catch (e) {
+      setLoading(false);
+    }
+    // extra code
 
     const url = `https://trickysys.com/demo/olf/androidApi/Master/Client_Login`;
 
@@ -126,7 +136,7 @@ const JwtLogin = () => {
         <Grid container>
           <Grid item sm={6} xs={12}>
             <JustifyBox p={4} height="100%" sx={{ minWidth: 320 }}>
-              <img src="/assets/images/illustrations/login-img.jpg" width="100%" alt="" />
+              <img src="/assets/images/illustrations/LoginImg.svg" width="100%" alt="" />
             </JustifyBox>
           </Grid>
 
@@ -139,6 +149,41 @@ const JwtLogin = () => {
               >
                 {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
                   <form onSubmit={handleSubmit}>
+
+
+
+                    {/* extra code */}
+
+                    <TextField
+                      fullWidth
+                      size="small"
+                      type="email"
+                      name="email"
+                      label="Email"
+                      variant="outlined"
+                      onBlur={handleBlur}
+                      value={values.email}
+                      onChange={handleChange}
+                      helperText={touched.email && errors.email}
+                      error={Boolean(errors.email && touched.email)}
+                      sx={{ mb: 3 }}
+                    />
+
+                    <TextField
+                      fullWidth
+                      size="small"
+                      name="password"
+                      type="password"
+                      label="Password"
+                      variant="outlined"
+                      onBlur={handleBlur}
+                      value={values.password}
+                      onChange={handleChange}
+                      helperText={touched.password && errors.password}
+                      error={Boolean(errors.password && touched.password)}
+                      sx={{ mb: 1.5 }}
+                    />
+                    {/* extra code */}
 
 
                     <Box sx={HideDiv}>

@@ -62,6 +62,12 @@ const StyledItem = styled(MenuItem)(({ theme }) => ({
   '& span': { marginRight: '10px', color: theme.palette.text.primary },
 }));
 
+const NavbarName = {
+  fontSize: { sm: 20, xs: 15 },
+  fontWeight: 800,
+  letterSpacing: { sm: "1px", xs: "" }
+}
+
 const Layout1Topbar = () => {
   const theme = useTheme();
   const { settings, updateSettings } = useSettings();
@@ -96,7 +102,7 @@ const Layout1Topbar = () => {
           </StyledIconButton>
         </Box>
 
-        <h2> Chaudhary Hospital </h2>
+        <Box sx={NavbarName}>Chaudhary Hospital </Box>
 
         <Box display="flex" alignItems="center">
 

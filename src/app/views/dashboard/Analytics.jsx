@@ -1,72 +1,182 @@
-import { Card, Grid, styled, useTheme } from '@mui/material';
-import { Fragment } from 'react';
-import Campaigns from './shared/Campaigns';
-import DoughnutChart from './shared/Doughnut';
-import RowCards from './shared/RowCards';
-import StatCards from './shared/StatCards';
-import StatCards2 from './shared/StatCards2';
-import TopSellingTable from './shared/TopSellingTable';
-import UpgradeCard from './shared/UpgradeCard';
+import { Box, Stack, Typography, Paper } from '@mui/material';
+import Carousel from 'react-material-ui-carousel';
+import { useNavigate } from 'react-router-dom';
+import "./analytics.css";
 
-const ContentBox = styled('div')(({ theme }) => ({
-  margin: '30px',
-  [theme.breakpoints.down('sm')]: { margin: '16px' },
-}));
 
-const Title = styled('span')(() => ({
-  fontSize: '1rem',
-  fontWeight: '500',
-  marginRight: '.5rem',
-  textTransform: 'capitalize',
-}));
-
-const SubTitle = styled('span')(({ theme }) => ({
-  fontSize: '0.875rem',
-  color: theme.palette.text.secondary,
-}));
-
-const H4 = styled('h4')(({ theme }) => ({
-  fontSize: '1rem',
-  fontWeight: '500',
-  marginBottom: '16px',
-  textTransform: 'capitalize',
-  color: theme.palette.text.secondary,
-}));
+function Item(props) {
+  const CarouselItem = {
+    width: "100%",
+    height: { md: "40vh", sm: "30vh", sx: "20vh" },
+    overflow: "hidden",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "5px",
+  }
+  return (
+    <Paper>
+      <Box sx={CarouselItem} >
+        <img src={props.item.image} className="carousel-img" alt="Doctor-img" />
+      </Box>
+    </Paper>
+  )
+}
 
 const Analytics = () => {
-  const { palette } = useTheme();
+  let items = [
+    {
+      image: "/assets/images/DashboardImg/carousel2.jpg"
+    },
+    {
+      image: "/assets/images/DashboardImg/carousel6.jpg"
+    },
+    {
+      image: "/assets/images/DashboardImg/carousel7.jpg"
+    }
+  ]
+
+  const CarouselContainer = {
+    padding: { sm: "20px", xs: "10px" },
+  }
+
+  const AppointmentBox = {
+    marginY: "10px",
+    paddingX: { sm: "50px", xs: "10px" },
+    paddingY: "10px",
+  }
+
+  const SVGBox = {
+    width: { sm: "150px", xs: "120px" },
+    height: { sm: "150px", xs: "120px" },
+    overflow: "hidden",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }
+
+
+  const DashboardBoxs = {
+    color: "white",
+    background: "rgb(110, 43, 198)",
+    borderRadius: "14px",
+    // padding: "15px",
+    padding: { sm: "15px", xs: "5px" },
+    cursor: "pointer",
+    width: "100%",
+    marginTop: "15px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  }
+
+  const SVGContainer = {
+    width: { sm: "200px", xs: "150px" },
+    textAlign: "center"
+  }
+
+
+  const navigate = useNavigate();
+
+  const NavBook = () => {
+    navigate("/book-appointment")
+  }
+  const NavMark = () => {
+    navigate("/mark-attendance")
+  }
+  const NavHistory = () => {
+    navigate("/appointment-history")
+  }
+  const NavPatient = () => {
+    navigate("/view-patient")
+  }
 
   return (
-    <Fragment>
-      <ContentBox className="analytics">
-        <Grid container spacing={3}>
-          <Grid item lg={8} md={8} sm={12} xs={12}>
-            <StatCards />
-            <TopSellingTable />
-            <StatCards2 />
+    <Box sx={CarouselContainer}>
+      <Box >
+        <Carousel>
+          {
+            items.map((item, i) => <Item key={i} item={item} />)
+          }
+        </Carousel>
+      </Box>
 
-            <H4>Ongoing Projects</H4>
-            <RowCards />
-          </Grid>
+      <Paper sx={AppointmentBox}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center">
 
-          <Grid item lg={4} md={4} sm={12} xs={12}>
-            <Card sx={{ px: 3, py: 2, mb: 3 }}>
-              <Title>Traffic Sources</Title>
-              <SubTitle>Last 30 days</SubTitle>
+          <Stack justifyContent="center" alignItems="center">
 
-              <DoughnutChart
-                height="300px"
-                color={[palette.primary.dark, palette.primary.main, palette.primary.light]}
-              />
-            </Card>
+            <Typography variant="h5" sx={{ fontWeight: "800", fontSize: { sm: "40px", xs: "30px" } }} >
+              0
+            </Typography>
+            <Typography variant="h5" sx={{ fontSize: { sm: "25px", xs: "17px" } }} mt={1}>
+              Today's Appointment
+            </Typography>
 
-            <UpgradeCard />
-            <Campaigns />
-          </Grid>
-        </Grid>
-      </ContentBox>
-    </Fragment>
+          </Stack>
+
+          <Box sx={SVGBox}>
+            <img className='dashboardSvg' src="/assets/images/DashboardImg/Appointment1.svg" alt='appointment-img' />
+          </Box>
+
+        </Stack>
+      </Paper>
+
+
+      <Stack >
+        <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Box sx={DashboardBoxs} mr={2} onClick={NavBook} >
+            <Box sx={SVGContainer}>
+              <img src='/assets/images/DashboardImg/Appointments07.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
+            </Box>
+            <Typography variant="subtitle1" mt={1} sx={{ textAlign: "center", }}>
+              Book Appointment
+            </Typography>
+          </Box>
+
+          <Box sx={DashboardBoxs} onClick={NavMark}>
+            <Box sx={SVGContainer}>
+              <img src='/assets/images/DashboardImg/Appointments03.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
+            </Box>
+            <Typography variant="subtitle1" mt={1} sx={{ textAlign: "center", }}>
+              Mark Attendance
+            </Typography>
+          </Box>
+
+
+        </Stack>
+        <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Box sx={DashboardBoxs} mr={2} onClick={NavHistory} >
+            <Box sx={SVGContainer}>
+              <img src='/assets/images/DashboardImg/Appointments01.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
+            </Box>
+            <Typography variant="subtitle1" mt={1} sx={{ textAlign: "center", }}>
+              Appointment History
+            </Typography>
+          </Box>
+
+          <Box sx={DashboardBoxs} onClick={NavPatient}>
+            <Box sx={SVGContainer}>
+              <img src='/assets/images/DashboardImg/Appointments02.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
+            </Box>
+            <Typography variant="subtitle1" mt={1} sx={{ textAlign: "center", }}>
+              View Patient
+            </Typography>
+          </Box>
+
+        </Stack>
+      </Stack>
+
+
+
+
+
+
+    </Box>
   );
 };
 
 export default Analytics;
+//  npm install react-material-ui-carousel --save
+// carousel npm package

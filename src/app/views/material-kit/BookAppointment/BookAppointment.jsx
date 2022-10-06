@@ -5,7 +5,7 @@ const BookAppointment = () => {
     return (
         <div className='mybox'>
 
-
+            Book Appointment Page
 
 
 

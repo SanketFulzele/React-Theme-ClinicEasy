@@ -1,0 +1,16 @@
+.carousel-img {
+    width: 100%;
+    height: auto;
+}
+
+.dashboardSvg {
+    width: 100%;
+    height: 150px;
+}
+
+@media screen and (max-width: 500px) {
+    .dashboardSvg {
+        width: 80px;
+        height: 80px;
+    }
+}
