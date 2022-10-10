@@ -1,0 +1,21 @@
+.compHeading {
+    width: 100%;
+    text-align: center;
+}
+
+.BackIcon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.BackIcon:hover {
+    background-color: rgb(222, 220, 220);
+    border-radius: 50%;
+}
+
+.compHeadingIcon {
+    transform: translate(3px ,4px);
+    width: 23px;
+    height: 23px;
+}

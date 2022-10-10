@@ -1,10 +1,12 @@
+import { Box } from '@mui/material'
+import HeadingComp from 'app/views/CommonComp/HeadingComp'
 import React from 'react'
 
 const CreateStaff = () => {
     return (
-        <div>
-            Create Staff Page
-        </div>
+        <Box>
+            <HeadingComp heading="Create Staff" navigate="/" />
+        </Box>
     )
 }
 

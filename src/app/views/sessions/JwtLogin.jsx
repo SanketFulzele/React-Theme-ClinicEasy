@@ -3,12 +3,13 @@ import { Card, Grid, TextField } from '@mui/material';
 import { Box, styled, useTheme } from '@mui/system';
 import { Paragraph } from 'app/components/Typography';
 import useAuth from 'app/hooks/useAuth';
-import { Formik } from 'formik';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import "yup-phone";
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 
 const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
 
@@ -87,47 +88,100 @@ const JwtLogin = () => {
     }
     // extra code
 
-    const url = `https://trickysys.com/demo/olf/androidApi/Master/Client_Login`;
+    // const url = `https://trickysys.com/demo/olf/androidApi/Master/Client_Login`;
+    // const url = `https://cliniceasy.in/restAPI/index.php/Login/login`;
 
-    let data = {
-      mobile: values.number,
-    }
+    // let data = {
+    //   // mobile: values.number,
+    //   mobile: 7276070179,
+    //   hospital_id: "1",
+    // }
 
-    fetch(url, {
-      method: 'POST',
+    var axios = require('axios');
+    var data = JSON.stringify({
+      "mobile": "7276070179",
+      "hospital_id": "1",
+    });
+
+    var config = {
+      method: 'post',
+      url: 'https://cliniceasy.in/restAPI/index.php/Login/login',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Authorization': 'Basic bWVhdDoxMTAw',
+        'Content-Type': 'application/json',
+        'Cookie': 'ci_session=8ba603fb33cd95d50f0dc0a40595a414d5b14cb4'
       },
-      body: JSON.stringify(data)
-    }).then(result => {
-      result.json().then(resp => {
-        console.warn(resp, "this is the response of the fetch post api")
-        setRespOTP(resp.otp)
-        setRespMsg(resp.message)
-        setRespSuccess(resp.success)
+      data: data
+    };
 
-        if (resp.success == 1) {
-          alert(resp.otp)
-        } else {
-          console.log("Phone number is not Registered")
-        }
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
       })
-    })
-    // 9850111244
+      .catch(function (error) {
+        console.log(error);
+      });
+
+
+
+
+    // let encoded = window.btoa('meat:1100');
+    // let auth = { "Authorization": `Basic ${encoded}` };
+    // bWVhdDoxMTAw = Basic64Encoded = meat:1100
+    // let auth = { 'Authorization': 'Basic + bWVhdDoxMTAw' }
+
+    // fetch(url, {
+    //   method: "POST",
+    //   mode: 'no-cors',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'Authorization': 'basic bWVhdDoxMTAw',
+    //   },
+    //   body: JSON.stringify(data)
+    // }).then((result) => {
+    //   result.json().then(Data => console.log(Data, "POST DATA"))
+    // })
+
+
+
+    // fetch(url, {
+    //   method: 'POST',
+    //   mode: 'no-cors',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(data)
+    // }).then((result) => {
+    //   result.json().then((resp) => {
+    //     console.warn(resp, "Response from The Post API")
+    //     setRespOTP(resp.otp)
+    //     setRespMsg(resp.message)
+    //     setRespSuccess(resp.success)
+
+    //     if (resp.success == 1) {
+    //       alert(resp.otp)
+    //     } else {
+    //       console.log("Phone number is not Registered")
+    //     }
+    //   })
+    // })
+    // 9850111244 wrong
+    // 7276070179
   }
 
-  HideDiv = RespSuccess === 1 ? HideDiv = DisplayNone : "";
-  HideDiv1 = RespSuccess === 1 ? "" : HideDiv1 = DisplayNone;
+  // HideDiv = RespSuccess === 1 ? HideDiv = DisplayNone : "";
+  // HideDiv1 = RespSuccess === 1 ? "" : HideDiv1 = DisplayNone;
 
   const handleInputOtp = () => {
-    if (inputOtp == RespOTP) {
-      alert("Login Successfully")
-      navigate('/')
-    } else {
-      setHideError(true);
-      console.warn("the otp is wrong")
-    }
+    // if (inputOtp == RespOTP) {
+    //   alert("Login Successfully")
+    //   // navigate('/')
+    // } else {
+    //   setHideError(true);
+    //   console.warn("the otp is wrong")
+    // }
   }
 
   return (
@@ -136,7 +190,7 @@ const JwtLogin = () => {
         <Grid container>
           <Grid item sm={6} xs={12}>
             <JustifyBox p={4} height="100%" sx={{ minWidth: 320 }}>
-              <img src="/assets/images/illustrations/LoginImg.svg" width="100%" alt="" />
+              <img src="/assets/images/illustrations/login-img.jpg" width="100%" alt="Login-Img" />
             </JustifyBox>
           </Grid>
 
@@ -150,11 +204,9 @@ const JwtLogin = () => {
                 {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
                   <form onSubmit={handleSubmit}>
 
-
-
                     {/* extra code */}
 
-                    <TextField
+                    {/* <TextField
                       fullWidth
                       size="small"
                       type="email"
@@ -182,7 +234,7 @@ const JwtLogin = () => {
                       helperText={touched.password && errors.password}
                       error={Boolean(errors.password && touched.password)}
                       sx={{ mb: 1.5 }}
-                    />
+                    /> */}
                     {/* extra code */}
 
 

@@ -1,10 +1,12 @@
+import { Box } from '@mui/system'
+import HeadingComp from 'app/views/CommonComp/HeadingComp'
 import React from 'react'
 
 const Share = () => {
     return (
-        <div>
-            Share Page
-        </div>
+        <Box>
+            <HeadingComp heading="Share" navigate="/" />
+        </Box>
     )
 }
 

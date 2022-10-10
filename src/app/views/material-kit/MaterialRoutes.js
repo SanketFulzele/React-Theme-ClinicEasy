@@ -16,6 +16,11 @@ const GiveFeedback = Loadable(lazy(() => import("./GiveFeedback/GiveFeedback")))
 const Support = Loadable(lazy(() => import("./Support/Support")));
 const Logout = Loadable(lazy(() => import("./Logout/Logout")));
 
+// Extra Pages
+const BookNewAppointment = Loadable(lazy(() => import("./BookAppointment/BookNewAppointment/BookNewAppointment")));
+const AddPatient = Loadable(lazy(() => import("./ViewPatient/AddPatient/AddPatient")));
+const UpdatePatient = Loadable(lazy(() => import("./MarkAttendance/UpdatePatient/UpdatePatient")));
+
 const materialRoutes = [
   {
     path: '/table',
@@ -72,6 +77,18 @@ const materialRoutes = [
   {
     path: '/logout',
     element: <Logout />,
+  },
+  {
+    path: '/book-new-appointment',
+    element: <BookNewAppointment />,
+  },
+  {
+    path: '/add-patient',
+    element: <AddPatient />,
+  },
+  {
+    path: '/update-patient',
+    element: <UpdatePatient />,
   },
 ];
 

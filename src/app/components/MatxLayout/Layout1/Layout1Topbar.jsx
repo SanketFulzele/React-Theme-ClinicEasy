@@ -112,7 +112,7 @@ const Layout1Topbar = () => {
                 <Hidden xsDown>
                   <Span>
                     {/* Hi <strong>{user.name}</strong> */}
-                    Hi <strong>Dr. Sanjiv Chaudhary </strong>
+                    <strong>Dr. Sanjiv </strong>
                   </Span>
                 </Hidden>
                 <Avatar src={user.avatar} sx={{ cursor: 'pointer' }} />

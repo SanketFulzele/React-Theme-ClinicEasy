@@ -1,10 +1,12 @@
+import { Box } from '@mui/material'
+import HeadingComp from 'app/views/CommonComp/HeadingComp'
 import React from 'react'
 
 const TodaysAppointment = () => {
     return (
-        <div>
-            Today's Appointment Page
-        </div>
+        <Box>
+            <HeadingComp heading="Today's Appointment" navigate="/" />
+        </Box>
     )
 }
 

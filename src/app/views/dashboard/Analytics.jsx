@@ -29,10 +29,10 @@ const Analytics = () => {
       image: "/assets/images/DashboardImg/carousel2.jpg"
     },
     {
-      image: "/assets/images/DashboardImg/carousel6.jpg"
+      image: "/assets/images/DashboardImg/carousel4.jpg"
     },
     {
-      image: "/assets/images/DashboardImg/carousel7.jpg"
+      image: "/assets/images/DashboardImg/carousel5.jpg"
     }
   ]
 
@@ -44,6 +44,7 @@ const Analytics = () => {
     marginY: "10px",
     paddingX: { sm: "50px", xs: "10px" },
     paddingY: "10px",
+    cursor: "pointer",
   }
 
   const SVGBox = {
@@ -58,7 +59,7 @@ const Analytics = () => {
 
   const DashboardBoxs = {
     color: "white",
-    background: "rgb(110, 43, 198)",
+    background: "#9938fa",
     borderRadius: "14px",
     // padding: "15px",
     padding: { sm: "15px", xs: "5px" },
@@ -91,6 +92,10 @@ const Analytics = () => {
   const NavPatient = () => {
     navigate("/view-patient")
   }
+  const NavTdAppointment = () => {
+    navigate("/todays-appointment")
+  }
+
 
   return (
     <Box sx={CarouselContainer}>
@@ -102,7 +107,7 @@ const Analytics = () => {
         </Carousel>
       </Box>
 
-      <Paper sx={AppointmentBox}>
+      <Paper sx={AppointmentBox} onClick={NavTdAppointment}>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
 
           <Stack justifyContent="center" alignItems="center">

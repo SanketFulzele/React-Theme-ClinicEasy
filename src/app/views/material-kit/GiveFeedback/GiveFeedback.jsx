@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material'
+import HeadingComp from 'app/views/CommonComp/HeadingComp';
 
 const FeedbackBox = {
     display: "flex",
@@ -18,8 +19,11 @@ const resFeedbackBox = {
 
 const GiveFeedback = () => {
     return (
-        <>
+        <Box>
+            <HeadingComp heading="Feedback" navigate="/" />
+
             <Box sx={FeedbackBox} >
+
 
                 <Typography variant='h5' sx={{ fontWeight: 600, }}>
                     Each and Every Feedback is valuable for us
@@ -41,7 +45,7 @@ const GiveFeedback = () => {
 
             </Box>
 
-        </>
+        </Box>
     )
 }
 
