@@ -2,15 +2,33 @@ import { Box, Paper, Typography } from '@mui/material'
 import React from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import "./headingComp.css";
 
 const HeadingComp = (props) => {
 
     const navigate = useNavigate();
 
-    const ComponentHeading = {
-        padding: "15px 10px",
+    const ComponentHeadingBox = {
+        padding: "18px 10px 10px 10px ",
         display: "flex",
+    }
+    const BackIcon = {
+        width: "33px",
+        height: "33px",
+        cursor: "pointer",
+        "&:hover": {
+            backgroundColor: "rgb(222, 220, 220)",
+            borderRadius: "50%",
+        }
+    }
+
+    const compHeadingIcon = {
+        transform: "translate(2px ,3px)",
+        fontSize: "27px",
+    }
+
+    const compHeading = {
+        width: "100%",
+        textAlign: "center",
     }
 
     const BacktoHome = () => {
@@ -18,16 +36,16 @@ const HeadingComp = (props) => {
     }
     return (
         <>
-            <Paper sx={ComponentHeading}>
-                <Box className='BackIcon'>
-                    <ArrowBackIcon className='compHeadingIcon' onClick={BacktoHome} />
+            <Paper sx={ComponentHeadingBox}>
+                <Box sx={BackIcon}>
+                    <ArrowBackIcon sx={compHeadingIcon} onClick={BacktoHome} />
                 </Box>
 
-                <div className='compHeading'>
+                <Box sx={compHeading}>
                     <Typography variant='h6' align="center">
                         {props.heading}
                     </Typography>
-                </div>
+                </Box>
             </Paper>
         </>
     )

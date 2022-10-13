@@ -12,6 +12,7 @@ const initialValues = {
     name: "",
     number: "",
     email: "",
+
 };
 
 // form field validation schema
@@ -22,24 +23,6 @@ const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid Email address').required('Email is required!'),
 });
 
-// const Genders = [
-//     {
-//         value: 'Select Gender',
-//         label: 'Select Gender',
-//     },
-//     {
-//         value: 'male',
-//         label: 'Male',
-//     },
-//     {
-//         value: 'female',
-//         label: 'Female',
-//     },
-//     {
-//         value: 'other',
-//         label: 'Other',
-//     },
-// ];
 
 const AddPatient = () => {
     const BookAppointmentHeading = {
@@ -53,11 +36,9 @@ const AddPatient = () => {
         padding: "15px",
     }
 
-    // const [currency, setCurrency] = useState('');
 
     const handleFormSubmit = (values) => {
         console.log(values);
-        // setCurrency(values.gender)
     }
 
 
@@ -81,7 +62,7 @@ const AddPatient = () => {
 
                                 <TextField
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     type="name"
                                     name="name"
                                     label="Name"
@@ -95,7 +76,7 @@ const AddPatient = () => {
                                 />
                                 <TextField
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     type="number"
                                     name="number"
                                     label="Mobile Number"
@@ -109,7 +90,7 @@ const AddPatient = () => {
                                 />
                                 <TextField
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     type="email"
                                     name="email"
                                     label="Email Id"
@@ -124,7 +105,7 @@ const AddPatient = () => {
 
                                 <TextField
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     type="address"
                                     name="address"
                                     label="Address"
@@ -140,28 +121,9 @@ const AddPatient = () => {
                                     required
                                 />
 
-                                {/* <TextField
-                                    fullWidth
-                                    size='small'
-                                    name="gender"
-                                    variant='outlined'
-                                    select
-                                    label="Gender"
-                                    value={currency}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    sx={{ mb: 3 }}
-                                >
-                                    {Genders.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField> */}
-
                                 <TextField
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     type="date"
                                     name="date"
                                     label=""
@@ -178,9 +140,10 @@ const AddPatient = () => {
                                     <InputLabel id="genderSelect">Gender</InputLabel>
                                     <Select
                                         labelId="genderSelect"
-                                        id="demo-simple-select"
                                         value={values.age}
-                                        label="Age"
+                                        name="gender"
+                                        size=""
+                                        label="Gender"
                                         onChange={handleChange}
                                     >
                                         <MenuItem value={"male"}>Male</MenuItem>

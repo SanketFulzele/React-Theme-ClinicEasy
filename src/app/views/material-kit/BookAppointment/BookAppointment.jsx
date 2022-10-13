@@ -1,4 +1,4 @@
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import React from 'react'
 import "./bookAppointment.css";
 import { Formik } from 'formik';
@@ -21,10 +21,7 @@ const validationSchema = Yup.object().shape({
 
 
 const BookAppointment = () => {
-    // const BookAppointmentHeading = {
-    //     padding: "15px",
-    //     textAlign: "center",
-    // }
+
     const BookAppointmentImgBox = {
         display: "flex",
         justifyContent: "center",
@@ -57,45 +54,45 @@ const BookAppointment = () => {
         console.log(values);
         console.log("button submitted")
 
-        if (values.number) {
-            // navigate("/book-new-appointment")
+        if (values.number === 8381001406) {
+            navigate("/book-new-appointment")
         } else {
-            // navigate("/")
+            navigate("/add-patient")
         }
 
-        let url = "https://cliniceasy.in/restAPI/index.php/Home/getPatients";
+        // let url = "https://cliniceasy.in/restAPI/index.php/Home/getPatients";
 
-        let data = {
-            hospital_id: "1",
-            user_id: "5",
-            search: "9689455261",
-        }
+        // let data = {
+        //     hospital_id: "1",
+        //     user_id: "5",
+        //     search: "9689455261",
+        // }
         // console.log(data);
         // let username = "meat";
         // let password = "1100";
         // var basecode = Buffer.from(username + ':' + password).toString('base64');
 
-        fetch(url, {
-            method: "POST",
-            mode: 'no-cors',
-            headers: {
-                'Accept': 'application/json',
-                // 'Content-Type': 'application/json'
-                // 'Authorization': 'Basic' + (`${username}:${password}`),
+        // fetch(url, {
+        //     method: "POST",
+        //     mode: 'no-cors',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         // 'Content-Type': 'application/json'
+        //         // 'Authorization': 'Basic' + (`${username}:${password}`),
 
-                "access-control-allow-origin": "*",
-                "Authorization": "Basic bWVhdDoxMTAw",
-                "Content-type": "application/json; charset=UTF-8"
-            },
-            body: JSON.stringify(data)
-        }).then(result => {
-            result.json().then(resp => {
-                console.warn(resp, "Response of the post fetch")
+        //         "access-control-allow-origin": "*",
+        //         "Authorization": "Basic bWVhdDoxMTAw",
+        //         "Content-type": "application/json; charset=UTF-8"
+        //     },
+        //     body: JSON.stringify(data)
+        // }).then(result => {
+        //     result.json().then(resp => {
+        //         console.warn(resp, "Response of the post fetch")
 
-            }).catch((error) => {
-                console.log(error, "error")
-            })
-        })
+        //     }).catch((error) => {
+        //         console.log(error, "error")
+        //     })
+        // })
 
 
         // var basicauth = `bWVhdDoxMTAw`;

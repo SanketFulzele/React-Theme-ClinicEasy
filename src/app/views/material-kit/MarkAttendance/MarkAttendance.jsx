@@ -50,12 +50,23 @@ const MarkAttendance = () => {
         navigate("/update-patient")
     }
 
+    const AttendanceTimeContainer = {
+        marginY: "15px",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        justifySelf: "center",
+        alignContent: "center",
+    }
+
     const ViewAttendanceBox = {
         padding: "15px",
+        width: { lg: "50vw", md: "60vw", sm: "80vw", xs: "95vw" },
         display: "flex",
         alignItems: "center",
         justifyContent: "space-evenly",
         flexWrap: "wrap",
+        margin: "10px",
     }
 
 
@@ -136,7 +147,6 @@ const MarkAttendance = () => {
 
 
             <Box mt={1}>
-
                 <Formik
                     onSubmit={handleFormSubmit}
                     initialValues={initialValues}
@@ -151,7 +161,6 @@ const MarkAttendance = () => {
                                     size="small"
                                     type="date"
                                     name="date"
-                                    label=""
                                     variant="outlined"
                                     onBlur={handleBlur}
                                     value={values.date}
@@ -164,7 +173,6 @@ const MarkAttendance = () => {
                                     size="small"
                                     type="date"
                                     name="dates"
-                                    label=""
                                     variant="outlined"
                                     onBlur={handleBlur}
                                     value={values.dates}
@@ -183,11 +191,11 @@ const MarkAttendance = () => {
                 </Formik>
             </Box>
 
-            <Box sx={{ padding: { sm: "30px", xs: "10px" } }}>
-                <Paper sx={ViewAttendanceBox}>
+            <Box sx={AttendanceTimeContainer}>
 
+                <Paper sx={ViewAttendanceBox}>
                     <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <CalendarMonthIcon /> <Typography variant='subtitle2' ml={1}> Date : 2022-10-06 </Typography>
+                        <CalendarMonthIcon /> <Typography variant='subtitle2' ml={1}> Date :  2022-10-06 </Typography>
                     </Box>
                     <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
                         <LoginIcon /> <Typography variant='subtitle2' ml={1}> In Time : 10:12:13 </Typography>
@@ -195,8 +203,44 @@ const MarkAttendance = () => {
                     <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
                         <LogoutIcon /> <Typography variant='subtitle2' ml={1}> Out Time : 22:45:56 </Typography>
                     </Box>
-
                 </Paper>
+
+                <Paper sx={ViewAttendanceBox}>
+                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
+                        <CalendarMonthIcon /> <Typography variant='subtitle2' ml={1}> Date :  2022-10-06 </Typography>
+                    </Box>
+                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
+                        <LoginIcon /> <Typography variant='subtitle2' ml={1}> In Time : 10:12:13 </Typography>
+                    </Box>
+                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
+                        <LogoutIcon /> <Typography variant='subtitle2' ml={1}> Out Time : 22:45:56 </Typography>
+                    </Box>
+                </Paper>
+
+                <Paper sx={ViewAttendanceBox}>
+                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
+                        <CalendarMonthIcon /> <Typography variant='subtitle2' ml={1}> Date :  2022-10-06 </Typography>
+                    </Box>
+                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
+                        <LoginIcon /> <Typography variant='subtitle2' ml={1}> In Time : 10:12:13 </Typography>
+                    </Box>
+                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
+                        <LogoutIcon /> <Typography variant='subtitle2' ml={1}> Out Time : 22:45:56 </Typography>
+                    </Box>
+                </Paper>
+
+                <Paper sx={ViewAttendanceBox}>
+                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
+                        <CalendarMonthIcon /> <Typography variant='subtitle2' ml={1}> Date :  2022-10-06 </Typography>
+                    </Box>
+                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
+                        <LoginIcon /> <Typography variant='subtitle2' ml={1}> In Time : 10:12:13 </Typography>
+                    </Box>
+                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
+                        <LogoutIcon /> <Typography variant='subtitle2' ml={1}> Out Time : 22:45:56 </Typography>
+                    </Box>
+                </Paper>
+
             </Box>
 
         </Box >
