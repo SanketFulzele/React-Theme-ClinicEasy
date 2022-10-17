@@ -1,7 +1,5 @@
-import { Box } from '@mui/material'
-import { Button, Paper, TextField, Typography } from '@mui/material'
-import HeadingComp from 'app/views/CommonComp/HeadingComp'
 import React from 'react'
+import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import "yup-phone";
@@ -11,7 +9,6 @@ const initialValues = {
     name: "",
     number: "",
     email: "",
-    text: "",
 };
 
 // form field validation schema
@@ -20,36 +17,34 @@ const validationSchema = Yup.object().shape({
     number: Yup.string().phone('IN', true, "Phone Number is Invalid")
         .required("Phone Number is Required"),
     email: Yup.string().email('Invalid Email address').required('Email is required!'),
-    text: Yup.string().min(3).max(25).required("Designation is Required"),
 });
 
-const CreateStaff = () => {
 
+const ProfilePage = () => {
     const FormContainer = {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         padding: "20px",
+        marginTop: "15px",
     }
 
     const FormElements = {
-        width: { lg: "40vw", md: "50vw", sm: "60vw", xs: "90vw" },
         padding: "20px ",
+        width: { lg: "40vw", md: "50vw", sm: "60vw", xs: "90vw" },
     }
-
 
     const handleFormSubmit = (values) => {
         console.log(values);
     }
 
     return (
-        <Box>
-            <HeadingComp heading="Create Staff" navigate="/" />
-
+        <div>
             <Box sx={FormContainer}>
-                <Paper sx={FormElements}>
-                    <Typography variant='h6' align='center' mb={2} sx={{ color: "var(--blue-color)" }}>
-                        Staff Registration
+                <Paper sx={FormElements} elevation="3">
+
+                    <Typography variant='h5' align='center' mb={2} sx={{ color: "var(--blue-color)" }}>
+                        My Profile
                     </Typography>
                     <Formik
                         onSubmit={handleFormSubmit}
@@ -63,7 +58,7 @@ const CreateStaff = () => {
                                     size="small"
                                     type="name"
                                     name="name"
-                                    label="Staff Name"
+                                    label="User Name"
                                     variant="outlined"
                                     onBlur={handleBlur}
                                     value={values.name}
@@ -77,7 +72,7 @@ const CreateStaff = () => {
                                     size="small"
                                     type="number"
                                     name="number"
-                                    label="Staff Mobile"
+                                    label="Mobile Number"
                                     variant="outlined"
                                     onBlur={handleBlur}
                                     value={values.number}
@@ -91,7 +86,7 @@ const CreateStaff = () => {
                                     size="small"
                                     type="email"
                                     name="email"
-                                    label="Staff Email"
+                                    label="Email Id"
                                     variant="outlined"
                                     onBlur={handleBlur}
                                     value={values.email}
@@ -101,28 +96,10 @@ const CreateStaff = () => {
                                     sx={{ mb: 3 }}
                                 />
 
-                                <TextField
-                                    fullWidth
-                                    size="small"
-                                    type="text"
-                                    name="text"
-                                    label="Designation"
-                                    variant="outlined"
-                                    onBlur={handleBlur}
-                                    value={values.text}
-                                    onChange={handleChange}
-                                    helperText={touched.text && errors.text}
-                                    error={Boolean(errors.text && touched.text)}
-                                    sx={{ mb: 3 }}
-                                    autoComplete="off"
-                                // required
-                                />
-
                                 <Box className="Flex">
-                                    <Button variant="contained"
-                                        sx={{ minWidth: "150px", padding: "8px", margin: "0 auto" }}
+                                    <Button variant="contained" sx={{ minWidth: "150px", padding: "8px", margin: "0 auto" }}
                                         type="submit" >
-                                        Submit
+                                        Update
                                     </Button>
                                 </Box>
                             </form>
@@ -130,9 +107,8 @@ const CreateStaff = () => {
                     </Formik>
                 </Paper>
             </Box>
-
-        </Box>
+        </div>
     )
 }
 
-export default CreateStaff
+export default ProfilePage;

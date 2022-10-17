@@ -4,21 +4,38 @@ import "./markAttendance.css";
 import HeadingComp from 'app/views/CommonComp/HeadingComp';
 import EditIcon from '@mui/icons-material/Edit';
 import BadgeIcon from '@mui/icons-material/Badge';
-import { useNavigate } from 'react-router-dom';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import EmailIcon from '@mui/icons-material/Email';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import { Formik } from 'formik';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import Modal from '@mui/material/Modal';
+import { useState } from 'react';
+import { Formik } from 'formik';
+import * as Yup from "yup";
+import "yup-phone";
 
 // inital login credentials
 const initialValues = {
     date: "",
     dates: "",
 };
+
+// inital login credentials
+const initialValuesModal = {
+    name: "",
+    number: "",
+    email: "",
+};
+
+// form field validation schema
+const validationSchemaModal = Yup.object().shape({
+    name: Yup.string().min(2).max(25).required("User Name is Required"),
+    number: Yup.string().phone('IN', true, "Phone Number is Invalid")
+        .required("Phone Number is Required"),
+    email: Yup.string().email('Invalid Email address').required('Email is required!'),
+});
 
 
 const MarkAttendance = () => {
@@ -44,11 +61,7 @@ const MarkAttendance = () => {
     const DateField = {
         marginRight: { sx: "30px", xs: "15px" },
     }
-    const navigate = useNavigate();
 
-    const NavUpdatePatient = () => {
-        navigate("/update-patient")
-    }
 
     const AttendanceTimeContainer = {
         marginY: "15px",
@@ -69,6 +82,39 @@ const MarkAttendance = () => {
         margin: "10px",
     }
 
+    const modalBox = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: { sm: "600px", xs: "90%", },
+        backgroundColor: 'background.paper',
+        border: 'none',
+        outline: "none",
+        boxShadow: 24,
+        p: 1,
+    };
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+
+    const FormContainer = {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px"
+    }
+
+    const FormElements = {
+        padding: "20px ",
+    }
+
+    const handleFormSubmitModal = (values) => {
+        console.log(values);
+    }
+
 
     const handleFormSubmit = (values) => {
         console.log(values);
@@ -80,12 +126,88 @@ const MarkAttendance = () => {
             <HeadingComp heading="Mark Attendance" navigate="/" />
 
             <Box sx={AttendanceBox}>
-                <img src="/assets/MySVG/maleAvatar.svg" className='male-avatar-svg' alt="Avatar-Img" />
+                <img src="/assets/MySVG/maleAva.svg" className='male-avatar-svg' alt="Avatar-Img" />
 
-                <Box sx={editContainer} className="Flex">
-                    <EditIcon sx={{ color: "white" }} onClick={NavUpdatePatient} />
+                <Box sx={editContainer} onClick={handleOpen} className="Flex">
+                    <EditIcon sx={{ color: "white" }} />
                 </Box>
 
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    sx={{ outline: "none", }}
+                >
+                    <Box sx={modalBox}>
+
+                        <Box sx={FormContainer}>
+                            <Paper sx={FormElements} elevation="3">
+                                <Typography variant='h6' align='center' mb={2} sx={{ color: "var(--blue-color)" }}>
+                                    Profile Details
+                                </Typography>
+                                <Formik
+                                    onSubmit={handleFormSubmitModal}
+                                    initialValues={initialValuesModal}
+                                    validationSchema={validationSchemaModal}
+                                >
+                                    {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+                                        <form onSubmit={handleSubmit}>
+                                            <TextField
+                                                fullWidth
+                                                size="small"
+                                                type="name"
+                                                name="name"
+                                                label="Name"
+                                                variant="outlined"
+                                                onBlur={handleBlur}
+                                                value={values.name}
+                                                onChange={handleChange}
+                                                helperText={touched.name && errors.name}
+                                                error={Boolean(errors.name && touched.name)}
+                                                sx={{ mb: 3 }}
+                                            />
+                                            <TextField
+                                                fullWidth
+                                                size="small"
+                                                type="number"
+                                                name="number"
+                                                label="Mobile Number"
+                                                variant="outlined"
+                                                onBlur={handleBlur}
+                                                value={values.number}
+                                                onChange={handleChange}
+                                                helperText={touched.number && errors.number}
+                                                error={Boolean(errors.number && touched.number)}
+                                                sx={{ mb: 3 }}
+                                            />
+                                            <TextField
+                                                fullWidth
+                                                size="small"
+                                                type="email"
+                                                name="email"
+                                                label="Email Id"
+                                                variant="outlined"
+                                                onBlur={handleBlur}
+                                                value={values.email}
+                                                onChange={handleChange}
+                                                helperText={touched.email && errors.email}
+                                                error={Boolean(errors.email && touched.email)}
+                                                sx={{ mb: 3 }}
+                                            />
+
+                                            <Box className="Flex">
+                                                <Button variant="contained" sx={{ minWidth: "150px", padding: "8px", margin: "0 auto" }}
+                                                    type="submit" >
+                                                    Update
+                                                </Button>
+                                            </Box>
+                                        </form>
+                                    )}
+                                </Formik>
+                            </Paper>
+                        </Box>
+
+                    </Box>
+                </Modal>
 
 
                 <Box>

@@ -4,7 +4,6 @@ import { Box } from '@mui/system'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import "yup-phone";
-import { useState } from 'react';
 import HeadingComp from 'app/views/CommonComp/HeadingComp';
 
 // inital login credentials
@@ -12,7 +11,6 @@ const initialValues = {
     name: "",
     number: "",
     email: "",
-
 };
 
 // form field validation schema
@@ -21,6 +19,7 @@ const validationSchema = Yup.object().shape({
     number: Yup.string().phone('IN', true, "Phone Number is Invalid")
         .required("Phone Number is Required"),
     email: Yup.string().email('Invalid Email address').required('Email is required!'),
+    text: Yup.string().min(2).required("Address is Required"),
 });
 
 
@@ -106,19 +105,18 @@ const AddPatient = () => {
                                 <TextField
                                     fullWidth
                                     // size="small"
-                                    type="address"
-                                    name="address"
+                                    type="text"
+                                    name="text"
                                     label="Address"
                                     variant="outlined"
                                     onBlur={handleBlur}
-                                    value={values.address}
+                                    value={values.text}
                                     onChange={handleChange}
-                                    helperText={touched.address && errors.address}
-                                    error={Boolean(errors.address && touched.address)}
+                                    helperText={touched.text && errors.text}
+                                    error={Boolean(errors.text && touched.text)}
                                     sx={{ mb: 3 }}
                                     rows={2}
                                     multiline
-                                    required
                                 />
 
                                 <TextField

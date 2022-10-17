@@ -7,11 +7,10 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 // import { useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
+const ShareUrl = `https://play.google.com/store/apps/details?id=com.Trickysys.myapplication.cliniceasy`;
+
 const Share = () => {
 
-    const ClinicEasyLogo = `https://play-lh.googleusercontent.com/SsymykjERq_sQAIXv7erd3mur-SljxYXZLMb_mK2r073Qtm1AOn3_a7hjG7_lzZ5wwd9=w480-h960-rw`;
-
-    const ShareUrl = `https://play-lh.googleusercontent.com/SsymykjERq_sQAIXv7erd3mur-SljxYXZLMb_mK2r073Qtm1AOn3_a7hjG7_lzZ5wwd9=w480-h960-rw`;
 
     const ClinicLogoBox = {
         display: "flex",
@@ -35,7 +34,7 @@ const Share = () => {
             <HeadingComp heading="Share" navigate="/" />
 
             <Box sx={ClinicLogoBox}>
-                <img style={{ width: "150px" }} src={ClinicEasyLogo} alt="Logo" />
+                <img style={{ width: "150px" }} src="/assets/MySVG/ClinicEasyLogo.webp" alt="Logo" />
             </Box>
             <Typography variant='subtitle1' mb={2} align='center'> Share with your Friends and Family to help them </Typography>
 

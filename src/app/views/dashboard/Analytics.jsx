@@ -59,7 +59,7 @@ const Analytics = () => {
 
   const DashboardBoxs = {
     color: "white",
-    background: "#9938fa",
+    background: "#0080ff",
     borderRadius: "14px",
     // padding: "15px",
     padding: { sm: "15px", xs: "5px" },
@@ -122,7 +122,8 @@ const Analytics = () => {
           </Stack>
 
           <Box sx={SVGBox}>
-            <img className='dashboardSvg' src="/assets/images/DashboardImg/Appointment1.svg" alt='appointment-img' />
+            <img className='dashboardSvg' src='/assets/MySVG/d04.svg' alt='appointment-img' />
+            {/* <img className='dashboardSvg' src="/assets/images/DashboardImg/Appointment1.svg" alt='appointment-img' /> */}
           </Box>
 
         </Stack>
@@ -133,7 +134,7 @@ const Analytics = () => {
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Box sx={DashboardBoxs} mr={2} onClick={NavBook} >
             <Box sx={SVGContainer}>
-              <img src='/assets/images/DashboardImg/Appointments07.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
+              <img src='/assets/MySVG/dash05.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
             </Box>
             <Typography variant="subtitle1" mt={1} sx={{ textAlign: "center", }}>
               Book Appointment
@@ -142,7 +143,7 @@ const Analytics = () => {
 
           <Box sx={DashboardBoxs} onClick={NavMark}>
             <Box sx={SVGContainer}>
-              <img src='/assets/images/DashboardImg/Appointments03.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
+              <img src='/assets/MySVG/d02.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
             </Box>
             <Typography variant="subtitle1" mt={1} sx={{ textAlign: "center", }}>
               Mark Attendance
@@ -154,7 +155,7 @@ const Analytics = () => {
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Box sx={DashboardBoxs} mr={2} onClick={NavHistory} >
             <Box sx={SVGContainer}>
-              <img src='/assets/images/DashboardImg/Appointments01.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
+              <img src='/assets/MySVG/d01.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
             </Box>
             <Typography variant="subtitle1" mt={1} sx={{ textAlign: "center", }}>
               Appointment History
@@ -163,7 +164,7 @@ const Analytics = () => {
 
           <Box sx={DashboardBoxs} onClick={NavPatient}>
             <Box sx={SVGContainer}>
-              <img src='/assets/images/DashboardImg/Appointments02.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
+              <img src='/assets/MySVG/d03.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
             </Box>
             <Typography variant="subtitle1" mt={1} sx={{ textAlign: "center", }}>
               View Patient

@@ -20,6 +20,7 @@ const Logout = Loadable(lazy(() => import("./Logout/Logout")));
 const BookNewAppointment = Loadable(lazy(() => import("./BookAppointment/BookNewAppointment/BookNewAppointment")));
 const AddPatient = Loadable(lazy(() => import("./ViewPatient/AddPatient/AddPatient")));
 const UpdatePatient = Loadable(lazy(() => import("./MarkAttendance/UpdatePatient/UpdatePatient")));
+const ProfilePage = Loadable(lazy(() => import("./ProfilePage/ProfilePage")));
 
 const materialRoutes = [
   {
@@ -89,6 +90,10 @@ const materialRoutes = [
   {
     path: '/update-patient',
     element: <UpdatePatient />,
+  },
+  {
+    path: '/profile',
+    element: <ProfilePage />,
   },
 ];
 

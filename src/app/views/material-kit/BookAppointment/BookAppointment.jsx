@@ -8,7 +8,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNavigate } from 'react-router-dom';
 import HeadingComp from 'app/views/CommonComp/HeadingComp';
 
-// inital login credentials
+// initial login credentials
 const initialValues = {
     number: "",
 };
@@ -59,6 +59,7 @@ const BookAppointment = () => {
         } else {
             navigate("/add-patient")
         }
+
 
         // let url = "https://cliniceasy.in/restAPI/index.php/Home/getPatients";
 

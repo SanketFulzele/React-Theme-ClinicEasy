@@ -56,7 +56,7 @@ const Support = () => {
                         <b> Contact Person </b>
                         <Typography variant='subtitle1'>
                             Trickysys IT Solutions<br />
-                            Email: info@trickysys@gmail.com<br />
+                            Email: info@trickysys.com<br />
                             Contact No. 7276070179<br />
                             Nagpur, MH.<br />
                         </Typography>

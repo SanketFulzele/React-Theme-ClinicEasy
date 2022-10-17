@@ -4,6 +4,8 @@
     "prettier.printWidth": 100,
     "prettier.singleQuote": true,
     "cSpell.words": [
-        "Chaudhary"
+        "Chaudhary",
+        "formik",
+        "Formik"
     ]
 }

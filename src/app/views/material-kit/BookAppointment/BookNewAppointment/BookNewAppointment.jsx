@@ -10,12 +10,15 @@ import HeadingComp from 'app/views/CommonComp/HeadingComp';
 // inital login credentials
 const initialValues = {
     number: "",
+    name: "",
 };
 
 // form field validation schema
 const validationSchema = Yup.object().shape({
+    name: Yup.string().min(2).max(25).required("User Name is Required"),
     number: Yup.string().phone('IN', true, "Phone Number is Invalid")
         .required("Phone Number is Required"),
+    text: Yup.string().min(3).required("Description is Required"),
 });
 
 const ShiftTime = [
