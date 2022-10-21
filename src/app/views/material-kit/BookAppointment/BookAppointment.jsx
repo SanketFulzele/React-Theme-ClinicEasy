@@ -61,60 +61,6 @@ const BookAppointment = () => {
         }
 
 
-        // let url = "https://cliniceasy.in/restAPI/index.php/Home/getPatients";
-
-        // let data = {
-        //     hospital_id: "1",
-        //     user_id: "5",
-        //     search: "9689455261",
-        // }
-        // console.log(data);
-        // let username = "meat";
-        // let password = "1100";
-        // var basecode = Buffer.from(username + ':' + password).toString('base64');
-
-        // fetch(url, {
-        //     method: "POST",
-        //     mode: 'no-cors',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         // 'Content-Type': 'application/json'
-        //         // 'Authorization': 'Basic' + (`${username}:${password}`),
-
-        //         "access-control-allow-origin": "*",
-        //         "Authorization": "Basic bWVhdDoxMTAw",
-        //         "Content-type": "application/json; charset=UTF-8"
-        //     },
-        //     body: JSON.stringify(data)
-        // }).then(result => {
-        //     result.json().then(resp => {
-        //         console.warn(resp, "Response of the post fetch")
-
-        //     }).catch((error) => {
-        //         console.log(error, "error")
-        //     })
-        // })
-
-
-        // var basicauth = `bWVhdDoxMTAw`;
-        // fetch(url, {
-        //     method: 'POST',
-        //     mode: 'no-cors',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         "Authorization": "Basic " + basicauth,
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(data)
-        // }).then(result => {
-        //     result.json().then(resp => {
-        //         console.warn(resp, "Response of the post fetch")
-
-        //     }).catch((error) => {
-        //         console.log(error, "error")
-        //     })
-        // })
-
     }
     return (
         <Box>

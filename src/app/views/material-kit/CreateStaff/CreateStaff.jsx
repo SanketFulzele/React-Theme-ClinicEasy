@@ -12,6 +12,7 @@ const initialValues = {
     number: "",
     email: "",
     text: "",
+    address: "",
 };
 
 // form field validation schema
@@ -21,7 +22,9 @@ const validationSchema = Yup.object().shape({
         .required("Phone Number is Required"),
     email: Yup.string().email('Invalid Email address').required('Email is required!'),
     text: Yup.string().min(3).max(25).required("Designation is Required"),
+    address: Yup.string().min(3).max(40).required("Address is Required"),
 });
+
 
 const CreateStaff = () => {
 
@@ -41,6 +44,13 @@ const CreateStaff = () => {
     const handleFormSubmit = (values) => {
         console.log(values);
     }
+
+
+
+
+
+
+
 
     return (
         <Box>
@@ -75,20 +85,6 @@ const CreateStaff = () => {
                                 <TextField
                                     fullWidth
                                     size="small"
-                                    type="number"
-                                    name="number"
-                                    label="Staff Mobile"
-                                    variant="outlined"
-                                    onBlur={handleBlur}
-                                    value={values.number}
-                                    onChange={handleChange}
-                                    helperText={touched.number && errors.number}
-                                    error={Boolean(errors.number && touched.number)}
-                                    sx={{ mb: 3 }}
-                                />
-                                <TextField
-                                    fullWidth
-                                    size="small"
                                     type="email"
                                     name="email"
                                     label="Staff Email"
@@ -100,6 +96,36 @@ const CreateStaff = () => {
                                     error={Boolean(errors.email && touched.email)}
                                     sx={{ mb: 3 }}
                                 />
+                                <TextField
+                                    fullWidth
+                                    size="small"
+                                    type="address"
+                                    name="address"
+                                    label="Staff Address"
+                                    variant="outlined"
+                                    onBlur={handleBlur}
+                                    value={values.address}
+                                    onChange={handleChange}
+                                    helperText={touched.address && errors.address}
+                                    error={Boolean(errors.address && touched.address)}
+                                    sx={{ mb: 3 }}
+                                />
+
+                                <TextField
+                                    fullWidth
+                                    size="small"
+                                    type="number"
+                                    name="number"
+                                    label="Staff Mobile"
+                                    variant="outlined"
+                                    onBlur={handleBlur}
+                                    value={values.number}
+                                    onChange={handleChange}
+                                    helperText={touched.number && errors.number}
+                                    error={Boolean(errors.number && touched.number)}
+                                    sx={{ mb: 3 }}
+                                />
+
 
                                 <TextField
                                     fullWidth

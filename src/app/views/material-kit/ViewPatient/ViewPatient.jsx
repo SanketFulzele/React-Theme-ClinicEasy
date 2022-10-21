@@ -6,9 +6,14 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import PortraitIcon from '@mui/icons-material/Portrait';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
+import PaidIcon from '@mui/icons-material/Paid';
 import "./viewPatient.css";
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const ViewPatient = () => {
+    const [patientData, setPatientData] = useState([])
+
     const navigate = useNavigate();
 
     const ComponentHeadingBox = {
@@ -77,6 +82,33 @@ const ViewPatient = () => {
     const NavAddIcon = () => {
         navigate("/add-patient")
     }
+
+    const url = `https://trickysys.com/demo/selfplay/androidApi/Master/bookingHistory`;
+
+    const data = {
+        "user_id": "3",
+        "game_id": "3"
+    }
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': "text/plain",
+        },
+        body: JSON.stringify(data)
+    }
+
+    useEffect(() => {
+        fetch(url, options)
+            .then(res => {
+                res.json().then((result) => {
+                    setPatientData(result.data)
+                })
+            })
+    }, [])
+
+    console.log(patientData);
+
     return (
         <Box>
             <Paper sx={ComponentHeadingBox}>
@@ -97,53 +129,25 @@ const ViewPatient = () => {
 
             <Box sx={AppointHistoryBox}>
 
-                <Paper sx={AppointHistoryInfo}>
-                    <Stack direction="row" alignItems="center" mb={1}>
-                        <PortraitIcon /> <Typography variant='subtitle1' ml={1}> Patient Name : Rohit
-                        </Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center" mb={1}>
 
-                        <SmartphoneIcon /> <Typography variant='subtitle1' ml={1}> Mobile Number : 8329132745
-                        </Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center">
-                        <CalendarMonthIcon /> <Typography variant='subtitle1' ml={1}> Added Date : 2022-10-07 14:43:07
-                        </Typography>
-                    </Stack>
-                </Paper>
-
-                <Paper sx={AppointHistoryInfo}>
-                    <Stack direction="row" alignItems="center" mb={1}>
-                        <PortraitIcon /> <Typography variant='subtitle1' ml={1}> Patient Name : Rohit
-                        </Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center" mb={1}>
-
-                        <SmartphoneIcon /> <Typography variant='subtitle1' ml={1}> Mobile Number : 8329132745
-                        </Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center">
-                        <CalendarMonthIcon /> <Typography variant='subtitle1' ml={1}> Added Date : 2022-10-07 14:43:07
-                        </Typography>
-                    </Stack>
-                </Paper>
-
-                <Paper sx={AppointHistoryInfo}>
-                    <Stack direction="row" alignItems="center" mb={1}>
-                        <PortraitIcon /> <Typography variant='subtitle1' ml={1}> Patient Name : Rohit
-                        </Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center" mb={1}>
-
-                        <SmartphoneIcon /> <Typography variant='subtitle1' ml={1}> Mobile Number : 8329132745
-                        </Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center">
-                        <CalendarMonthIcon /> <Typography variant='subtitle1' ml={1}> Added Date : 2022-10-07 14:43:07
-                        </Typography>
-                    </Stack>
-                </Paper>
+                {patientData.map((data) => {
+                    return (
+                        <Paper sx={AppointHistoryInfo} key={data.id}>
+                            <Stack direction="row" alignItems="center" mb={1}>
+                                <PortraitIcon /> <Typography variant='subtitle1' ml={1}> UID : {data.uid}
+                                </Typography>
+                            </Stack>
+                            <Stack direction="row" alignItems="center" mb={1}>
+                                <PaidIcon /> <Typography variant='subtitle1' ml={1}> Bet Amount : {data.amount}
+                                </Typography>
+                            </Stack>
+                            <Stack direction="row" alignItems="center">
+                                <CalendarMonthIcon /> <Typography variant='subtitle1' ml={1}> Added Date : {data.date}
+                                </Typography>
+                            </Stack>
+                        </Paper>
+                    )
+                })}
 
                 <Paper sx={AppointHistoryInfo}>
                     <Stack direction="row" alignItems="center" mb={1}>
@@ -169,3 +173,6 @@ const ViewPatient = () => {
 }
 
 export default ViewPatient
+
+
+// self play money amount generating upi id success@razorpay
