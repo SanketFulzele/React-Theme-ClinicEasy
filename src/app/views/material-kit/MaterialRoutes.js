@@ -19,7 +19,6 @@ const Logout = Loadable(lazy(() => import("./Logout/Logout")));
 // Extra Pages
 const BookNewAppointment = Loadable(lazy(() => import("./BookAppointment/BookNewAppointment/BookNewAppointment")));
 const AddPatient = Loadable(lazy(() => import("./ViewPatient/AddPatient/AddPatient")));
-const UpdatePatient = Loadable(lazy(() => import("./MarkAttendance/UpdatePatient/UpdatePatient")));
 const ProfilePage = Loadable(lazy(() => import("./ProfilePage/ProfilePage")));
 
 const materialRoutes = [
@@ -86,10 +85,6 @@ const materialRoutes = [
   {
     path: '/add-patient',
     element: <AddPatient />,
-  },
-  {
-    path: '/update-patient',
-    element: <UpdatePatient />,
   },
   {
     path: '/profile',

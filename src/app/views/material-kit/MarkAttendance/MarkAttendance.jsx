@@ -4,41 +4,29 @@ import "./markAttendance.css";
 import HeadingComp from 'app/views/CommonComp/HeadingComp';
 import EditIcon from '@mui/icons-material/Edit';
 import BadgeIcon from '@mui/icons-material/Badge';
-import SmartphoneIcon from '@mui/icons-material/Smartphone';
-import EmailIcon from '@mui/icons-material/Email';
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import Modal from '@mui/material/Modal';
 import { useState } from 'react';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import "yup-phone";
-
-// inital login credentials
-const initialValues = {
-    date: "",
-    dates: "",
-};
-
-// inital login credentials
-const initialValuesModal = {
-    name: "",
-    number: "",
-    email: "",
-};
+import { useLayoutEffect } from 'react';
+import ViewAttendance from './ViewAttendance/ViewAttendance';
 
 // form field validation schema
 const validationSchemaModal = Yup.object().shape({
-    name: Yup.string().min(2).max(25).required("User Name is Required"),
-    number: Yup.string().phone('IN', true, "Phone Number is Invalid")
-        .required("Phone Number is Required"),
-    email: Yup.string().email('Invalid Email address').required('Email is required!'),
+    name: Yup.string().min(2).max(25).required("Account Name is Required"),
+    bank: Yup.string().min(5).required("Bank Name is Required"),
+    number: Yup.string().min(8).max(17).required("Account Number is Required"),
+    code: Yup.string().min(11).max(11).required("IFSC Code is Required"),
 });
 
 
 const MarkAttendance = () => {
+
+    const [userData, setUserData] = useState([]);
 
     const AttendanceBox = {
         borderBottom: "1px solid #000",
@@ -57,29 +45,6 @@ const MarkAttendance = () => {
         top: "10px",
         right: "10px",
 
-    }
-    const DateField = {
-        marginRight: { sx: "30px", xs: "15px" },
-    }
-
-
-    const AttendanceTimeContainer = {
-        marginY: "15px",
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        justifySelf: "center",
-        alignContent: "center",
-    }
-
-    const ViewAttendanceBox = {
-        padding: "15px",
-        width: { lg: "50vw", md: "60vw", sm: "80vw", xs: "95vw" },
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-evenly",
-        flexWrap: "wrap",
-        margin: "10px",
     }
 
     const modalBox = {
@@ -111,13 +76,83 @@ const MarkAttendance = () => {
         padding: "20px ",
     }
 
-    const handleFormSubmitModal = (values) => {
-        console.log(values);
+
+    const url = `https://trickysys.com/demo/selfplay/androidApi/Master/myProfile`;
+
+    const data = {
+        "user_id": "3",
     }
 
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': "text/plain",
+        },
+        body: JSON.stringify(data)
+    }
 
-    const handleFormSubmit = (values) => {
-        console.log(values);
+    const userInfo = () => {
+        fetch(url, options)
+            .then(res => {
+                res.json().then((result) => {
+                    setUserData(result.data)
+                })
+            })
+    }
+
+    useLayoutEffect(() => {
+        userInfo()
+    }, [])
+
+
+    const { account_holder_name } = userData;
+    const { bank_name } = userData;
+    const { account_no } = userData;
+    const { ifsc_code } = userData;
+
+
+    // inital login credentials
+    const initialValuesModal = {
+        name: account_holder_name,
+        bank: bank_name,
+        number: account_no,
+        code: ifsc_code,
+    };
+
+
+
+    const handleFormSubmitModal = (values) => {
+
+        const { bank, name, code, number } = values;
+
+        const Url = `https://trickysys.com/demo/selfplay/androidApi/Master/kyc`;
+
+        const Data = {
+            "user_id": "3",
+            "name": name,
+            "account_no": number,
+            "ifsc": code,
+            "bank_name": bank,
+        }
+
+        const Options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': "text/plain",
+            },
+            body: JSON.stringify(Data)
+        }
+
+        fetch(Url, Options)
+            .then(res => {
+                res.json().then((result) => {
+                    return result;
+                })
+            }).then(() => {
+                userInfo();
+            })
+
+        handleClose();
     }
 
 
@@ -142,7 +177,7 @@ const MarkAttendance = () => {
                         <Box sx={FormContainer}>
                             <Paper sx={FormElements} elevation="3">
                                 <Typography variant='h6' align='center' mb={2} sx={{ color: "var(--blue-color)" }}>
-                                    Profile Details
+                                    Bank Details
                                 </Typography>
                                 <Formik
                                     onSubmit={handleFormSubmitModal}
@@ -156,7 +191,7 @@ const MarkAttendance = () => {
                                                 size="small"
                                                 type="name"
                                                 name="name"
-                                                label="Name"
+                                                label="Account Name"
                                                 variant="outlined"
                                                 onBlur={handleBlur}
                                                 value={values.name}
@@ -168,9 +203,23 @@ const MarkAttendance = () => {
                                             <TextField
                                                 fullWidth
                                                 size="small"
+                                                type="text"
+                                                name="bank"
+                                                label="Bank Name"
+                                                variant="outlined"
+                                                onBlur={handleBlur}
+                                                value={values.bank}
+                                                onChange={handleChange}
+                                                helperText={touched.bank && errors.bank}
+                                                error={Boolean(errors.bank && touched.bank)}
+                                                sx={{ mb: 3 }}
+                                            />
+                                            <TextField
+                                                fullWidth
+                                                size="small"
                                                 type="number"
                                                 name="number"
-                                                label="Mobile Number"
+                                                label="Account Number"
                                                 variant="outlined"
                                                 onBlur={handleBlur}
                                                 value={values.number}
@@ -182,15 +231,15 @@ const MarkAttendance = () => {
                                             <TextField
                                                 fullWidth
                                                 size="small"
-                                                type="email"
-                                                name="email"
-                                                label="Email Id"
+                                                type="text"
+                                                name="code"
+                                                label="IFSC Code"
                                                 variant="outlined"
                                                 onBlur={handleBlur}
-                                                value={values.email}
+                                                value={values.code}
                                                 onChange={handleChange}
-                                                helperText={touched.email && errors.email}
-                                                error={Boolean(errors.email && touched.email)}
+                                                helperText={touched.code && errors.code}
+                                                error={Boolean(errors.code && touched.code)}
                                                 sx={{ mb: 3 }}
                                             />
 
@@ -210,53 +259,55 @@ const MarkAttendance = () => {
                 </Modal>
 
 
-                <Box>
-                    <Stack direction={{ sm: "row", xs: "column" }} mt={3} alignItems="center" justifyContent="space-around">
-                        <Stack direction="row" mt={{ xs: 1 }}>
-                            <BadgeIcon />
-                            <Typography variant='subtitle1' mx={1}>
-                                Name :
-                            </Typography>
-                            <Typography variant='subtitle1'>
-                                Dr. Sameer Joy
-                            </Typography>
+                {userData !== "" ?
+                    <Box>
+                        <Stack direction={{ sm: "row", xs: "column" }} mt={3} alignItems="center" justifyContent="space-around">
+                            <Stack direction="row" mt={{ xs: 1 }}>
+                                <BadgeIcon />
+                                <Typography variant='subtitle1' mx={1}>
+                                    Account Name :
+                                </Typography>
+                                <Typography variant='subtitle1'>
+                                    {userData.account_holder_name}
+                                </Typography>
+                            </Stack>
+
+                            <Stack direction="row" mt={{ xs: 1 }}>
+                                <AccountBalanceWalletIcon />
+                                <Typography variant='subtitle1' mx={1}>
+                                    Account No :
+                                </Typography>
+                                <Typography variant='subtitle1'>
+                                    {userData.account_no}
+                                </Typography>
+                            </Stack>
+
                         </Stack>
+                        <Stack direction={{ sm: "row", xs: "column" }} mt={{ sm: 3, xs: 0 }} alignItems="center" justifyContent="space-around">
+                            <Stack direction="row" mt={{ xs: 1 }}>
+                                <VpnKeyIcon />
+                                <Typography variant='subtitle1' mx={1}>
+                                    IFSC Code  :
+                                </Typography>
+                                <Typography variant='subtitle1'>
+                                    {userData.ifsc_code}
+                                </Typography>
+                            </Stack>
 
-                        <Stack direction="row" mt={{ xs: 1 }}>
-                            <BusinessCenterIcon />
-                            <Typography variant='subtitle1' mx={1}>
-                                Designation :
-                            </Typography>
-                            <Typography variant='subtitle1'>
-                                Admin
-                            </Typography>
+                            <Stack direction="row" mt={{ xs: 1 }}>
+                                <AccountBalanceIcon />
+                                <Typography variant='subtitle1' mx={1}>
+                                    Bank Name :
+                                </Typography>
+                                <Typography variant='subtitle1'>
+                                    {userData.bank_name}
+                                </Typography>
+                            </Stack>
+
                         </Stack>
+                    </Box>
 
-                    </Stack>
-
-                    <Stack direction={{ sm: "row", xs: "column" }} mt={{ sm: 3, xs: 0 }} alignItems="center" justifyContent="space-around">
-                        <Stack direction="row" mt={{ xs: 1 }}>
-                            <EmailIcon />
-                            <Typography variant='subtitle1' mx={1}>
-                                Email Id :
-                            </Typography>
-                            <Typography variant='subtitle1'>
-                                dev@mailinator.com
-                            </Typography>
-                        </Stack>
-
-                        <Stack direction="row" mt={{ xs: 1 }}>
-                            <SmartphoneIcon />
-                            <Typography variant='subtitle1' mx={1}>
-                                Mobile :
-                            </Typography>
-                            <Typography variant='subtitle1'>
-                                7276070169
-                            </Typography>
-                        </Stack>
-
-                    </Stack>
-                </Box>
+                    : ""}
 
             </Box>
 
@@ -264,106 +315,7 @@ const MarkAttendance = () => {
                 <Button variant='contained'> MARK IN TIME ATTENDANCE </Button>
             </Box>
 
-            <Typography variant='subtitle1' align="center" mt={3}>View Attendance</Typography>
-
-
-
-            <Box mt={1}>
-                <Formik
-                    onSubmit={handleFormSubmit}
-                    initialValues={initialValues}
-                >
-                    {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
-                        <form onSubmit={handleSubmit}>
-
-                            <Stack direction="row" alignItems="center" justifyContent="center" p={1}>
-
-
-                                <TextField
-                                    size="small"
-                                    type="date"
-                                    name="date"
-                                    variant="outlined"
-                                    onBlur={handleBlur}
-                                    value={values.date}
-                                    onChange={handleChange}
-                                    helperText={touched.date && errors.date}
-                                    error={Boolean(errors.date && touched.date)}
-                                    sx={DateField}
-                                />
-                                <TextField
-                                    size="small"
-                                    type="date"
-                                    name="dates"
-                                    variant="outlined"
-                                    onBlur={handleBlur}
-                                    value={values.dates}
-                                    onChange={handleChange}
-                                    helperText={touched.dates && errors.dates}
-                                    error={Boolean(errors.dates && touched.dates)}
-                                    sx={DateField}
-                                />
-
-                                <Box >
-                                    <Button variant='contained' type='submit'> Go </Button>
-                                </Box>
-                            </Stack>
-                        </form>
-                    )}
-                </Formik>
-            </Box>
-
-            <Box sx={AttendanceTimeContainer}>
-
-                <Paper sx={ViewAttendanceBox}>
-                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <CalendarMonthIcon /> <Typography variant='subtitle2' ml={1}> Date :  2022-10-06 </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <LoginIcon /> <Typography variant='subtitle2' ml={1}> In Time : 10:12:13 </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <LogoutIcon /> <Typography variant='subtitle2' ml={1}> Out Time : 22:45:56 </Typography>
-                    </Box>
-                </Paper>
-
-                <Paper sx={ViewAttendanceBox}>
-                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <CalendarMonthIcon /> <Typography variant='subtitle2' ml={1}> Date :  2022-10-06 </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <LoginIcon /> <Typography variant='subtitle2' ml={1}> In Time : 10:12:13 </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <LogoutIcon /> <Typography variant='subtitle2' ml={1}> Out Time : 22:45:56 </Typography>
-                    </Box>
-                </Paper>
-
-                <Paper sx={ViewAttendanceBox}>
-                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <CalendarMonthIcon /> <Typography variant='subtitle2' ml={1}> Date :  2022-10-06 </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <LoginIcon /> <Typography variant='subtitle2' ml={1}> In Time : 10:12:13 </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <LogoutIcon /> <Typography variant='subtitle2' ml={1}> Out Time : 22:45:56 </Typography>
-                    </Box>
-                </Paper>
-
-                <Paper sx={ViewAttendanceBox}>
-                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <CalendarMonthIcon /> <Typography variant='subtitle2' ml={1}> Date :  2022-10-06 </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <LoginIcon /> <Typography variant='subtitle2' ml={1}> In Time : 10:12:13 </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                        <LogoutIcon /> <Typography variant='subtitle2' ml={1}> Out Time : 22:45:56 </Typography>
-                    </Box>
-                </Paper>
-
-            </Box>
+            <ViewAttendance />
 
         </Box >
     )
