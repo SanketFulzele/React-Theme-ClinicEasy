@@ -36,6 +36,9 @@ const Footer = () => {
 
   const footerTheme = settings.themes[settings.footer.theme] || theme;
 
+  const date = new Date();
+  let year = date.getFullYear();
+
   return (
     <ThemeProvider theme={footerTheme}>
       <AppBar color="primary" position="static" sx={{ zIndex: 96 }}>
@@ -45,7 +48,7 @@ const Footer = () => {
             <Paragraph sx={{ m: 0 }}>
               Design and Developed by
               <a target="_blank" rel="noreferrer" href={FooterUrl}> TrickySYS </a>
-              | All Rights Reserved &copy; 2022
+              | All Rights Reserved &copy; {year}
             </Paragraph>
           </FooterContent>
         </AppFooter>

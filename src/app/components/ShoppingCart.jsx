@@ -1,6 +1,6 @@
 import { Badge, Button, Drawer, Icon, IconButton, ThemeProvider } from '@mui/material';
 import { Box, styled, useTheme } from '@mui/system';
-import useAuth from 'app/hooks/useAuth';
+// import useAuth from 'app/hooks/useAuth';
 import useSettings from 'app/hooks/useSettings';
 import {
   deleteProductFromCart,
@@ -82,14 +82,15 @@ function ShoppingCart({ container }) {
   const [panelOpen, setPanelOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const { cartList } = useSelector((state) => state.ecommerce);
   const { settings } = useSettings();
   const theme = useTheme();
   const secondary = theme.palette.text.secondary;
 
   if (!cartListLoaded) {
-    dispatch(getCartList(user.id));
+    dispatch(getCartList());
+    // dispatch(getCartList(user.id));
     cartListLoaded = true;
   }
 
@@ -148,7 +149,8 @@ function ShoppingCart({ container }) {
                     <StyledIconButton
                       size="small"
                       onClick={() =>
-                        dispatch(updateCartAmount(user.id, product.id, product.amount + 1))
+                        dispatch(updateCartAmount(product.id, product.amount + 1))
+                        // dispatch(updateCartAmount(user.id, product.id, product.amount + 1))
                       }
                     >
                       <Icon sx={{ cursor: 'pinter' }}>keyboard_arrow_up</Icon>
@@ -157,7 +159,8 @@ function ShoppingCart({ container }) {
                       disabled={!(product.amount - 1)}
                       size="small"
                       onClick={() =>
-                        dispatch(updateCartAmount(user.id, product.id, product.amount - 1))
+                        dispatch(updateCartAmount(product.id, product.amount - 1))
+                        // dispatch(updateCartAmount(user.id, product.id, product.amount - 1))
                       }
                     >
                       <Icon id={!(product.amount - 1) && 'disable'}>keyboard_arrow_down</Icon>
@@ -174,7 +177,8 @@ function ShoppingCart({ container }) {
                   </ProductDetails>
                   <StyledIconButton
                     size="small"
-                    onClick={() => dispatch(deleteProductFromCart(user.userId, product.id))}
+                    onClick={() => dispatch(deleteProductFromCart(product.id))}
+                  // onClick={() => dispatch(deleteProductFromCart(user.userId, product.id))}
                   >
                     <Icon fontSize="small">clear</Icon>
                   </StyledIconButton>

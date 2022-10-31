@@ -1,4 +1,4 @@
-import AuthGuard from 'app/auth/AuthGuard';
+// import AuthGuard from 'app/auth/AuthGuard';
 import chartsRoute from 'app/views/charts/ChartsRoute';
 import dashboardRoutes from 'app/views/dashboard/DashboardRoutes';
 import materialRoutes from 'app/views/material-kit/MaterialRoutes';
@@ -10,9 +10,9 @@ import MatxLayout from './components/MatxLayout/MatxLayout';
 const routes = [
   {
     element: (
-      <AuthGuard>
-        <MatxLayout />
-      </AuthGuard>
+      // <AuthGuard>
+      <MatxLayout />
+      // </AuthGuard>
     ),
     children: [...dashboardRoutes, ...chartsRoute, ...materialRoutes],
   },

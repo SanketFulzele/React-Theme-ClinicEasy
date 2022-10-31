@@ -2,12 +2,13 @@ import { Avatar, Hidden, Icon, IconButton, MenuItem, useMediaQuery } from '@mui/
 import { Box, styled, useTheme } from '@mui/system';
 import { MatxMenu } from 'app/components';
 import { themeShadows } from 'app/components/MatxTheme/themeColors';
-import useAuth from 'app/hooks/useAuth';
+// import useAuth from 'app/hooks/useAuth';
 import useSettings from 'app/hooks/useSettings';
 import { topBarHeight } from 'app/utils/constant';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Span } from '../../../components/Typography';
+import { useNavigate } from 'react-router-dom';
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary,
@@ -71,7 +72,8 @@ const NavbarName = {
 const Layout1Topbar = () => {
   const theme = useTheme();
   const { settings, updateSettings } = useSettings();
-  const { logout, user } = useAuth();
+  // const { logout, user } = useAuth();
+  const navigate = useNavigate();
   const isMdScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const updateSidebarMode = (sidebarSettings) => {
@@ -90,6 +92,10 @@ const Layout1Topbar = () => {
     }
     updateSidebarMode({ mode });
   };
+
+  const Logout = () => {
+    navigate('/session/signin')
+  }
 
   return (
     <TopbarRoot>
@@ -115,7 +121,8 @@ const Layout1Topbar = () => {
                     <strong>Dr. Sanjiv </strong>
                   </Span>
                 </Hidden>
-                <Avatar src={user.avatar} sx={{ cursor: 'pointer' }} />
+                <Avatar src='' sx={{ cursor: 'pointer' }} />
+                {/* <Avatar src={user.avatar} sx={{ cursor: 'pointer' }} /> */}
               </UserMenu>
             }
           >
@@ -133,7 +140,8 @@ const Layout1Topbar = () => {
               </Link>
             </StyledItem>
 
-            <StyledItem onClick={logout}>
+            <StyledItem onClick={Logout}>
+              {/* <StyledItem onClick={logout}> */}
               <Icon> power_settings_new </Icon>
               <Span> Logout </Span>
             </StyledItem>

@@ -105,6 +105,7 @@ const ViewPatient = () => {
                     setPatientData(result.data)
                 })
             })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     console.log(patientData);

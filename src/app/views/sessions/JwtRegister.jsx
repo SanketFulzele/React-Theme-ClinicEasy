@@ -3,7 +3,7 @@ import { LoadingButton } from '@mui/lab';
 import { Card, Checkbox, Grid, TextField } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { Paragraph } from 'app/components/Typography';
-import useAuth from 'app/hooks/useAuth';
+// import useAuth from 'app/hooks/useAuth';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -50,7 +50,7 @@ const validationSchema = Yup.object().shape({
 
 const JwtRegister = () => {
   const theme = useTheme();
-  const { register } = useAuth();
+  // const { register } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -58,7 +58,7 @@ const JwtRegister = () => {
     setLoading(true);
 
     try {
-      register(values.email, values.username, values.password);
+      // register(values.email, values.username, values.password);
       navigate('/');
       setLoading(false);
     } catch (e) {

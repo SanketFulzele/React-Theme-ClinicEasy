@@ -57,6 +57,7 @@ const MarkAttendance = () => {
         border: 'none',
         outline: "none",
         boxShadow: 24,
+        borderRadius: "20px",
         p: 1,
     };
 
@@ -102,6 +103,7 @@ const MarkAttendance = () => {
 
     useLayoutEffect(() => {
         userInfo()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -175,7 +177,7 @@ const MarkAttendance = () => {
                     <Box sx={modalBox}>
 
                         <Box sx={FormContainer}>
-                            <Paper sx={FormElements} elevation="3">
+                            <Paper sx={FormElements} elevation="">
                                 <Typography variant='h6' align='center' mb={2} sx={{ color: "var(--blue-color)" }}>
                                     Bank Details
                                 </Typography>

@@ -21,7 +21,7 @@ const validationSchema = Yup.object().shape({
     number: Yup.string().phone('IN', true, "Phone Number is Invalid")
         .required("Phone Number is Required"),
     email: Yup.string().email('Invalid Email address').required('Email is required!'),
-    text: Yup.string().min(3).max(25).required("Designation is Required"),
+    text: Yup.string().min(3).max(55).required("Designation is Required"),
     address: Yup.string().min(3).max(40).required("Address is Required"),
 });
 
@@ -44,13 +44,6 @@ const CreateStaff = () => {
     const handleFormSubmit = (values) => {
         console.log(values);
     }
-
-
-
-
-
-
-
 
     return (
         <Box>
