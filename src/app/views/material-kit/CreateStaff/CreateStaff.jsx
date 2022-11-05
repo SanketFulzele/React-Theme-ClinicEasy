@@ -5,28 +5,32 @@ import React from 'react'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import "yup-phone";
+import { useNavigate } from 'react-router-dom';
 
 // inital login credentials
 const initialValues = {
     name: "",
     number: "",
     email: "",
-    text: "",
-    address: "",
+    designation: "",
 };
 
 // form field validation schema
 const validationSchema = Yup.object().shape({
-    name: Yup.string().min(2).max(25).required("User Name is Required"),
-    number: Yup.string().phone('IN', true, "Phone Number is Invalid")
-        .required("Phone Number is Required"),
-    email: Yup.string().email('Invalid Email address').required('Email is required!'),
-    text: Yup.string().min(3).max(55).required("Designation is Required"),
-    address: Yup.string().min(3).max(40).required("Address is Required"),
+    name: Yup.string().min(2).max(25).required("Staff Name is Required !"),
+    number: Yup.string().required("Mobile Number is Required").max(10, "Mobile Number is Too Long")
+        .phone('IN', true, "Phone Number is Invalid"),
+    email: Yup.string().email('Invalid Email address').required('Email is Required !'),
+    designation: Yup.string().min(3).max(30).required("Designation is Required !"),
 });
+
+const HospitalId = localStorage.getItem('HospitalId');
+const UserId = localStorage.getItem('UserId');
 
 
 const CreateStaff = () => {
+
+    const navigate = useNavigate();
 
     const FormContainer = {
         display: "flex",
@@ -40,9 +44,34 @@ const CreateStaff = () => {
         padding: "20px ",
     }
 
+    const URL = `https://cliniceasy.in/restAPI/index.php/Staffs/registration`;
 
     const handleFormSubmit = (values) => {
-        console.log(values);
+
+        const data = {
+            "hospital_id": HospitalId,
+            "user_id": UserId,
+            "name": values.name,
+            "mobile": values.number,
+            "email": values.email,
+            "role": values.designation,
+        }
+
+        fetch(URL, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(result => {
+            result.json().then(resp => {
+                console.warn(resp, "CREATE STAFF RESPONSE")
+            })
+        }).then(() => {
+            navigate('/my-staff')
+        })
+
     }
 
     return (
@@ -75,34 +104,6 @@ const CreateStaff = () => {
                                     error={Boolean(errors.name && touched.name)}
                                     sx={{ mb: 3 }}
                                 />
-                                <TextField
-                                    fullWidth
-                                    size="small"
-                                    type="email"
-                                    name="email"
-                                    label="Staff Email"
-                                    variant="outlined"
-                                    onBlur={handleBlur}
-                                    value={values.email}
-                                    onChange={handleChange}
-                                    helperText={touched.email && errors.email}
-                                    error={Boolean(errors.email && touched.email)}
-                                    sx={{ mb: 3 }}
-                                />
-                                <TextField
-                                    fullWidth
-                                    size="small"
-                                    type="address"
-                                    name="address"
-                                    label="Staff Address"
-                                    variant="outlined"
-                                    onBlur={handleBlur}
-                                    value={values.address}
-                                    onChange={handleChange}
-                                    helperText={touched.address && errors.address}
-                                    error={Boolean(errors.address && touched.address)}
-                                    sx={{ mb: 3 }}
-                                />
 
                                 <TextField
                                     fullWidth
@@ -119,22 +120,35 @@ const CreateStaff = () => {
                                     sx={{ mb: 3 }}
                                 />
 
+                                <TextField
+                                    fullWidth
+                                    size="small"
+                                    type="email"
+                                    name="email"
+                                    label="Staff Email"
+                                    variant="outlined"
+                                    onBlur={handleBlur}
+                                    value={values.email}
+                                    onChange={handleChange}
+                                    helperText={touched.email && errors.email}
+                                    error={Boolean(errors.email && touched.email)}
+                                    sx={{ mb: 3 }}
+                                />
 
                                 <TextField
                                     fullWidth
                                     size="small"
                                     type="text"
-                                    name="text"
+                                    name="designation"
                                     label="Designation"
                                     variant="outlined"
                                     onBlur={handleBlur}
-                                    value={values.text}
+                                    value={values.designation}
                                     onChange={handleChange}
-                                    helperText={touched.text && errors.text}
-                                    error={Boolean(errors.text && touched.text)}
+                                    helperText={touched.designation && errors.designation}
+                                    error={Boolean(errors.designation && touched.designation)}
                                     sx={{ mb: 3 }}
                                     autoComplete="off"
-                                // required
                                 />
 
                                 <Box className="Flex">

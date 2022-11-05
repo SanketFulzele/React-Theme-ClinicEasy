@@ -1,32 +1,35 @@
-import { Button, MenuItem, Paper, TextField, Typography } from '@mui/material'
+import { Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import "yup-phone";
-import { useState } from 'react';
 import HeadingComp from 'app/views/CommonComp/HeadingComp';
+import { useNavigate } from 'react-router-dom';
 
 // inital login credentials
 const initialValues = {
-    number: "",
-    name: "",
+    name: localStorage.getItem('patientName'),
+    number: localStorage.getItem('BookAppointmentNumber'),
+    date: localStorage.getItem('patientDate'),
+    time: "",
+    shift: "",
+    desc: "",
 };
 
 // form field validation schema
 const validationSchema = Yup.object().shape({
     name: Yup.string().min(2).max(25).required("User Name is Required"),
-    number: Yup.string().phone('IN', true, "Phone Number is Invalid")
-        .required("Phone Number is Required"),
-    text: Yup.string().min(3).required("Description is Required"),
+    number: Yup.string().required("Mobile Number is Required").max(10, "Mobile Number is Too Long")
+        .phone('IN', true, "Phone Number is Invalid"),
+    date: Yup.string().required("Date is Required"),
+    time: Yup.string().required("Time is Required"),
+    shift: Yup.string().required("Shift Time is Required"),
+    desc: Yup.string().min(3).required("Description is Required"),
 });
 
-const ShiftTime = [
-    {
-        value: '10Am to 8Pm',
-        label: '10am - 8pm',
-    },
-];
+const HospitalId = localStorage.getItem('HospitalId');
+const UserId = localStorage.getItem('UserId');
 
 const BookNewAppointment = () => {
 
@@ -41,11 +44,43 @@ const BookNewAppointment = () => {
         color: "var(--blue-color)",
     }
 
-    const [currency, setCurrency] = useState('10Am to 8Pm');
+    const navigate = useNavigate();
+
+    const url = `https://cliniceasy.in/restAPI/index.php/Home/saveAppointment`;
+
 
     const handleFormSubmit = (values) => {
+        const patientId = localStorage.getItem('patientId')
         console.log(values);
-        setCurrency(values.shift);
+
+        const data = {
+            "hospital_id": HospitalId,
+            "user_id": UserId,
+            "patient_id": patientId,
+            "booking_date": values.date,
+            "booking_time": values.time,
+            "shift_id": values.shift,
+            "description": values.desc,
+        }
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(result => {
+            result.json().then(resp => {
+                localStorage.setItem('BookAppointmentNumber', '')
+                localStorage.setItem('patientName', '')
+                localStorage.setItem('patientDate', '')
+                localStorage.setItem('patientId', '')
+                console.warn(resp)
+                alert(resp.message);
+                navigate('/')
+            })
+        })
     }
 
     return (
@@ -72,7 +107,7 @@ const BookNewAppointment = () => {
                                     size="small"
                                     type="name"
                                     name="name"
-                                    label="Name"
+                                    label="User Name"
                                     variant="outlined"
                                     onBlur={handleBlur}
                                     value={values.name}
@@ -123,39 +158,36 @@ const BookNewAppointment = () => {
                                     error={Boolean(errors.time && touched.time)}
                                     sx={{ mb: 3 }}
                                 />
-                                <TextField
-                                    fullWidth
-                                    size='small'
-                                    name="shift"
-                                    variant='outlined'
-                                    select
-                                    label="Shift"
-                                    value={currency}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    sx={{ mb: 3 }}
-                                >
-                                    {ShiftTime.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+
+                                <FormControl fullWidth sx={{ mb: 3 }} size="small">
+                                    <InputLabel id="shiftSelect">Shift</InputLabel>
+                                    <Select
+                                        labelId="shiftSelect"
+                                        value={values.shift}
+                                        name="shift"
+                                        label="Shift"
+                                        onChange={handleChange}
+                                        error={Boolean(errors.shift && touched.shift)}
+                                    >
+                                        <MenuItem value={"10 AM - 8 PM"}>10AM - 8PM</MenuItem>
+                                    </Select>
+                                </FormControl>
+
 
                                 <TextField
                                     fullWidth
                                     size="small"
                                     type="text"
-                                    name="text"
+                                    name="desc"
                                     label="Description"
                                     variant="outlined"
                                     onBlur={handleBlur}
-                                    value={values.text}
+                                    value={values.desc}
                                     onChange={handleChange}
-                                    helperText={touched.text && errors.text}
-                                    error={Boolean(errors.text && touched.text)}
+                                    helperText={touched.desc && errors.desc}
+                                    error={Boolean(errors.desc && touched.desc)}
                                     sx={{ mb: 3 }}
-                                    rows={5}
+                                    rows={3}
                                     multiline
                                 />
                                 <Box className="Flex">

@@ -6,10 +6,12 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import PortraitIcon from '@mui/icons-material/Portrait';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
-import PaidIcon from '@mui/icons-material/Paid';
 import "./viewPatient.css";
 import { useEffect } from 'react';
 import { useState } from 'react';
+
+const HospitalId = localStorage.getItem('HospitalId');
+const UserId = localStorage.getItem('UserId');
 
 const ViewPatient = () => {
     const [patientData, setPatientData] = useState([])
@@ -72,7 +74,12 @@ const ViewPatient = () => {
         alignItems: "start",
         flexDirection: "column",
         justifyContent: "center",
-        margin: "10px"
+        margin: "10px",
+        cursor: "pointer",
+        transition: "all ease 0.3s",
+        "&:hover": {
+            transform: "scale(1.03)",
+        },
     }
 
     const BacktoHome = () => {
@@ -83,11 +90,11 @@ const ViewPatient = () => {
         navigate("/add-patient")
     }
 
-    const url = `https://trickysys.com/demo/selfplay/androidApi/Master/bookingHistory`;
+    const url = `https://cliniceasy.in/restAPI/index.php/Home/getPatients`;
 
     const data = {
-        "user_id": "3",
-        "game_id": "3"
+        "hospital_id": HospitalId,
+        "user_id": UserId,
     }
 
     const options = {
@@ -102,13 +109,11 @@ const ViewPatient = () => {
         fetch(url, options)
             .then(res => {
                 res.json().then((result) => {
-                    setPatientData(result.data)
+                    setPatientData(result.patients)
                 })
             })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    console.log(patientData);
 
     return (
         <Box>
@@ -135,39 +140,23 @@ const ViewPatient = () => {
                     return (
                         <Paper sx={AppointHistoryInfo} key={data.id}>
                             <Stack direction="row" alignItems="center" mb={1}>
-                                <PortraitIcon /> <Typography variant='subtitle1' ml={1}> UID : {data.uid}
+                                <PortraitIcon /> <Typography variant='subtitle1' ml={1}> Patient Name : {data.name}
                                 </Typography>
                             </Stack>
                             <Stack direction="row" alignItems="center" mb={1}>
-                                <PaidIcon /> <Typography variant='subtitle1' ml={1}> Bet Amount : {data.amount}
+                                <SmartphoneIcon /> <Typography variant='subtitle1' ml={1}> Mobile Number : {data.mobile}
                                 </Typography>
                             </Stack>
                             <Stack direction="row" alignItems="center">
-                                <CalendarMonthIcon /> <Typography variant='subtitle1' ml={1}> Added Date : {data.date}
+                                <CalendarMonthIcon /> <Typography variant='subtitle1' ml={1}> Added Date : {data.created}
                                 </Typography>
                             </Stack>
                         </Paper>
                     )
-                })}
-
-                <Paper sx={AppointHistoryInfo}>
-                    <Stack direction="row" alignItems="center" mb={1}>
-                        <PortraitIcon /> <Typography variant='subtitle1' ml={1}> Patient Name : Rohit
-                        </Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center" mb={1}>
-
-                        <SmartphoneIcon /> <Typography variant='subtitle1' ml={1}> Mobile Number : 8329132745
-                        </Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center">
-                        <CalendarMonthIcon /> <Typography variant='subtitle1' ml={1}> Added Date : 2022-10-07 14:43:07
-                        </Typography>
-                    </Stack>
-                </Paper>
+                })
+                }
 
             </Box>
-
 
         </Box>
     )

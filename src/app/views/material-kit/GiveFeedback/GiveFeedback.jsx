@@ -13,9 +13,12 @@ const initialValues = {
 
 // form field validation schema
 const validationSchema = Yup.object().shape({
-    subject: Yup.string().min(2).required("Subject is Required"),
-    feedback: Yup.string().min(8).required("Feedback is Required"),
+    subject: Yup.string().min(2).required("Subject is Required !"),
+    feedback: Yup.string().min(8).required("Feedback is Required !"),
 });
+
+const HospitalId = localStorage.getItem('HospitalId');
+const UserId = localStorage.getItem('UserId');
 
 
 const GiveFeedback = () => {
@@ -48,6 +51,8 @@ const GiveFeedback = () => {
         const URL = 'https://trickysys.com/demo/selfplay/androidApi/Master/feedback';
 
         const DATA = {
+            // "hospital_id": HospitalId,
+            // "user_id": UserId,
             "user_id": "3",
             "subject": subject,
             "feedback": feedback,

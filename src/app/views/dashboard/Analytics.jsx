@@ -1,10 +1,14 @@
 import { Box, Stack, Typography, Paper } from '@mui/material';
+import { useState, useLayoutEffect } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useNavigate } from 'react-router-dom';
 import "./analytics.css";
 
+const HospitalId = localStorage.getItem('HospitalId');
+const UserId = localStorage.getItem('UserId');
 
 function Item(props) {
+
   const CarouselItem = {
     width: "100%",
     height: { md: "40vh", sm: "30vh", sx: "20vh" },
@@ -23,7 +27,10 @@ function Item(props) {
   )
 }
 
+
 const Analytics = () => {
+  const [TodaysAppointment, setTodaysAppointment] = useState(0)
+
   let items = [
     {
       image: "/assets/images/DashboardImg/carousel2.jpg"
@@ -45,6 +52,7 @@ const Analytics = () => {
     paddingX: { sm: "50px", xs: "10px" },
     paddingY: "10px",
     cursor: "pointer",
+    background: "linear-gradient(129deg, rgba(68,162,200,1) 0%, rgba(18,133,231,0.9504603965609681) 27%, rgba(67,36,210,1) 100%)",
   }
 
   const SVGBox = {
@@ -56,12 +64,11 @@ const Analytics = () => {
     justifyContent: "center",
   }
 
-
   const DashboardBoxs = {
     color: "white",
-    background: "#0080ff",
+    // background: "#0080ff",
+    background: "linear-gradient(129deg, rgba(68,184,200,1) 0%, rgba(18,71,213,1) 100%)",
     borderRadius: "14px",
-    // padding: "15px",
     padding: { sm: "15px", xs: "5px" },
     cursor: "pointer",
     width: "100%",
@@ -77,6 +84,34 @@ const Analytics = () => {
     textAlign: "center"
   }
 
+
+
+  const Url = `https://cliniceasy.in/restAPI/index.php/Home/home`;
+
+  const data = {
+    "hospital_id": HospitalId,
+    "user_id": UserId,
+  }
+
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'text/plain',
+    },
+    body: JSON.stringify(data),
+  }
+
+  useLayoutEffect(() => {
+    fetch(Url, options)
+      .then(res => {
+        res.json().then((result) => {
+          if (result.success !== 0) {
+            setTodaysAppointment(result.appointments.length)
+          }
+        })
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const navigate = useNavigate();
 
@@ -107,13 +142,13 @@ const Analytics = () => {
         </Carousel>
       </Box>
 
-      <Paper sx={AppointmentBox} onClick={NavTdAppointment}>
-        <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Paper sx={AppointmentBox} onClick={NavTdAppointment} >
+        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ backgroundColor: "transparent" }}>
 
           <Stack justifyContent="center" alignItems="center">
 
             <Typography variant="h5" sx={{ fontWeight: "800", fontSize: { sm: "40px", xs: "30px" } }} >
-              0
+              {TodaysAppointment}
             </Typography>
             <Typography variant="h5" sx={{ fontSize: { sm: "25px", xs: "17px" } }} mt={1}>
               Today's Appointment

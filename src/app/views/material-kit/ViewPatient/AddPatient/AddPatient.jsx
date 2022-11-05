@@ -5,25 +5,37 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 import "yup-phone";
 import HeadingComp from 'app/views/CommonComp/HeadingComp';
+import { useNavigate } from 'react-router-dom';
 
 // inital login credentials
 const initialValues = {
     name: "",
-    number: "",
+    number: localStorage.getItem('BookAppointmentNumber'),
     email: "",
+    address: "",
+    date: "",
+    gender: "",
 };
 
 // form field validation schema
 const validationSchema = Yup.object().shape({
     name: Yup.string().min(2).max(25).required("User Name is Required"),
-    number: Yup.string().phone('IN', true, "Phone Number is Invalid")
-        .required("Phone Number is Required"),
+    number: Yup.string().required("Mobile Number is Required").max(10, "Mobile Number is Too Long")
+        .phone('IN', true, "Phone Number is Invalid"),
     email: Yup.string().email('Invalid Email address').required('Email is required!'),
-    text: Yup.string().min(2).required("Address is Required"),
+    address: Yup.string().min(5).required("Address is Required"),
+    date: Yup.string().required("Date is Required"),
+    gender: Yup.string().required("Gender is Required"),
 });
 
+const HospitalId = localStorage.getItem('HospitalId');
+const UserId = localStorage.getItem('UserId');
 
 const AddPatient = () => {
+
+
+    const navigate = useNavigate();
+
     const BookAppointmentHeading = {
         padding: "15px",
         textAlign: "center",
@@ -35,9 +47,38 @@ const AddPatient = () => {
         padding: "15px",
     }
 
+    const Url = `https://cliniceasy.in/restAPI/index.php/Home/savePatient`;
 
     const handleFormSubmit = (values) => {
-        console.log(values);
+        localStorage.setItem('patientName', values.name);
+        localStorage.setItem('patientDate', values.date);
+        localStorage.setItem('BookAppointmentNumber', values.number);
+
+        const Data = {
+            "hospital_id": HospitalId,
+            "user_id": UserId,
+            "mobile": values.number,
+            "name": values.name,
+            "email": values.email,
+            "address": values.address,
+            "gender": values.gender,
+            "dob": values.date,
+        }
+
+        fetch(Url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Data)
+        }).then(result => {
+            result.json().then(resp => {
+                localStorage.setItem('patientId', resp.data.patient_id)
+            })
+        }).then(() => {
+            navigate('/book-new-appointment')
+        })
     }
 
 
@@ -61,7 +102,7 @@ const AddPatient = () => {
 
                                 <TextField
                                     fullWidth
-                                    // size="small"
+                                    size="small"
                                     type="name"
                                     name="name"
                                     label="Name"
@@ -75,7 +116,7 @@ const AddPatient = () => {
                                 />
                                 <TextField
                                     fullWidth
-                                    // size="small"
+                                    size="small"
                                     type="number"
                                     name="number"
                                     label="Mobile Number"
@@ -89,7 +130,7 @@ const AddPatient = () => {
                                 />
                                 <TextField
                                     fullWidth
-                                    // size="small"
+                                    size="small"
                                     type="email"
                                     name="email"
                                     label="Email Id"
@@ -104,27 +145,24 @@ const AddPatient = () => {
 
                                 <TextField
                                     fullWidth
-                                    // size="small"
+                                    size="small"
                                     type="text"
-                                    name="text"
+                                    name="address"
                                     label="Address"
                                     variant="outlined"
                                     onBlur={handleBlur}
-                                    value={values.text}
+                                    value={values.address}
                                     onChange={handleChange}
-                                    helperText={touched.text && errors.text}
-                                    error={Boolean(errors.text && touched.text)}
+                                    helperText={touched.address && errors.address}
+                                    error={Boolean(errors.address && touched.address)}
                                     sx={{ mb: 3 }}
-                                    rows={2}
-                                    multiline
                                 />
 
                                 <TextField
                                     fullWidth
-                                    // size="small"
+                                    size="small"
                                     type="date"
                                     name="date"
-                                    label=""
                                     variant="outlined"
                                     onBlur={handleBlur}
                                     value={values.date}
@@ -134,15 +172,15 @@ const AddPatient = () => {
                                     sx={{ mb: 3 }}
                                 />
 
-                                <FormControl fullWidth sx={{ mb: 3 }}>
+                                <FormControl fullWidth sx={{ mb: 3 }} size="small">
                                     <InputLabel id="genderSelect">Gender</InputLabel>
                                     <Select
                                         labelId="genderSelect"
-                                        value={values.age}
+                                        value={values.gender}
                                         name="gender"
-                                        size=""
                                         label="Gender"
                                         onChange={handleChange}
+                                        error={Boolean(errors.gender && touched.gender)}
                                     >
                                         <MenuItem value={"male"}>Male</MenuItem>
                                         <MenuItem value={"female"}>Female</MenuItem>

@@ -13,6 +13,9 @@ const initialValues = {
     dates: "",
 };
 
+const HospitalId = localStorage.getItem('HospitalId');
+const UserId = localStorage.getItem('UserId');
+
 const ViewAttendance = () => {
 
     const [viewDate, setViewDate] = useState([]);
@@ -41,13 +44,14 @@ const ViewAttendance = () => {
     const handleFormSubmit = (values) => {
         console.log(values);
 
-        const url = 'https://trickysys.com/demo/selfplay/androidApi/Master/bookingHistory'
+        const url = `https://cliniceasy.in/restAPI/index.php/Staffs/getAttendance`;
 
         const data = {
-            "user_id": "3",
-            "game_id": "3",
-            "start_date": values.date,
-            "end_date": values.dates,
+            "hospital_id": HospitalId,
+            "user_id": UserId,
+            "staff_id": "1",
+            "from_date": values.date,
+            "to_date": values.dates
         }
         const options = {
             method: 'POST',
@@ -62,7 +66,7 @@ const ViewAttendance = () => {
             .then(res => {
                 res.json().then((result) => {
                     setViewDate(result.data)
-                    console.log(result.data)
+                    // console.log(result.data)
                 })
             })
     }
@@ -122,13 +126,13 @@ const ViewAttendance = () => {
                     return (
                         <Paper sx={ViewAttendanceBox} key={data.id}>
                             <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                                <CalendarMonthIcon /> <Typography variant='subtitle2' ml={1}> Date : {data.date} </Typography>
+                                <CalendarMonthIcon /> <Typography variant='subtitle2' ml={1}> Date : {data.attendance_date} </Typography>
                             </Box>
                             <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                                <LoginIcon /> <Typography variant='subtitle2' ml={1}> Amount : {data.amount} </Typography>
+                                <LoginIcon /> <Typography variant='subtitle2' ml={1}> In Time : {data.in_time} </Typography>
                             </Box>
                             <Box sx={{ display: "flex" }} mt={{ sm: 0, xs: 1 }}>
-                                <LogoutIcon /> <Typography variant='subtitle2' ml={1}> Game : {data.game_name} </Typography>
+                                <LogoutIcon /> <Typography variant='subtitle2' ml={1}> Out Time : {data.out_time} </Typography>
                             </Box>
                         </Paper>
                     )

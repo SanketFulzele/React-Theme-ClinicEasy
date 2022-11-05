@@ -1,8 +1,6 @@
 import Loadable from 'app/components/Loadable';
 import { lazy } from 'react';
 
-const AppTable = Loadable(lazy(() => import('./tables/AppTable')));
-const AppForm = Loadable(lazy(() => import('./forms/AppForm')));
 const BookAppointment = Loadable(lazy(() => import("./BookAppointment/BookAppointment")));
 const MarkAttendance = Loadable(lazy(() => import("./MarkAttendance/MarkAttendance")));
 const AppointmentHistory = Loadable(lazy(() => import("./AppointmentHistory/AppointmentHistory")));
@@ -22,14 +20,6 @@ const AddPatient = Loadable(lazy(() => import("./ViewPatient/AddPatient/AddPatie
 const ProfilePage = Loadable(lazy(() => import("./ProfilePage/ProfilePage")));
 
 const materialRoutes = [
-  {
-    path: '/table',
-    element: <AppTable />,
-  },
-  {
-    path: '/material/form',
-    element: <AppForm />,
-  },
   {
     path: '/book-appointment',
     element: <BookAppointment />,

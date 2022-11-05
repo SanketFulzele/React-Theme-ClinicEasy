@@ -15,10 +15,12 @@ const initialValues = {
 
 // form field validation schema
 const validationSchema = Yup.object().shape({
-    number: Yup.string().phone('IN', true, "Phone Number is Invalid")
-        .required("Phone Number is Required"),
+    number: Yup.string().required("Mobile Number is Required").max(10, "Mobile Number is Too Long")
+        .phone('IN', true, "Phone Number is Invalid"),
 });
 
+const HospitalId = localStorage.getItem('HospitalId');
+const UserId = localStorage.getItem('UserId');
 
 const BookAppointment = () => {
 
@@ -46,20 +48,48 @@ const BookAppointment = () => {
     }
 
     let navigate = useNavigate();
-    //9689455261
-    //8381002109 new number chaudhary hospital =>  add patient
-    // already booked appointment => book new appointment
-    const handleFormSubmit = (values) => {
-        console.log(values.number);
-        console.log(values);
-        console.log("button submitted")
 
-        if (values.number === 8381001406) {
-            navigate("/book-new-appointment")
-        } else {
-            navigate("/add-patient")
+    const Url = `https://cliniceasy.in/restAPI/index.php/Home/getPatients`;
+
+    const handleFormSubmit = (values) => {
+
+        const Data = {
+            "hospital_id": HospitalId,
+            "user_id": UserId,
+            "search": values.number,
         }
 
+        fetch(Url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Data)
+        }).then(result => {
+            result.json().then(resp => {
+                console.warn(resp)
+
+                const Storage = () => {
+                    return resp.patients.map((value) => {
+                        return (
+                            localStorage.setItem('patientId', value.id),
+                            localStorage.setItem('patientName', value.name)
+                        )
+                    })
+                }
+
+                localStorage.setItem('BookAppointmentNumber', values.number);
+
+                if (resp.success === 1) {
+                    Storage();
+                    navigate("/book-new-appointment")
+                } else {
+                    navigate("/add-patient")
+                }
+
+            })
+        })
 
     }
     return (
