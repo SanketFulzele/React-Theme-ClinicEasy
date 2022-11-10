@@ -16,10 +16,11 @@ const initialValues = {
 const HospitalId = localStorage.getItem('HospitalId');
 const UserId = localStorage.getItem('UserId');
 
-const ViewAttendance = () => {
-
+const StaffAttendanceComp = () => {
     const [viewDate, setViewDate] = useState([]);
     const [error, setError] = useState();
+
+    const StaffId = localStorage.getItem("StaffId")
 
     const AttendanceTimeContainers = {
         marginY: "15px",
@@ -50,7 +51,7 @@ const ViewAttendance = () => {
         const data = {
             "hospital_id": HospitalId,
             "user_id": UserId,
-            "staff_id": "1",
+            "staff_id": StaffId,
             "from_date": values.date,
             "to_date": values.dates
         }
@@ -72,7 +73,6 @@ const ViewAttendance = () => {
                         setViewDate(result.data)
                         setError()
                     }
-                    // console.log(result.data)
                 })
             })
     }
@@ -159,6 +159,4 @@ const ViewAttendance = () => {
     )
 }
 
-export default ViewAttendance
-
-
+export default StaffAttendanceComp

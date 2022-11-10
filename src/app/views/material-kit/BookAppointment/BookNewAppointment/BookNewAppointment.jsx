@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const initialValues = {
     name: localStorage.getItem('patientName'),
     number: localStorage.getItem('BookAppointmentNumber'),
-    date: localStorage.getItem('patientDate'),
+    date: "",
     time: "",
     shift: "",
     desc: "",

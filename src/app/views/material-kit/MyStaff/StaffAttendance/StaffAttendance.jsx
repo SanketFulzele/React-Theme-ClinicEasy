@@ -1,7 +1,6 @@
+import HeadingComp from 'app/views/CommonComp/HeadingComp'
 import { Box, Button, Stack, TextField, Typography } from '@mui/material'
 import React from 'react'
-import "./markAttendance.css";
-import HeadingComp from 'app/views/CommonComp/HeadingComp';
 import EditIcon from '@mui/icons-material/Edit';
 import BadgeIcon from '@mui/icons-material/Badge';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
@@ -12,27 +11,29 @@ import { useState } from 'react';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import "yup-phone";
-import ViewAttendance from './ViewAttendance/ViewAttendance';
+import StaffAttendanceComp from './StaffAttendanceComp/StaffAttendanceComp';
 
 // form field validation schema
 const validationSchemaModal = Yup.object().shape({
     name: Yup.string().min(2).max(25).required("User Name is Required !"),
-    number: Yup.string().phone('IN', true, "Phone Number is Required !")
-        .required("Phone Number is Required !"),
+    number: Yup.string().required("Mobile Number is Required").max(10, "Mobile Number is Too Long")
+        .phone('IN', true, "Phone Number is Invalid"),
     email: Yup.string().email('Invalid Email address').required('Email is Required !'),
 });
 
 const HospitalId = localStorage.getItem('HospitalId');
 const UserId = localStorage.getItem('UserId');
-const UserRole = localStorage.getItem("UserRole")
 
-const MarkAttendance = () => {
 
-    const [UserName, setUserName] = useState(localStorage.getItem('UserName'));
-    const [UserEmail, setUserEmail] = useState(localStorage.getItem('UserEmail'));
-    const [UserMobile, setUserMobile] = useState(localStorage.getItem('UserMobile'));
+const StaffAttendance = () => {
 
-    const [btnText, setBtnText] = useState('MARK IN TIME ATTENDANCE');
+    const [staffName, setStaffName] = useState(localStorage.getItem("StaffName"));
+    const [staffEmail, setStaffEmail] = useState(localStorage.getItem("StaffEmail"));
+    const [staffMobile, setStaffMobile] = useState(localStorage.getItem("StaffMobile"));
+
+    const StaffId = localStorage.getItem("StaffId")
+    const StaffStatus = localStorage.getItem("StaffStatus")
+    const StaffRole = localStorage.getItem("StaffRole")
 
     const AttendanceBox = {
         borderBottom: "1px solid #000",
@@ -70,50 +71,12 @@ const MarkAttendance = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "20px"
+        padding: "10px"
     }
 
     const FormElements = {
         padding: "20px ",
     }
-
-    //----------- MARK IN TIME ATTENDANCE CODE START'S HERE -------
-    const URL = `https://cliniceasy.in/restAPI/index.php/Staffs/markAttendance`;
-
-    const DATA = {
-        "hospital_id": HospitalId,
-        "user_id": UserId,
-    }
-    const OPTIONS = {
-        method: 'POST',
-        headers: {
-            'Content-Type': "text/plain",
-        },
-        body: JSON.stringify(DATA)
-    }
-    const handleTimeAttendance = () => {
-        fetch(URL, OPTIONS)
-            .then(res => {
-                res.json().then((result) => {
-                    console.warn(result);
-                    if (result.message === "Attendance mark successfully") {
-                        setBtnText('MARK OUT TIME ATTENDANCE')
-                    } else {
-                        setBtnText('MARK OUT TIME ATTENDANCE')
-                    }
-                    alert(result.message);
-                })
-            })
-    }
-
-    // useLayoutEffect(() => {
-    //     handleTimeAttendance();
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [])
-    //---------- MARK IN TIME ATTENDANCE CODE END'S HERE --------
-
-
-
 
     // UPDATE MODAL CODE START'S HERE
 
@@ -123,12 +86,12 @@ const MarkAttendance = () => {
 
     // inital login credentials
     const initialValuesModal = {
-        name: UserName,
-        number: UserMobile,
-        email: UserEmail,
+        name: staffName,
+        number: staffMobile,
+        email: staffEmail,
     };
 
-    const Url = `https://cliniceasy.in/restAPI/index.php/Profile/updateProfile`;
+    const Url = `https://cliniceasy.in/restAPI/index.php/Staffs/updateStaff`;
 
     const handleFormSubmitModal = (values) => {
 
@@ -137,8 +100,10 @@ const MarkAttendance = () => {
         const Data = {
             "hospital_id": HospitalId,
             "user_id": UserId,
+            "id": StaffId,
             "name": name,
             "email": email,
+            "status": StaffStatus,
             "mobile": number
         }
 
@@ -153,12 +118,12 @@ const MarkAttendance = () => {
         fetch(Url, Options)
             .then(res => {
                 res.json().then((result) => {
-                    localStorage.setItem('UserName', result.name)
-                    localStorage.setItem('UserEmail', result.email)
-                    localStorage.setItem('UserMobile', result.mobile)
-                    setUserEmail(result.email)
-                    setUserMobile(result.mobile)
-                    setUserName(result.name)
+                    localStorage.setItem("StaffName", result.name)
+                    localStorage.setItem("StaffEmail", result.email)
+                    localStorage.setItem("StaffMobile", result.mobile)
+                    setStaffName(result.name)
+                    setStaffMobile(result.mobile)
+                    setStaffEmail(result.email)
                 })
             })
 
@@ -166,11 +131,9 @@ const MarkAttendance = () => {
     }
     // UPDATE MODAL CODE END'S HERE
 
-
     return (
         <Box>
-
-            <HeadingComp heading="Mark Attendance" navigate="/" />
+            <HeadingComp heading="Staff Attendance" navigate="/my-staff" />
 
             <Box sx={AttendanceBox}>
                 <img src="/assets/MySVG/maleAva.svg" style={{ width: "100px" }} alt="Avatar-Img" />
@@ -204,7 +167,7 @@ const MarkAttendance = () => {
                                                 size="small"
                                                 type="name"
                                                 name="name"
-                                                label="User Name"
+                                                label="Staff Name"
                                                 variant="outlined"
                                                 onBlur={handleBlur}
                                                 value={values.name}
@@ -219,7 +182,7 @@ const MarkAttendance = () => {
                                                 size="small"
                                                 type="number"
                                                 name="number"
-                                                label="Mobile Number"
+                                                label="Staff Number"
                                                 variant="outlined"
                                                 onBlur={handleBlur}
                                                 value={values.number}
@@ -233,7 +196,7 @@ const MarkAttendance = () => {
                                                 size="small"
                                                 type="email"
                                                 name="email"
-                                                label="Email"
+                                                label="Staff Email"
                                                 variant="outlined"
                                                 onBlur={handleBlur}
                                                 value={values.email}
@@ -265,10 +228,10 @@ const MarkAttendance = () => {
                             <Stack direction="row" mt={{ xs: 1 }}>
                                 <BadgeIcon />
                                 <Typography variant='subtitle1' mx={1}>
-                                    User Name :
+                                    Staff Name :
                                 </Typography>
                                 <Typography variant='subtitle1'>
-                                    {UserName}
+                                    {staffName}
                                 </Typography>
                             </Stack>
 
@@ -278,7 +241,7 @@ const MarkAttendance = () => {
                                     Mobile Number :
                                 </Typography>
                                 <Typography variant='subtitle1'>
-                                    {UserMobile}
+                                    {staffMobile}
                                 </Typography>
                             </Stack>
 
@@ -290,17 +253,17 @@ const MarkAttendance = () => {
                                     Email Id :
                                 </Typography>
                                 <Typography variant='subtitle1'>
-                                    {UserEmail}
+                                    {staffEmail}
                                 </Typography>
                             </Stack>
 
-                            <Stack direction="row" mt={{ xs: 1 }}>
+                            <Stack direction="row" mt={{ xs: 1, }}>
                                 <WorkIcon />
                                 <Typography variant='subtitle1' mx={1}>
                                     Designation :
                                 </Typography>
                                 <Typography variant='subtitle1'>
-                                    {UserRole}
+                                    {StaffRole}
                                 </Typography>
                             </Stack>
 
@@ -311,14 +274,10 @@ const MarkAttendance = () => {
 
             </Box>
 
-            <Box className='Flex' mt={3}>
-                <Button variant='contained' onClick={handleTimeAttendance} > {btnText} </Button>
-            </Box>
-
-            <ViewAttendance />
+            <StaffAttendanceComp />
 
         </Box>
     )
 }
 
-export default MarkAttendance
+export default StaffAttendance

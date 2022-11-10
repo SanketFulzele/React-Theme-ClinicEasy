@@ -6,6 +6,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const HospitalId = localStorage.getItem('HospitalId');
 const UserId = localStorage.getItem('UserId');
@@ -13,6 +14,8 @@ const UserId = localStorage.getItem('UserId');
 const MyStaff = () => {
 
     const [myStaff, setMyStaff] = useState([]);
+
+    const navigate = useNavigate();
 
     const InfoContainer = {
         display: "flex",
@@ -63,6 +66,16 @@ const MyStaff = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const SendStaffData = (data) => {
+        localStorage.setItem("StaffId", data.id)
+        localStorage.setItem("StaffName", data.name)
+        localStorage.setItem("StaffEmail", data.email)
+        localStorage.setItem("StaffStatus", data.status)
+        localStorage.setItem("StaffMobile", data.mobile)
+        localStorage.setItem("StaffRole", data.role)
+        navigate('/staff-attendance')
+    }
+
     return (
         <Box>
             <HeadingComp heading="My Staff" navigate="/" />
@@ -72,7 +85,12 @@ const MyStaff = () => {
 
                 {myStaff.map((data) => {
                     return (
-                        <Paper sx={InfoBox} elevation={3} key={data.id} onClick={() => console.warn(data.id)}>
+                        <Paper sx={InfoBox} elevation={3} key={data.id} onClick={() => {
+                            return (
+                                SendStaffData(data)
+                            )
+                        }} >
+
                             <Stack direction="row" alignItems="center" mb={1}>
                                 <PortraitIcon /> <Typography variant='subtitle1' ml={1}> Name : {data.name}
                                 </Typography>

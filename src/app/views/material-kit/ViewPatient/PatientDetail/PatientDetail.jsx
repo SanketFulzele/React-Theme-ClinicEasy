@@ -16,8 +16,8 @@ import PatientHistoryComp from './PatientHistoryComp';
 // form field validation schema
 const validationSchemaModal = Yup.object().shape({
     name: Yup.string().min(2).max(25).required("User Name is Required !"),
-    number: Yup.string().phone('IN', true, "Phone Number is Required !")
-        .required("Phone Number is Required !"),
+    number: Yup.string().required("Mobile Number is Required").max(10, "Mobile Number is Too Long")
+        .phone('IN', true, "Phone Number is Invalid"),
     email: Yup.string().email('Invalid Email address').required('Email is Required !'),
     address: Yup.string().min(5).required("Address is Required"),
     date: Yup.string().required("Date is Required"),

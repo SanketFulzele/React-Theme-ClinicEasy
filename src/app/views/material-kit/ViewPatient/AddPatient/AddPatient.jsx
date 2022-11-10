@@ -50,7 +50,6 @@ const AddPatient = () => {
 
     const handleFormSubmit = (values) => {
         localStorage.setItem('patientName', values.name);
-        localStorage.setItem('patientDate', values.date);
         localStorage.setItem('BookAppointmentNumber', values.number);
 
         const Data = {

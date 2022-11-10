@@ -9,12 +9,6 @@ import EmailIcon from '@mui/icons-material/Email';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import { useState } from 'react';
 
-// inital login credentials
-const initialValuesModal = {
-    name: "",
-    number: "",
-    email: "",
-};
 
 // form field validation schema
 const validationSchemaModal = Yup.object().shape({
@@ -28,9 +22,12 @@ const validationSchemaModal = Yup.object().shape({
 const HospitalId = localStorage.getItem('HospitalId');
 const UserId = localStorage.getItem('UserId');
 
-console.log(HospitalId, UserId);
 
 const ProfilePage = () => {
+
+    const [UserName, setUserName] = useState(localStorage.getItem('UserName'));
+    const [UserEmail, setUserEmail] = useState(localStorage.getItem('UserEmail'));
+    const [UserMobile, setUserMobile] = useState(localStorage.getItem('UserMobile'));
 
     const MainContainer = {
         display: "flex",
@@ -104,8 +101,48 @@ const ProfilePage = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    // inital login credentials
+    const initialValuesModal = {
+        name: UserName,
+        number: UserMobile,
+        email: UserEmail,
+    };
+
+    const Url = `https://cliniceasy.in/restAPI/index.php/Profile/updateProfile`;
+
     const handleFormSubmitModal = (values) => {
-        console.log(values);
+
+        const { name, number, email } = values;
+
+        const Data = {
+            "hospital_id": HospitalId,
+            "user_id": UserId,
+            "name": name,
+            "email": email,
+            "mobile": number
+        }
+
+        const Options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': "text/plain",
+            },
+            body: JSON.stringify(Data)
+        }
+
+        fetch(Url, Options)
+            .then(res => {
+                res.json().then((result) => {
+                    localStorage.setItem('UserName', result.name)
+                    localStorage.setItem('UserEmail', result.email)
+                    localStorage.setItem('UserMobile', result.mobile)
+                    setUserEmail(result.email)
+                    setUserMobile(result.mobile)
+                    setUserName(result.name)
+                })
+            })
+
+        handleClose();
     }
 
     return (
@@ -130,16 +167,16 @@ const ProfilePage = () => {
 
 
                     <Box>
-                        <Typography variant='h6' my={2} sx={{ textAlign: "center", }}> Dr. Samir Rathi </Typography>
+                        <Typography variant='h6' my={2} sx={{ textAlign: "center", }}> {UserName} </Typography>
 
                         <Stack direction="row" alignItems="center" mb={3}>
                             <EmailIcon /> <Typography sx={{ fontSize: "17px", fontWeight: "500" }} ml={1}>
-                                Email : samir79@gmail.com
+                                Email : {UserEmail}
                             </Typography>
                         </Stack>
                         <Stack direction="row" alignItems="center" mb={1}>
                             <SmartphoneIcon /> <Typography sx={{ fontSize: "17px", fontWeight: "500" }} ml={1}>
-                                Number : 9833423487
+                                Number : {UserMobile}
                             </Typography>
                         </Stack>
                     </Box>

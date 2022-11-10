@@ -53,7 +53,7 @@ const PatientHistoryComp = (props) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: { sm: "400px", xs: "90%", },
+        width: { sm: "400px", xs: "95%", },
         backgroundColor: 'background.paper',
         border: 'none',
         outline: "none",
@@ -66,7 +66,7 @@ const PatientHistoryComp = (props) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "10px"
+        padding: "20px"
     }
 
     const FormElements = {
@@ -99,6 +99,7 @@ const PatientHistoryComp = (props) => {
                             setError("No Data Available")
                         } else {
                             setAppointment(result.appointments)
+                            setError()
                         }
                         // console.warn(result.appointments.length)
                     })

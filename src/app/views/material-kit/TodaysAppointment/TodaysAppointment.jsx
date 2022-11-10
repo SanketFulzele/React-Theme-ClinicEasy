@@ -105,13 +105,13 @@ const TodaysAppointment = () => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: { sm: "400px", xs: "90%", },
+        width: { sm: "400px", xs: "95%", },
         backgroundColor: 'background.paper',
         border: 'none',
         outline: "none",
         boxShadow: 24,
         borderRadius: "20px",
-        p: 1,
+        padding: "10px",
     };
 
     const FormContainer = {
@@ -122,7 +122,7 @@ const TodaysAppointment = () => {
     }
 
     const FormElements = {
-        padding: "20px ",
+        padding: "10px",
     }
     // Modal Styling
 

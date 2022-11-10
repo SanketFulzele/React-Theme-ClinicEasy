@@ -20,8 +20,6 @@ const validationSchema = Yup.object().shape({
 const HospitalId = localStorage.getItem('HospitalId');
 const UserId = localStorage.getItem('UserId');
 
-console.log(HospitalId, UserId);
-
 const GiveFeedback = () => {
 
     const FeedbackBox = {
@@ -49,14 +47,13 @@ const GiveFeedback = () => {
     const handleFormSubmit = (values) => {
         const { subject, feedback } = values;
 
-        const URL = 'https://trickysys.com/demo/selfplay/androidApi/Master/feedback';
+        const URL = 'https://cliniceasy.in/restAPI/index.php/Home/saveFeedback';
 
         const DATA = {
-            // "hospital_id": HospitalId,
-            // "user_id": UserId,
-            "user_id": "3",
+            "hospital_id": HospitalId,
+            "user_id": UserId,
             "subject": subject,
-            "feedback": feedback,
+            "feedback": feedback
         }
 
         const Options = {
@@ -70,10 +67,11 @@ const GiveFeedback = () => {
         fetch(URL, Options)
             .then(res => {
                 res.json().then((result) => {
-                    return alert(result.message)
+                    return (
+                        alert(result.message),
+                        navigate('/')
+                    )
                 })
-            }).then(() => {
-                navigate('/')
             })
     }
 

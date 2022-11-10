@@ -95,6 +95,7 @@ const Layout1Topbar = () => {
 
   const Logout = () => {
     navigate('/session/signin')
+    localStorage.clear()
   }
 
   return (

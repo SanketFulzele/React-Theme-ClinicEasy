@@ -125,6 +125,10 @@ const JwtLogin = () => {
     }).then(result => {
       result.json().then(resp => {
         localStorage.setItem('UserId', resp.user_id)
+        localStorage.setItem('UserName', resp.name)
+        localStorage.setItem('UserEmail', resp.email)
+        localStorage.setItem('UserMobile', resp.mobile)
+        localStorage.setItem('UserRole', resp.role)
         localStorage.setItem('HospitalId', resp.hospital_id)
       })
     })
