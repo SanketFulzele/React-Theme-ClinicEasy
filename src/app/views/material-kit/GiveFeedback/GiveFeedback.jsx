@@ -20,6 +20,7 @@ const validationSchema = Yup.object().shape({
 const HospitalId = localStorage.getItem('HospitalId');
 const UserId = localStorage.getItem('UserId');
 
+console.log(HospitalId, UserId);
 
 const GiveFeedback = () => {
 

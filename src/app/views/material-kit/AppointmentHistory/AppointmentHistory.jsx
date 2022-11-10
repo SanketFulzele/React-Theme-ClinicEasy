@@ -17,10 +17,22 @@ import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
 
+
+let today = new Date();
+let dd = String(today.getDate()).padStart(2, '0');
+let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+let yyyy = today.getFullYear();
+today = yyyy + '-' + mm + '-' + dd;
+
 // inital login credentials
 const initialValues = {
-    date: "",
+    date: today,
 };
+
+// form field validation schema
+const validationSchema = Yup.object().shape({
+    date: Yup.string().required("Date is Required"),
+});
 
 // form field validation schema
 const validationSchemaModal = Yup.object().shape({
@@ -35,6 +47,7 @@ const AppointmentHistory = () => {
 
     const [dateInfo, setDateInfo] = useState([]);
     const [error, setError] = useState();
+    const [appointmentsId, setAppointmentsId] = useState();
 
     const AppointHistoryBox = {
         display: "flex",
@@ -55,7 +68,7 @@ const AppointmentHistory = () => {
         margin: "10px"
     }
 
-    // Modal Styling
+    //----------- Modal Styling ----------
     const modalBox = {
         position: 'absolute',
         top: '50%',
@@ -70,15 +83,6 @@ const AppointmentHistory = () => {
         p: 1,
     };
 
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
-    const [open1, setOpen1] = useState(false);
-    const handleOpen1 = () => setOpen1(true);
-    const handleClose1 = () => setOpen1(false);
-
-
     const FormContainer = {
         display: "flex",
         alignItems: "center",
@@ -91,6 +95,7 @@ const AppointmentHistory = () => {
     }
     // Modal Styling
 
+
     const url = `https://cliniceasy.in/restAPI/index.php/Home/getAppointments`;
 
 
@@ -101,7 +106,6 @@ const AppointmentHistory = () => {
             "user_id": UserId,
             "booking_date": values.date,
         }
-
         fetch(url, {
             method: 'POST',
             headers: {
@@ -113,25 +117,141 @@ const AppointmentHistory = () => {
             result.json().then(resp => {
                 if (resp.success === 1) {
                     setDateInfo(resp.appointments)
+                    localStorage.setItem('BookingDate', values.date)
                     setError()
                 } else {
                     setError(resp.message)
                 }
             })
         })
-
     }
 
-    // Modal Jsx
-    // inital Modal Status
+
+    // ------------- Modal Jsx Starts here ----------
+
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const [open1, setOpen1] = useState(false);
+    const handleOpen1 = () => setOpen1(true);
+    const handleClose1 = () => setOpen1(false);
+
+    //  Modal Jsx Initial Modal Status
     const ModalStatus = {
         fees: "",
     };
 
-    const SubmitModalStatus = (values) => {
-        console.log(values)
+    const Url = `https://cliniceasy.in/restAPI/index.php/Home/changeAppointmentStatus`;
+
+    const reRenderingData = {
+        "hospital_id": HospitalId,
+        "user_id": UserId,
+        "booking_date": localStorage.getItem('BookingDate'),
     }
-    // Modal Jsx
+
+    const SubmitModalStatus = (values) => {
+
+        const Data = {
+            "hospital_id": HospitalId,
+            "user_id": UserId,
+            "appointment_id": appointmentsId,
+            "appointment_status": "Completed",
+            "appointment_fees": values.fees
+        }
+
+        const Options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: JSON.stringify(Data),
+        }
+
+        fetch(Url, Options)
+            .then(res => {
+                res.json().then((result) => {
+                    return result;
+                })
+            }).then(() => {
+                handleClose();
+
+                // -----Re:Rendering Appointment History Component Start's Here
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(reRenderingData)
+                }).then(result => {
+                    result.json().then(resp => {
+                        if (resp.success === 1) {
+                            setDateInfo(resp.appointments)
+                            setError()
+                        } else {
+                            setError(resp.message)
+                        }
+                    })
+                })
+                // -----Re:Rendering Appointment History Component Ends's Here
+            })
+
+    }
+    // Modal Status
+
+    // ---- Delete Appointment
+
+    const URL = `https://cliniceasy.in/restAPI/index.php/Home/deleteAppointment`;
+
+    const DelAppointment = () => {
+        const Data = {
+            "hospital_id": HospitalId,
+            "user_id": UserId,
+            "appointment_id": appointmentsId
+        }
+
+        const Options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: JSON.stringify(Data),
+        }
+
+        fetch(URL, Options)
+            .then(res => {
+                res.json().then((result) => {
+                    return result;
+                })
+            }).then(() => {
+                handleClose1();
+                // -----Re:Rendering Appointment History Component Start's Here
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(reRenderingData)
+                }).then(result => {
+                    result.json().then(resp => {
+                        if (resp.success === 1) {
+                            setDateInfo(resp.appointments)
+                            setError()
+                        } else {
+                            setError(resp.message)
+                        }
+                    })
+                })
+                // -----Re:Rendering Appointment History Component Ends's Here
+
+            })
+
+    }
+    // ---- Delete Appointment
+    // ------------- Modal Jsx Ends here ----------
 
     return (
         <Box>
@@ -141,11 +261,14 @@ const AppointmentHistory = () => {
                 <Formik
                     onSubmit={handleFormSubmit}
                     initialValues={initialValues}
+                    validationSchema={validationSchema}
                 >
                     {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
                         <form onSubmit={handleSubmit}>
 
-                            <Stack direction="row" alignItems="center" justifyContent="center" p={1}>
+                            <Stack direction="row"
+                                justifyContent="center"
+                                p={1}>
 
                                 <TextField
                                     type="date"
@@ -158,9 +281,13 @@ const AppointmentHistory = () => {
                                     error={Boolean(errors.date && touched.date)}
                                     sx={{ maxWidth: { sm: "40vw", xs: "70vw" } }}
                                     fullWidth
+                                    label="Select Date"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                 />
 
-                                <Box ml={3}>
+                                <Box ml={3} sx={{ transform: "translateY(10px)" }}>
                                     <Button variant='contained' type='submit' > <ArrowForwardIcon /> </Button>
                                 </Box>
                             </Stack>
@@ -168,6 +295,8 @@ const AppointmentHistory = () => {
                     )}
                 </Formik>
             </Box>
+
+
 
             <Box sx={AppointHistoryBox}>
 
@@ -228,11 +357,17 @@ const AppointmentHistory = () => {
 
                                 {(data.appointment_status === "Waiting") ?
                                     <Stack direction="row" spacing={2} mt={1}>
-                                        <Button variant="outlined" color="error" onClick={handleOpen1}>
+                                        <Button variant="outlined" color="error" onClick={() => {
+                                            setAppointmentsId(data.id)
+                                            handleOpen1()
+                                        }}>
                                             Delete
                                         </Button>
 
-                                        <Button variant="contained" onClick={handleOpen}>
+                                        <Button variant="contained" onClick={() => {
+                                            setAppointmentsId(data.id)
+                                            handleOpen()
+                                        }}>
                                             Change Status
                                         </Button>
                                     </Stack> : ''}
@@ -280,7 +415,7 @@ const AppointmentHistory = () => {
 
                                             <Stack direction='row' justifyContent="space-between">
                                                 <Button variant="contained" color="error" sx={{ minWidth: "150px", padding: "8px", }}
-                                                    type="submit" onClick={handleClose} >
+                                                    onClick={handleClose} >
                                                     Cancel
                                                 </Button>
                                                 <Button variant="contained" sx={{ minWidth: "150px", padding: "8px", marginLeft: "20px" }}
@@ -316,11 +451,11 @@ const AppointmentHistory = () => {
 
                                 <Stack direction='row' justifyContent="space-between">
                                     <Button variant="contained" color="error" sx={{ minWidth: "150px", padding: "8px", }}
-                                        type="submit" onClick={handleClose1} >
+                                        onClick={handleClose1} >
                                         No
                                     </Button>
                                     <Button variant="contained" sx={{ minWidth: "150px", padding: "8px", marginLeft: "20px" }}
-                                        type="submit" >
+                                        type="submit" onClick={DelAppointment} >
                                         Yes
                                     </Button>
                                 </Stack>

@@ -1,7 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import { Card, Grid, TextField } from '@mui/material';
-import { Box, styled, useTheme } from '@mui/system';
-import { Paragraph } from 'app/components/Typography';
+import { Box, styled } from '@mui/system';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -55,7 +54,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const JwtLogin = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -138,6 +136,8 @@ const JwtLogin = () => {
       setHideError(true);
     }
   }
+
+  // 7276070179 Admin Number
 
   return (
     <JWTRoot>
@@ -234,15 +234,14 @@ const JwtLogin = () => {
 
                     </Box>
 
-                    {/* <Paragraph>
-                      Don't have an account?
+                    <Typography sx={{ fontSize: "15px", fontWeight: "600", }}>
                       <NavLink
                         to="/session/signup"
-                        style={{ color: theme.palette.primary.main, marginLeft: 5 }}
+                        style={{ color: "var(--blue-color)" }}
                       >
-                        Register
+                        New Hospital Registration
                       </NavLink>
-                    </Paragraph> */}
+                    </Typography>
 
                   </form>
                 )}

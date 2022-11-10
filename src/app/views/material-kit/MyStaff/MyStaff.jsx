@@ -72,7 +72,7 @@ const MyStaff = () => {
 
                 {myStaff.map((data) => {
                     return (
-                        <Paper sx={InfoBox} elevation={3} key={data.id}>
+                        <Paper sx={InfoBox} elevation={3} key={data.id} onClick={() => console.warn(data.id)}>
                             <Stack direction="row" alignItems="center" mb={1}>
                                 <PortraitIcon /> <Typography variant='subtitle1' ml={1}> Name : {data.name}
                                 </Typography>

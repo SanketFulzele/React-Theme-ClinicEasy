@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 const HospitalId = localStorage.getItem('HospitalId');
-const UserId = localStorage.getItem('UserId');
+const UserId = localStorage.getItem('UserId')
 
 const ViewPatient = () => {
     const [patientData, setPatientData] = useState([])
@@ -82,7 +82,7 @@ const ViewPatient = () => {
         },
     }
 
-    const BacktoHome = () => {
+    const BackToHome = () => {
         navigate("/")
     }
 
@@ -119,7 +119,7 @@ const ViewPatient = () => {
         <Box>
             <Paper sx={ComponentHeadingBox}>
                 <Box sx={BackIcon}>
-                    <ArrowBackIcon sx={compHeadingIcon} onClick={BacktoHome} />
+                    <ArrowBackIcon sx={compHeadingIcon} onClick={BackToHome} />
                 </Box>
 
                 <Box sx={compHeading}>
@@ -138,8 +138,13 @@ const ViewPatient = () => {
 
                 {patientData.map((data) => {
                     return (
-                        <Paper sx={AppointHistoryInfo} key={data.id}>
-                            <Stack direction="row" alignItems="center" mb={1}>
+                        <Paper sx={AppointHistoryInfo} key={data.id} onClick={() => {
+                            return (
+                                localStorage.setItem('PatientDetailsId', data.id),
+                                navigate("/patient-detail")
+                            )
+                        }} >
+                            <Stack direction="row" alignItems="center" mb={1} >
                                 <PortraitIcon /> <Typography variant='subtitle1' ml={1}> Patient Name : {data.name}
                                 </Typography>
                             </Stack>
@@ -163,6 +168,3 @@ const ViewPatient = () => {
 }
 
 export default ViewPatient
-
-
-// self play money amount generating upi id success@razorpay

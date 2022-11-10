@@ -1,8 +1,5 @@
-import { Box, Button, Modal, Paper, Stack, TextField, Typography } from '@mui/material'
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Box, Button, Modal, Paper, Stack, TextField, Typography } from '@mui/material'
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import PortraitIcon from '@mui/icons-material/Portrait';
 import ScheduleIcon from '@mui/icons-material/Schedule';
@@ -13,10 +10,10 @@ import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import "yup-phone";
+import { useEffect } from 'react';
 
 // form field validation schema
 const validationSchemaModal = Yup.object().shape({
@@ -26,60 +23,11 @@ const validationSchemaModal = Yup.object().shape({
 const HospitalId = localStorage.getItem('HospitalId');
 const UserId = localStorage.getItem('UserId');
 
-const TodaysAppointment = () => {
+const PatientHistoryComp = (props) => {
+
     const [appointment, setAppointment] = useState([]);
-    const [error, setError] = useState();
     const [appointmentsId, setAppointmentsId] = useState();
-
-    const navigate = useNavigate();
-
-    const ComponentHeadingBox = {
-        padding: "18px 10px 10px 10px ",
-        display: "flex",
-        marginBottom: "15px",
-    }
-    const BackIconBox = {
-        width: "33px",
-        height: "33px",
-        cursor: "pointer",
-        "&:hover": {
-            backgroundColor: "rgb(222, 220, 220)",
-            borderRadius: "50%",
-        }
-    }
-
-    const BackIcon = {
-        transform: "translate(2px ,3px)",
-        fontSize: "27px",
-    }
-
-    const compHeading = {
-        width: "100%",
-        textAlign: "center",
-    }
-
-    const AddIconBox = {
-        marginRight: "10px",
-        cursor: "pointer",
-        width: "35px",
-        height: "35px",
-        "&:hover": {
-            backgroundColor: "rgb(222, 220, 220)",
-            borderRadius: "50%",
-        }
-    }
-
-    const AddIcon = {
-        transform: "translate(2px ,4px)",
-        fontSize: "28px",
-    }
-    const BacktoHome = () => {
-        navigate("/")
-    }
-
-    const NavAddIcon = () => {
-        navigate("/book-appointment")
-    }
+    const [error, setError] = useState();
 
     const AppointHistoryBox = {
         display: "flex",
@@ -126,11 +74,12 @@ const TodaysAppointment = () => {
     }
     // Modal Styling
 
-    const url = `https://cliniceasy.in/restAPI/index.php/Home/home`;
+    const url = `https://cliniceasy.in/restAPI/index.php/Home/getPatientDetails`;
 
     const data = {
         "hospital_id": HospitalId,
         "user_id": UserId,
+        "patient_id": props.PatientDetailsId
     }
 
     const options = {
@@ -146,12 +95,12 @@ const TodaysAppointment = () => {
             fetch(url, options)
                 .then(res => {
                     res.json().then((result) => {
-                        if (result.success === 1) {
-                            setAppointment(result.appointments)
-                            setError()
+                        if (result.appointments.length === 0) {
+                            setError("No Data Available")
                         } else {
-                            setError(result.message)
+                            setAppointment(result.appointments)
                         }
+                        // console.warn(result.appointments.length)
                     })
                 })
 
@@ -162,7 +111,6 @@ const TodaysAppointment = () => {
         fetchAppointments()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
 
 
     // ------------- Modal Styling Starts Here -----------
@@ -190,6 +138,7 @@ const TodaysAppointment = () => {
             "hospital_id": HospitalId,
             "user_id": UserId,
             "appointment_id": appointmentsId,
+            // "appointment_status": "waiting",
             "appointment_status": "completed",
             "appointment_fees": values.fees
         }
@@ -257,98 +206,84 @@ const TodaysAppointment = () => {
 
     return (
         <Box>
-            <Paper sx={ComponentHeadingBox}>
-                <Box sx={BackIconBox}>
-                    <ArrowBackIcon sx={BackIcon} onClick={BacktoHome} />
-                </Box>
-
-                <Box sx={compHeading}>
-                    <Typography variant='h6' align="center">
-                        Today's Appointment
-                    </Typography>
-                </Box>
-                <Box sx={AddIconBox}>
-                    <AddCircleOutlineIcon sx={AddIcon} onClick={NavAddIcon} />
-                </Box>
-            </Paper>
-
             <Box sx={AppointHistoryBox}>
 
-                {error ? error :
-                    appointment.map((data) => {
-                        return (
-                            <Paper sx={AppointHistoryInfo} key={data.id}>
-                                <Stack direction="row" alignItems="center" mb={1}>
-                                    <ConfirmationNumberIcon /> <Typography variant='subtitle1' ml={1}>
-                                        Appointment Number : {data.booking_number}
-                                    </Typography>
-                                </Stack>
-                                <Stack direction="row" alignItems="center" mb={1}>
-                                    <PortraitIcon /> <Typography variant='subtitle1' ml={1}>
-                                        Name : {data.patient}
-                                    </Typography>
-                                </Stack>
-                                <Stack direction="row" alignItems="center" mb={1}>
-                                    <ScheduleIcon /> <Typography variant='subtitle1' ml={1}>
-                                        Shift : {data.shift}
-                                    </Typography>
-                                </Stack>
-                                <Stack direction="row" alignItems="center" mb={1}>
-                                    <CalendarMonthIcon /> <Typography variant='subtitle1' ml={1}>
-                                        Date : {data.booking_date}
-                                    </Typography>
-                                </Stack>
-                                <Stack direction="row" alignItems="center" mb={1}>
-                                    <DetailsIcon /> <Typography variant='subtitle1' ml={1}>
-                                        Status : {data.appointment_status}
-                                    </Typography>
-                                </Stack>
-                                <Stack direction="row" alignItems="center" mb={1}>
-                                    <SmartphoneIcon /> <Typography variant='subtitle1' ml={1}> Mobile : {data.mobile}
-                                    </Typography>
-                                </Stack>
-                                <Stack direction="row" alignItems="center" mb={1}>
-                                    <PlaylistAddCheckIcon /> <Typography variant='subtitle1' ml={1}>
-                                        Created By : {data.created_by}
-                                    </Typography>
-                                </Stack>
-
-                                {(data.description === '') ? "" :
+                {
+                    error ? error :
+                        appointment.map((data) => {
+                            return (
+                                <Paper sx={AppointHistoryInfo} key={data.id}>
                                     <Stack direction="row" alignItems="center" mb={1}>
-                                        <EditIcon /> <Typography variant='subtitle1' ml={1}>
-                                            Description : {data.description}
+                                        <ConfirmationNumberIcon /> <Typography variant='subtitle1' ml={1}>
+                                            Appointment Number : {data.booking_number}
                                         </Typography>
                                     </Stack>
-                                }
-
-                                {(data.appointment_fees === "0") ? "" :
-                                    <Stack direction="row" alignItems="center">
-                                        <CurrencyRupeeIcon /> <Typography variant='subtitle1' ml={1}>
-                                            <strong> Fee : ₹{data.appointment_fees} </strong>
+                                    <Stack direction="row" alignItems="center" mb={1}>
+                                        <PortraitIcon /> <Typography variant='subtitle1' ml={1}>
+                                            Name : {data.patient}
                                         </Typography>
                                     </Stack>
-                                }
+                                    <Stack direction="row" alignItems="center" mb={1}>
+                                        <ScheduleIcon /> <Typography variant='subtitle1' ml={1}>
+                                            Shift : {data.shift}
+                                        </Typography>
+                                    </Stack>
+                                    <Stack direction="row" alignItems="center" mb={1}>
+                                        <CalendarMonthIcon /> <Typography variant='subtitle1' ml={1}>
+                                            Date : {data.booking_date}
+                                        </Typography>
+                                    </Stack>
+                                    <Stack direction="row" alignItems="center" mb={1}>
+                                        <DetailsIcon /> <Typography variant='subtitle1' ml={1}>
+                                            Status : {data.appointment_status}
+                                        </Typography>
+                                    </Stack>
+                                    <Stack direction="row" alignItems="center" mb={1}>
+                                        <SmartphoneIcon /> <Typography variant='subtitle1' ml={1}> Mobile : {data.mobile}
+                                        </Typography>
+                                    </Stack>
+                                    <Stack direction="row" alignItems="center" mb={1}>
+                                        <PlaylistAddCheckIcon /> <Typography variant='subtitle1' ml={1}>
+                                            Created By : {data.created_by}
+                                        </Typography>
+                                    </Stack>
 
-                                {(data.appointment_status === "Waiting") ?
-                                    <Stack direction="row" spacing={2} mt={1}>
-                                        <Button variant="outlined" color="error" onClick={() => {
-                                            setAppointmentsId(data.id)
-                                            handleOpen1()
-                                        }}>
-                                            Delete
-                                        </Button>
+                                    {(data.description === '') ? "" :
+                                        <Stack direction="row" alignItems="center" mb={1}>
+                                            <EditIcon /> <Typography variant='subtitle1' ml={1}>
+                                                Description : {data.description}
+                                            </Typography>
+                                        </Stack>
+                                    }
 
-                                        <Button variant="contained" onClick={() => {
-                                            setAppointmentsId(data.id)
-                                            handleOpen()
-                                        }}>
-                                            Change Status
-                                        </Button>
-                                    </Stack> : ''}
+                                    {(data.appointment_fees === "0") ? "" :
+                                        <Stack direction="row" alignItems="center">
+                                            <CurrencyRupeeIcon /> <Typography variant='subtitle1' ml={1}>
+                                                <strong> Fee : ₹{data.appointment_fees} </strong>
+                                            </Typography>
+                                        </Stack>
+                                    }
 
-                            </Paper>
-                        )
-                    })
+                                    {(data.appointment_status === "Waiting") ?
+                                        <Stack direction="row" spacing={2} mt={1}>
+                                            <Button variant="outlined" color="error" onClick={() => {
+                                                setAppointmentsId(data.id)
+                                                handleOpen1()
+                                            }}>
+                                                Delete
+                                            </Button>
+
+                                            <Button variant="contained" onClick={() => {
+                                                setAppointmentsId(data.id)
+                                                handleOpen()
+                                            }}>
+                                                Change Status
+                                            </Button>
+                                        </Stack> : ''}
+
+                                </Paper>
+                            )
+                        })
 
                 }
 
@@ -441,9 +376,8 @@ const TodaysAppointment = () => {
                 </Modal>
 
             </Box>
-
         </Box>
     )
 }
 
-export default TodaysAppointment
+export default PatientHistoryComp

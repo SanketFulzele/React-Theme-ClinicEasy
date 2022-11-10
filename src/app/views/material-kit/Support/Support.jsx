@@ -45,22 +45,26 @@ const Support = () => {
                         <b> Need help? Contact us </b>
                     </Typography>
 
-                    <Typography variant='h6' mb={2}>
-                        <b> ClinicEasy </b>
+                    <Box mb={2}>
+                        <Typography variant='h6' >
+                            <b> ClinicEasy </b>
+                        </Typography>
                         <Typography variant='subtitle1'>
                             &copy; Trickysys IT Solutions Nagpur, INDIA.
                         </Typography>
-                    </Typography>
+                    </Box>
 
-                    <Typography variant='h6'>
-                        <b> Contact Person </b>
+                    <Box>
+                        <Typography variant='h6'>
+                            <b> Contact Person </b>
+                        </Typography>
                         <Typography variant='subtitle1'>
                             Trickysys IT Solutions<br />
                             Email: info@trickysys.com<br />
                             Contact No. 7276070179<br />
                             Nagpur, MH.<br />
                         </Typography>
-                    </Typography>
+                    </Box>
                 </Paper>
             </Box>
 

@@ -135,7 +135,10 @@ const BookNewAppointment = () => {
                                     size="small"
                                     type="date"
                                     name="date"
-                                    label=""
+                                    label="Date"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     variant="outlined"
                                     onBlur={handleBlur}
                                     value={values.date}
@@ -149,7 +152,10 @@ const BookNewAppointment = () => {
                                     size="small"
                                     type="time"
                                     name="time"
-                                    label=""
+                                    label="Time"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     variant="outlined"
                                     onBlur={handleBlur}
                                     value={values.time}

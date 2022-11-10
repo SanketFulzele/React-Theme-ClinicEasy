@@ -33,7 +33,6 @@ const UserId = localStorage.getItem('UserId');
 
 const AddPatient = () => {
 
-
     const navigate = useNavigate();
 
     const BookAppointmentHeading = {
@@ -169,6 +168,10 @@ const AddPatient = () => {
                                     onChange={handleChange}
                                     helperText={touched.date && errors.date}
                                     error={Boolean(errors.date && touched.date)}
+                                    label="Date Of Birth"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     sx={{ mb: 3 }}
                                 />
 

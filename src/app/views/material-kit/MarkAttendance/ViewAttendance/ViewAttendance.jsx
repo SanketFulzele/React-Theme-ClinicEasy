@@ -96,6 +96,10 @@ const ViewAttendance = () => {
                                     onChange={handleChange}
                                     helperText={touched.date && errors.date}
                                     error={Boolean(errors.date && touched.date)}
+                                    label="From"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     sx={DateField}
                                 />
                                 <TextField
@@ -108,6 +112,10 @@ const ViewAttendance = () => {
                                     onChange={handleChange}
                                     helperText={touched.dates && errors.dates}
                                     error={Boolean(errors.dates && touched.dates)}
+                                    label="To"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     sx={DateField}
                                 />
 

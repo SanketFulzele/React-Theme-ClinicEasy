@@ -7,7 +7,7 @@ export const navigations = [
   { name: "Today's Appointment", path: '/todays-appointment', icon: 'alarm' },
   { name: 'Create Staff', path: '/create-staff', icon: 'person' },
   { name: 'My Staff', path: '/my-staff', icon: 'group' },
-  { name: 'My Report', path: '/my-report', icon: 'assignment' },
+  // { name: 'My Report', path: '/my-report', icon: 'assignment' },
   { name: 'Share', path: '/share', icon: 'share' },
   { name: 'Give Feedback', path: '/give-feedback', icon: 'feedback' },
   { name: 'Support ', path: '/support', icon: 'info' },

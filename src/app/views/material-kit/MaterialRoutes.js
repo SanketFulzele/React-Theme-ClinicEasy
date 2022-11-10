@@ -8,7 +8,7 @@ const ViewPatient = Loadable(lazy(() => import("./ViewPatient/ViewPatient")));
 const TodaysAppointment = Loadable(lazy(() => import("./TodaysAppointment/TodaysAppointment")));
 const CreateStaff = Loadable(lazy(() => import("./CreateStaff/CreateStaff")));
 const MyStaff = Loadable(lazy(() => import("./MyStaff/MyStaff")));
-const MyReport = Loadable(lazy(() => import("./MyReport/MyReport")));
+// const MyReport = Loadable(lazy(() => import("./MyReport/MyReport")));
 const Share = Loadable(lazy(() => import("./Share/Share")));
 const GiveFeedback = Loadable(lazy(() => import("./GiveFeedback/GiveFeedback")));
 const Support = Loadable(lazy(() => import("./Support/Support")));
@@ -17,6 +17,7 @@ const Logout = Loadable(lazy(() => import("./Logout/Logout")));
 // Extra Pages
 const BookNewAppointment = Loadable(lazy(() => import("./BookAppointment/BookNewAppointment/BookNewAppointment")));
 const AddPatient = Loadable(lazy(() => import("./ViewPatient/AddPatient/AddPatient")));
+const PatientDetail = Loadable(lazy(() => import("./ViewPatient/PatientDetail/PatientDetail")));
 const ProfilePage = Loadable(lazy(() => import("./ProfilePage/ProfilePage")));
 
 const materialRoutes = [
@@ -48,10 +49,10 @@ const materialRoutes = [
     path: '/my-staff',
     element: <MyStaff />,
   },
-  {
-    path: '/my-report',
-    element: <MyReport />,
-  },
+  // {
+  //   path: '/my-report',
+  //   element: <MyReport />,
+  // },
   {
     path: '/share',
     element: <Share />,
@@ -75,6 +76,10 @@ const materialRoutes = [
   {
     path: '/add-patient',
     element: <AddPatient />,
+  },
+  {
+    path: '/patient-detail',
+    element: <PatientDetail />,
   },
   {
     path: '/profile',

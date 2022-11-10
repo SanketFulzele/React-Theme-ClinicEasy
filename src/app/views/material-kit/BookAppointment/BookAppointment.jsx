@@ -74,17 +74,17 @@ const BookAppointment = () => {
                     return resp.patients.map((value) => {
                         return (
                             localStorage.setItem('patientId', value.id),
-                            localStorage.setItem('patientName', value.name)
+                            localStorage.setItem('patientName', value.name),
+                            localStorage.setItem('BookAppointmentNumber', value.mobile)
                         )
                     })
                 }
-
-                localStorage.setItem('BookAppointmentNumber', values.number);
 
                 if (resp.success === 1) {
                     Storage();
                     navigate("/book-new-appointment")
                 } else {
+                    localStorage.setItem('BookAppointmentNumber', values.number);
                     navigate("/add-patient")
                 }
 

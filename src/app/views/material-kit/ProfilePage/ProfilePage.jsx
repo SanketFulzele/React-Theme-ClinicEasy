@@ -5,6 +5,8 @@ import * as Yup from "yup";
 import "yup-phone";
 import "./profilePage.css";
 import EditIcon from '@mui/icons-material/Edit';
+import EmailIcon from '@mui/icons-material/Email';
+import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import { useState } from 'react';
 
 // inital login credentials
@@ -26,6 +28,8 @@ const validationSchemaModal = Yup.object().shape({
 const HospitalId = localStorage.getItem('HospitalId');
 const UserId = localStorage.getItem('UserId');
 
+console.log(HospitalId, UserId);
+
 const ProfilePage = () => {
 
     const MainContainer = {
@@ -33,6 +37,7 @@ const ProfilePage = () => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
+        textAlign: "center",
     }
 
     const ProfileImgContainer = {
@@ -52,12 +57,20 @@ const ProfilePage = () => {
     }
 
     const ProfilePicContainer = {
-        borderRadius: "15px",
-        width: "170px",
-        height: "135px",
+        borderRadius: "50%",
+        width: "120px",
+        height: "120px",
         backgroundColor: "#ffffff",
-        marginTop: "-70px",
+        marginTop: "-90px",
         padding: "7px",
+    }
+
+    const AdminInfoBox = {
+        padding: "50px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column"
     }
 
     const FormContainer = {
@@ -97,28 +110,50 @@ const ProfilePage = () => {
 
     return (
         <div>
-            <Box sx={MainContainer}>
+            <Box sx={MainContainer} >
 
                 <Box sx={ProfileImgContainer}>
                     <img className='bg-img' src="/assets/MySVG/proBImg.jpg" alt="profile-background-img" />
                 </Box>
 
-                <Box sx={ProfilePicContainer}>
-                    <img className='profilePic' src="/assets/MySVG/dr-pic1.jpg" alt="profile-pic-img" />
+                <Box sx={editContainer} className="Flex" onClick={handleOpen}>
+                    <EditIcon sx={{ color: "white" }} />
+                </Box>
 
-                    <Box sx={editContainer} className="Flex" onClick={handleOpen}>
-                        <EditIcon sx={{ color: "white" }} />
+
+
+
+                <Paper elevation="2" sx={AdminInfoBox}>
+                    <Box sx={ProfilePicContainer}>
+                        <img className='profilePic' src="/assets/MySVG/dr-pic1.jpg" alt="profile-pic-img" />
                     </Box>
-                </Box>
 
-                <Box>
-                    <Typography variant='h6' mt={2} sx={{ textAlign: "center", }}> Dr. Samir Rathi </Typography>
-                    <Stack direction="row" mt={2} spacing={6}>
-                        <Typography variant='h6'>samir79@gmail.com</Typography>
-                        <Typography variant='h6'>9833423487</Typography>
-                    </Stack>
-                </Box>
+
+                    <Box>
+                        <Typography variant='h6' my={2} sx={{ textAlign: "center", }}> Dr. Samir Rathi </Typography>
+
+                        <Stack direction="row" alignItems="center" mb={3}>
+                            <EmailIcon /> <Typography sx={{ fontSize: "17px", fontWeight: "500" }} ml={1}>
+                                Email : samir79@gmail.com
+                            </Typography>
+                        </Stack>
+                        <Stack direction="row" alignItems="center" mb={1}>
+                            <SmartphoneIcon /> <Typography sx={{ fontSize: "17px", fontWeight: "500" }} ml={1}>
+                                Number : 9833423487
+                            </Typography>
+                        </Stack>
+                    </Box>
+                </Paper>
+
+
+
+
+
             </Box>
+
+
+
+
 
             <Modal
                 open={open}

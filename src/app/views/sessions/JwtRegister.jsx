@@ -1,29 +1,26 @@
-import { useTheme } from '@emotion/react';
 import { LoadingButton } from '@mui/lab';
-import { Card, Checkbox, Grid, TextField } from '@mui/material';
+import { Card, Grid, TextField, Typography } from '@mui/material';
 import { Box, styled } from '@mui/system';
-import { Paragraph } from 'app/components/Typography';
-// import useAuth from 'app/hooks/useAuth';
-import { Formik } from 'formik';
-import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
+import "yup-phone";
 
 const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
 
 const JustifyBox = styled(FlexBox)(() => ({ justifyContent: 'center' }));
 
-const ContentBox = styled(JustifyBox)(() => ({
-  height: '100%',
-  padding: '32px',
-  background: 'rgba(0, 0, 0, 0.01)',
-}));
+// const ContentBox = styled(JustifyBox)(() => ({
+//   height: '100%',
+//   padding: '32px',
+//   background: 'rgba(0, 0, 0, 0.01)',
+// }));
 
 const JWTRegister = styled(JustifyBox)(() => ({
   background: '#1A2038',
   minHeight: '100vh !important',
   '& .card': {
-    maxWidth: 800,
+    maxWidth: 600,
     minHeight: 400,
     margin: '1rem',
     display: 'flex',
@@ -34,44 +31,53 @@ const JWTRegister = styled(JustifyBox)(() => ({
 
 // inital login credentials
 const initialValues = {
-  email: '',
-  password: '',
-  username: '',
-  remember: true,
+  hospitalName: "",
+  ownerName: "",
+  number: "",
+  email: "",
+  address: "",
+  pincode: "",
 };
 
 // form field validation schema
 const validationSchema = Yup.object().shape({
-  password: Yup.string()
-    .min(6, 'Password must be 6 character length')
-    .required('Password is required!'),
+  hospitalName: Yup.string().min(2).max(50).required("Hospital Name is Required !"),
+  ownerName: Yup.string().min(2).max(25).required("Owner Name is Required !"),
+  number: Yup.string().required("Mobile Number is Required").max(10, "Mobile Number is Too Long")
+    .phone('IN', true, "Phone Number is Invalid"),
   email: Yup.string().email('Invalid Email address').required('Email is required!'),
+  address: Yup.string().min(3).required("Address is Required"),
+  pincode: Yup.string().required("Pincode is Required").min(6, "Pincode is Short").max(6, "Pincode is Too Long")
 });
 
+
+
+
 const JwtRegister = () => {
-  const theme = useTheme();
-  // const { register } = useAuth();
+
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+
 
   const handleFormSubmit = (values) => {
-    setLoading(true);
+    const { address, email, hospitalName, number, ownerName, pincode } = values;
 
-    try {
-      // register(values.email, values.username, values.password);
-      navigate('/');
-      setLoading(false);
-    } catch (e) {
-      console.log(e);
-      setLoading(false);
-    }
+    localStorage.setItem('RegAddress', address)
+    localStorage.setItem('RegEmail', email)
+    localStorage.setItem('RegHospitalName', hospitalName)
+    localStorage.setItem('RegNumber', number)
+    localStorage.setItem('RegOwnerName', ownerName)
+    localStorage.setItem('RegPincode', pincode)
+
+    navigate('/session/admin-registration')
+
   };
 
   return (
     <JWTRegister>
       <Card className="card">
         <Grid container>
-          <Grid item sm={6} xs={12}>
+
+          {/* <Grid item sm={6} xs={12}>
             <ContentBox>
               <img
                 width="100%"
@@ -79,10 +85,16 @@ const JwtRegister = () => {
                 src="/assets/images/illustrations/posting_photo.svg"
               />
             </ContentBox>
-          </Grid>
+          </Grid> */}
 
-          <Grid item sm={6} xs={12}>
-            <Box p={4} height="100%">
+          <Grid item sm={12} xs={12}>
+            {/* <Grid item sm={6} xs={12}> */}
+            <Box p={4} height="100%" sx={{ textAlign: "center", }}>
+
+              <Typography variant="h6" mb={4} gutterBottom>
+                Registration
+              </Typography>
+
               <Formik
                 onSubmit={handleFormSubmit}
                 initialValues={initialValues}
@@ -94,14 +106,44 @@ const JwtRegister = () => {
                       fullWidth
                       size="small"
                       type="text"
-                      name="username"
-                      label="Username"
+                      name="hospitalName"
+                      label="Hospital Name"
                       variant="outlined"
                       onBlur={handleBlur}
-                      value={values.username}
+                      value={values.hospitalName}
                       onChange={handleChange}
-                      helperText={touched.username && errors.username}
-                      error={Boolean(errors.username && touched.username)}
+                      helperText={touched.hospitalName && errors.hospitalName}
+                      error={Boolean(errors.hospitalName && touched.hospitalName)}
+                      sx={{ mb: 3 }}
+                    />
+
+                    <TextField
+                      fullWidth
+                      size="small"
+                      type="text"
+                      name="ownerName"
+                      label="Owner Name"
+                      variant="outlined"
+                      onBlur={handleBlur}
+                      value={values.ownerName}
+                      onChange={handleChange}
+                      helperText={touched.ownerName && errors.ownerName}
+                      error={Boolean(errors.ownerName && touched.ownerName)}
+                      sx={{ mb: 3 }}
+                    />
+
+                    <TextField
+                      fullWidth
+                      size="small"
+                      type="number"
+                      name="number"
+                      label="Mobile Name"
+                      variant="outlined"
+                      onBlur={handleBlur}
+                      value={values.number}
+                      onChange={handleChange}
+                      helperText={touched.number && errors.number}
+                      error={Boolean(errors.number && touched.number)}
                       sx={{ mb: 3 }}
                     />
 
@@ -110,7 +152,7 @@ const JwtRegister = () => {
                       size="small"
                       type="email"
                       name="email"
-                      label="Email"
+                      label="Email Id"
                       variant="outlined"
                       onBlur={handleBlur}
                       value={values.email}
@@ -119,54 +161,55 @@ const JwtRegister = () => {
                       error={Boolean(errors.email && touched.email)}
                       sx={{ mb: 3 }}
                     />
+
                     <TextField
                       fullWidth
                       size="small"
-                      name="password"
-                      type="password"
-                      label="Password"
+                      type="text"
+                      name="address"
+                      label="Address"
                       variant="outlined"
                       onBlur={handleBlur}
-                      value={values.password}
+                      value={values.address}
                       onChange={handleChange}
-                      helperText={touched.password && errors.password}
-                      error={Boolean(errors.password && touched.password)}
-                      sx={{ mb: 2 }}
+                      helperText={touched.address && errors.address}
+                      error={Boolean(errors.address && touched.address)}
+                      sx={{ mb: 3 }}
                     />
 
-                    <FlexBox gap={1} alignItems="center">
-                      <Checkbox
-                        size="small"
-                        name="remember"
-                        onChange={handleChange}
-                        checked={values.remember}
-                        sx={{ padding: 0 }}
-                      />
+                    <TextField
+                      fullWidth
+                      size="small"
+                      type="number"
+                      name="pincode"
+                      label="Pincode"
+                      variant="outlined"
+                      onBlur={handleBlur}
+                      value={values.pincode}
+                      onChange={handleChange}
+                      helperText={touched.pincode && errors.pincode}
+                      error={Boolean(errors.pincode && touched.pincode)}
+                    />
 
-                      <Paragraph fontSize={13}>
-                        I have read and agree to the terms of service.
-                      </Paragraph>
-                    </FlexBox>
 
                     <LoadingButton
                       type="submit"
                       color="primary"
-                      loading={loading}
                       variant="contained"
-                      sx={{ mb: 2, mt: 3 }}
+                      sx={{ mb: 2, mt: 3, width: "80px", letterSpacing: "2px" }}
                     >
-                      Regiser
+                      Next
                     </LoadingButton>
 
-                    <Paragraph>
-                      Already have an account?
+                    <Typography sx={{ fontSize: "15px", }}>
+                      Already Have an Account ?
                       <NavLink
                         to="/session/signin"
-                        style={{ color: theme.palette.primary.main, marginLeft: 5 }}
+                        style={{ color: "var(--blue-color)", fontWeight: "600", marginLeft: "7px" }}
                       >
                         Login
                       </NavLink>
-                    </Paragraph>
+                    </Typography>
                   </form>
                 )}
               </Formik>
