@@ -43,11 +43,11 @@ const initialValues = {
 const validationSchema = Yup.object().shape({
   hospitalName: Yup.string().min(2).max(50).required("Hospital Name is Required !"),
   ownerName: Yup.string().min(2).max(25).required("Owner Name is Required !"),
-  number: Yup.string().required("Mobile Number is Required").max(10, "Mobile Number is Too Long")
-    .phone('IN', true, "Phone Number is Invalid"),
-  email: Yup.string().email('Invalid Email address').required('Email is required!'),
-  address: Yup.string().min(3).required("Address is Required"),
-  pincode: Yup.string().required("Pincode is Required").min(6, "Pincode is Short").max(6, "Pincode is Too Long")
+  number: Yup.string().required("Mobile Number is Required").max(10, "Mobile Number is Too Long !")
+    .phone('IN', true, "Phone Number is Invalid !"),
+  email: Yup.string().email('Invalid Email address !').required('Email Id is required!'),
+  address: Yup.string().min(3).required("Address is Required !"),
+  pincode: Yup.string().required("Pincode is Required !").min(6, "Pincode is Short !").max(6, "Pincode is Too Long !")
 });
 
 
@@ -137,7 +137,7 @@ const JwtRegister = () => {
                       size="small"
                       type="number"
                       name="number"
-                      label="Mobile Name"
+                      label="Mobile Number"
                       variant="outlined"
                       onBlur={handleBlur}
                       value={values.number}

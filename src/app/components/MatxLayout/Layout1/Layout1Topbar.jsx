@@ -9,6 +9,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Span } from '../../../components/Typography';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary,
@@ -69,11 +71,20 @@ const NavbarName = {
   letterSpacing: { sm: "1px", xs: "" }
 }
 
+
+
+
 const Layout1Topbar = () => {
+
   const theme = useTheme();
   const { settings, updateSettings } = useSettings();
   // const { logout, user } = useAuth();
   const navigate = useNavigate();
+
+
+  const UserName = localStorage.getItem("UserName");
+
+
   const isMdScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const updateSidebarMode = (sidebarSettings) => {
@@ -119,7 +130,7 @@ const Layout1Topbar = () => {
                 <Hidden xsDown>
                   <Span>
                     {/* Hi <strong>{user.name}</strong> */}
-                    <strong>Dr. Sanjiv </strong>
+                    <strong> {UserName} </strong>
                   </Span>
                 </Hidden>
                 <Avatar src='' sx={{ cursor: 'pointer' }} />

@@ -12,7 +12,7 @@ const JustifyBox = styled(FlexBox)(() => ({ justifyContent: 'center' }));
 
 const ContentBox = styled(JustifyBox)(() => ({
     height: '100%',
-    padding: '32px',
+    padding: '15px 32px',
     background: 'rgba(0, 0, 0, 0.01)',
 }));
 
@@ -39,9 +39,9 @@ const initialValues = {
 // form field validation schema
 const validationSchema = Yup.object().shape({
     hospitalAdminName: Yup.string().min(2).max(50).required("Hospital Name is Required !"),
-    adminNumber: Yup.string().required("Mobile Number is Required").max(10, "Mobile Number is Too Long")
-        .phone('IN', true, "Phone Number is Invalid"),
-    email: Yup.string().email('Invalid Email address').required('Email is required!'),
+    adminNumber: Yup.string().required("Mobile Number is Required !").max(10, "Mobile Number is Too Long !")
+        .phone('IN', true, "Phone Number is Invalid !"),
+    email: Yup.string().email('Invalid Email address !').required('Email Id is required !'),
 });
 
 const Url = `https://cliniceasy.in/restAPI/index.php/Home/saveHospitalRequest`;
@@ -84,11 +84,9 @@ const AdminRegistration = () => {
         }).then(result => {
             result.json().then(resp => {
                 alert(resp.message)
+                navigate('/session/signup')
             })
-        }).then(() => {
-            navigate('/')
         })
-
     };
 
     return (
@@ -101,7 +99,7 @@ const AdminRegistration = () => {
                             <img
                                 width="100%"
                                 alt="Register"
-                                src="/assets/images/illustrations/posting_photo.svg"
+                                src='/assets/MySVG/registration.svg'
                             />
                         </ContentBox>
                     </Grid>
@@ -140,7 +138,7 @@ const AdminRegistration = () => {
                                             size="small"
                                             type="number"
                                             name="adminNumber"
-                                            label="Admin Mobile Name"
+                                            label="Admin Mobile Number"
                                             variant="outlined"
                                             onBlur={handleBlur}
                                             value={values.adminNumber}
@@ -155,7 +153,7 @@ const AdminRegistration = () => {
                                             size="small"
                                             type="email"
                                             name="email"
-                                            label="Email Id"
+                                            label="Admin Email Id"
                                             variant="outlined"
                                             onBlur={handleBlur}
                                             value={values.email}
@@ -168,7 +166,7 @@ const AdminRegistration = () => {
                                             type="submit"
                                             color="primary"
                                             variant="contained"
-                                            sx={{ mb: 2, mt: 3, }}
+                                            sx={{ mt: 3, }}
                                         >
                                             Submit
                                         </LoadingButton>

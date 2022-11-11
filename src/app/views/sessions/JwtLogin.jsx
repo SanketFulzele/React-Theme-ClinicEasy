@@ -49,8 +49,8 @@ let HideDiv1 = DisplayNone;
 
 // form field validation schema
 const validationSchema = Yup.object().shape({
-  number: Yup.string().phone('IN', true, "Phone Number is Invalid")
-    .required("Phone Number is Required"),
+  number: Yup.string().required("Mobile Number is Required").max(10, "Mobile Number is Too Long")
+    .phone('IN', true, "Phone Number is Invalid"),
 });
 
 const JwtLogin = () => {

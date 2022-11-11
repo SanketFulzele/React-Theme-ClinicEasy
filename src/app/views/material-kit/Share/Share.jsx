@@ -1,15 +1,17 @@
-import { Button, Typography } from '@mui/material';
+import React from 'react'
+import { Button, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system'
 import HeadingComp from 'app/views/CommonComp/HeadingComp'
-import React from 'react'
-import ShareIcon from '@mui/icons-material/Share';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-// import { useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import { FacebookIcon, FacebookShareButton, TwitterShareButton, TwitterIcon, WhatsappIcon, WhatsappShareButton, } from 'react-share';
 
 const ShareUrl = `https://play.google.com/store/apps/details?id=com.Trickysys.myapplication.cliniceasy`;
 
 const Share = () => {
+
+    // const currentPageUrl = window.location.href;
+    const currentPageUrl = `https://www.trickysys.com/`;
 
 
     const ClinicLogoBox = {
@@ -26,9 +28,6 @@ const Share = () => {
         flexDirection: "column",
     }
 
-    // const [value, setValue] = useState();
-    // const [copied, setCopied] = useState(false);
-
     return (
         <Box>
             <HeadingComp heading="Share" navigate="/" />
@@ -41,23 +40,42 @@ const Share = () => {
 
             <Box sx={ShareBox}>
 
-                <CopyToClipboard text={ShareUrl} >
-                    <Button variant='outlined' size="large" endIcon={<ContentCopyIcon />}> drsanch</Button>
-                </CopyToClipboard>
+                <Stack direction="row" sx={{ marginBottom: "20px" }}>
+
+                    <Box sx={{ marginX: "5px" }}>
+                        <FacebookShareButton
+                            url={currentPageUrl}
+                            quote={"Clinic Easy is Amazing"}
+                            hashtag='#trickysys'
+                        >
+                            <FacebookIcon round={true} size={50} />
+                        </FacebookShareButton>
+                    </Box>
+
+                    <Box sx={{ marginX: "5px" }}>
+                        <TwitterShareButton quote={"Clinic Easy is Amazing"}
+                            url={currentPageUrl}  >
+                            <TwitterIcon round={true} size={50} />
+                        </TwitterShareButton>
+
+                    </Box>
+
+                    <Box sx={{ marginX: "5px" }}>
+                        <WhatsappShareButton quote={"Clinic Easy is Amazing"}
+                            url={currentPageUrl}  >
+                            <WhatsappIcon round={true} size={50} />
+                        </WhatsappShareButton>
+
+                    </Box>
+                </Stack>
 
                 <Typography variant='subtitle1' m={2}>Copy link here</Typography>
 
-                <Button variant='contained' size="large" startIcon={<ShareIcon />}>
-                    Share Application via</Button>
-            </Box>
-
-            {/* <Box>
-                <input value={value} onChange={({ target: { value } }) => setValue(value)} />
-
-                <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
-                    <Button>Copy to Clipboard</Button>
+                <CopyToClipboard text={ShareUrl} >
+                    <Button variant='outlined' size="large" endIcon={<ContentCopyIcon />}> Copy </Button>
                 </CopyToClipboard>
-            </Box> */}
+
+            </Box>
 
         </Box>
     )

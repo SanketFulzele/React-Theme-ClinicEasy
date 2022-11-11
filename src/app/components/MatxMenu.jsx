@@ -31,7 +31,7 @@ const MatxMenu = (props) => {
       <ThemeProvider theme={settings.themes[settings.activeTheme]}>
         <Menu
           elevation={8}
-          getContentAnchorEl={null}
+          getcontentanchorel={null}
           anchorEl={anchorEl}
           open={!!anchorEl}
           onClose={handleClose}
@@ -45,7 +45,7 @@ const MatxMenu = (props) => {
           }}
         >
           {children.map((child, index) => (
-            <div onClick={shouldCloseOnItemClick ? handleClose : () => {}} key={index}>
+            <div onClick={shouldCloseOnItemClick ? handleClose : () => { }} key={index}>
               {child}
             </div>
           ))}

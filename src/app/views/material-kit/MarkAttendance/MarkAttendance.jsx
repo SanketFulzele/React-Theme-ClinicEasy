@@ -26,13 +26,18 @@ const HospitalId = localStorage.getItem('HospitalId');
 const UserId = localStorage.getItem('UserId');
 const UserRole = localStorage.getItem("UserRole")
 
+localStorage.setItem('MarkAttendanceBtn', "Mark Attendance");
+
 const MarkAttendance = () => {
 
     const [UserName, setUserName] = useState(localStorage.getItem('UserName'));
     const [UserEmail, setUserEmail] = useState(localStorage.getItem('UserEmail'));
     const [UserMobile, setUserMobile] = useState(localStorage.getItem('UserMobile'));
 
-    const [btnText, setBtnText] = useState('MARK IN TIME ATTENDANCE');
+    const MarkAttendanceBtn = localStorage.getItem('MarkAttendanceBtn')
+    const [btnText, setBtnText] = useState(MarkAttendanceBtn);
+
+
 
     const AttendanceBox = {
         borderBottom: "1px solid #000",
@@ -77,12 +82,15 @@ const MarkAttendance = () => {
         padding: "20px ",
     }
 
+
+
     //----------- MARK IN TIME ATTENDANCE CODE START'S HERE -------
     const URL = `https://cliniceasy.in/restAPI/index.php/Staffs/markAttendance`;
 
     const DATA = {
         "hospital_id": HospitalId,
-        "user_id": UserId,
+        "user_id": "41",
+        // "user_id": UserId,
     }
     const OPTIONS = {
         method: 'POST',
@@ -92,24 +100,24 @@ const MarkAttendance = () => {
         body: JSON.stringify(DATA)
     }
     const handleTimeAttendance = () => {
+
+
         fetch(URL, OPTIONS)
             .then(res => {
                 res.json().then((result) => {
                     console.warn(result);
                     if (result.message === "Attendance mark successfully") {
-                        setBtnText('MARK OUT TIME ATTENDANCE')
-                    } else {
-                        setBtnText('MARK OUT TIME ATTENDANCE')
+                        setBtnText('MARKED IN TIME ATTENDANCE')
+                        localStorage.setItem('MarkAttendanceBtn', "Marked In Time Attendance")
+                    } else if (result.message === "Out time mark successfully") {
+                        setBtnText('MARKED OUT TIME ATTENDANCE')
+                        localStorage.setItem('MarkAttendanceBtn', "Marked Out Time Attendance")
                     }
                     alert(result.message);
                 })
             })
     }
 
-    // useLayoutEffect(() => {
-    //     handleTimeAttendance();
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [])
     //---------- MARK IN TIME ATTENDANCE CODE END'S HERE --------
 
 

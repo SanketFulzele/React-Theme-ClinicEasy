@@ -35,6 +35,7 @@ const ProfilePage = () => {
         alignItems: "center",
         flexDirection: "column",
         textAlign: "center",
+        zIndex: 2,
     }
 
     const ProfileImgContainer = {
@@ -58,12 +59,12 @@ const ProfilePage = () => {
         width: "120px",
         height: "120px",
         backgroundColor: "#ffffff",
-        marginTop: "-90px",
+        marginTop: "-100px",
         padding: "7px",
     }
 
     const AdminInfoBox = {
-        padding: "50px",
+        padding: "30px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -74,7 +75,6 @@ const ProfilePage = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "20px",
         marginTop: "15px",
     }
 
@@ -160,9 +160,12 @@ const ProfilePage = () => {
 
 
 
-                <Paper elevation="2" sx={AdminInfoBox}>
+                <Paper elevation={2} sx={AdminInfoBox}>
                     <Box sx={ProfilePicContainer}>
-                        <img className='profilePic' src="/assets/MySVG/dr-pic1.jpg" alt="profile-pic-img" />
+                        <img className='profilePic'
+                            // src="/assets/MySVG/dr-pic1.jpg"
+                            src="assets/MySVG/User5.png"
+                            alt="profile-pic-img" />
                     </Box>
 
 
@@ -182,10 +185,6 @@ const ProfilePage = () => {
                     </Box>
                 </Paper>
 
-
-
-
-
             </Box>
 
 
@@ -200,8 +199,8 @@ const ProfilePage = () => {
                 <Box sx={modalBox}>
 
                     <Box sx={FormContainer}>
-                        <Paper sx={FormElements} elevation="">
-                            <Typography variant='h5' align='center' mb={2} sx={{ color: "var(--blue-color)", fontWeight: "500", letterSpacing: "0.9px" }}>
+                        <Paper sx={FormElements} elevation={0}>
+                            <Typography variant='h5' align='center' mb={2} sx={{ color: "var(--blue-color)", fontWeight: "500", letterSpacing: "0.9px", transform: "translateY(-14px)" }}>
                                 My Profile
                             </Typography>
                             <Formik
@@ -276,7 +275,7 @@ const ProfilePage = () => {
 
 
             {/* <Box sx={FormContainer}>
-                <Paper sx={FormElements} elevation="3">
+                <Paper sx={FormElements} elevation={1}>
 
                     <Typography variant='h5' align='center' mb={2} sx={{ color: "var(--blue-color)", fontWeight: "500", letterSpacing: "0.9px" }}>
                         My Profile
