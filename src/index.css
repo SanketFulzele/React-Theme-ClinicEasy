@@ -15,7 +15,6 @@ input[type=number]::-webkit-outer-spin-button {
     --blue-color: #0080ff;
 }
 
-
 @media screen and (min-width: 450px) {
     
     /* Scroll Bar CSS */

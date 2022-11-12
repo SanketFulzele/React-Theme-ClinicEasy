@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Card, Grid, TextField } from '@mui/material';
+import { Button, Card, Grid, Stack, TextField } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { Formik } from 'formik';
 import { useState } from 'react';
@@ -55,9 +55,8 @@ const validationSchema = Yup.object().shape({
 
 const JwtLogin = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
-  const [RespOTP, setRespOTP] = useState();
+  // const [RespOTP, setRespOTP] = useState();
   const [RespMsg, setRespMsg] = useState();
   const [RespSuccess, setRespSuccess] = useState();
 
@@ -66,38 +65,61 @@ const JwtLogin = () => {
 
   const [userNumber, setUserNumber] = useState();
 
+  const [hospitalId, setHospitalId] = useState();
+
+  const URL = `https://cliniceasy.in/restAPI/index.php/Login/getHospital`;
   const url = `https://cliniceasy.in/restAPI/index.php/Login/login`;
 
   const handleFormSubmit = (values) => {
 
-    let data = {
+    const DATA = {
       "mobile": values.number,
-      "hospital_id": "1",
+      "player_id": "1234"
     }
 
-    setUserNumber(values.number)
-
-    fetch(url, {
+    fetch(URL, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(DATA)
     }).then(result => {
       result.json().then(resp => {
-        setRespMsg(resp.message)
-        setRespOTP(resp.otp)
-        setRespSuccess(resp.success)
 
         if (resp.success === 1) {
-          alert(resp.otp)
+          setUserNumber(values.number)
+          setHospitalId(resp.data.id)
+          localStorage.setItem("ReferralCode", resp.data.referral_code)
+          localStorage.setItem("HospitalName", resp.data.name)
+
+          let data = {
+            "mobile": values.number,
+            "hospital_id": resp.data.id,
+          }
+
+          fetch(url, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          }).then(result => {
+            result.json().then(resp => {
+              setRespMsg(resp.message)
+              // setRespOTP(resp.otp)
+              setRespSuccess(resp.success)
+              alert(resp.otp)
+            })
+          })
         } else {
-          alert('Phone Number is Not Registered')
+          alert(resp.message)
         }
 
       })
     })
+
   }
 
   // 7276070179
@@ -111,7 +133,7 @@ const JwtLogin = () => {
 
     const Data = {
       "mobile": userNumber,
-      "hospital_id": "1",
+      "hospital_id": hospitalId,
       "otp": inputOtp
     }
 
@@ -124,22 +146,55 @@ const JwtLogin = () => {
       body: JSON.stringify(Data)
     }).then(result => {
       result.json().then(resp => {
-        localStorage.setItem('UserId', resp.user_id)
-        localStorage.setItem('UserName', resp.name)
-        localStorage.setItem('UserEmail', resp.email)
-        localStorage.setItem('UserMobile', resp.mobile)
-        localStorage.setItem('UserRole', resp.role)
-        localStorage.setItem('HospitalId', resp.hospital_id)
+
+        if (resp.success === 1) {
+          localStorage.setItem('UserId', resp.user_id)
+          localStorage.setItem('UserName', resp.name)
+          localStorage.setItem('UserEmail', resp.email)
+          localStorage.setItem('UserMobile', resp.mobile)
+          localStorage.setItem('UserRole', resp.role)
+          localStorage.setItem('HospitalId', resp.hospital_id)
+
+          // alert("Login Successfully")
+          navigate('/')
+        } else {
+          setHideError(true);
+        }
+
       })
     })
 
-    if (inputOtp == RespOTP) {
-      alert("Login Successfully")
-      navigate('/')
-    } else {
-      setHideError(true);
-    }
   }
+
+  // ===== Resend OTP Code Start's Here ========
+
+  const ResendOtp = () => {
+
+    const reData = {
+      "mobile": userNumber,
+      "hospital_id": hospitalId
+    }
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(reData)
+    }).then(result => {
+      result.json().then(resp => {
+        setRespMsg(resp.message)
+        // setRespOTP(resp.otp)
+        setRespSuccess(resp.success)
+        alert(resp.otp)
+      })
+    })
+
+  }
+
+  // ===== Resend OTP Code End's Here ==========
+
 
   // 7276070179 Admin Number
 
@@ -166,7 +221,7 @@ const JwtLogin = () => {
 
                     <Box sx={HideDiv}>
 
-                      <Typography variant="h6" gutterBottom>
+                      <Typography variant="h6" align='center' gutterBottom>
                         Login With Mobile Number
                       </Typography>
 
@@ -190,21 +245,22 @@ const JwtLogin = () => {
                         sx={{ marginTop: "13px" }}
                       />
 
-                      <LoadingButton
-                        type="submit"
-                        color="primary"
-                        loading={loading}
-                        variant="contained"
-                        sx={{ my: 2 }}
-                      >
-                        Login
-                      </LoadingButton>
+                      <Box sx={{ textAlign: "center" }}>
+                        <LoadingButton
+                          type="submit"
+                          color="primary"
+                          variant="contained"
+                          sx={{ my: 2 }}
+                        >
+                          Login
+                        </LoadingButton>
+                      </Box>
 
                     </Box>
 
                     <Box sx={HideDiv1}>
 
-                      <Typography variant="h6" gutterBottom>
+                      <Typography variant="h6" align="center" gutterBottom>
                         Verify With OTP
                       </Typography>
 
@@ -218,7 +274,7 @@ const JwtLogin = () => {
                         size="small"
                         name="otp"
                         type="number"
-                        label="Type Your OTP"
+                        label="Enter Your OTP"
                         variant="outlined"
                         onBlur={handleBlur}
                         value={inputOtp}
@@ -226,19 +282,24 @@ const JwtLogin = () => {
                         sx={{ marginTop: "13px" }}
                       />
 
-                      <LoadingButton
-                        type="button"
-                        onClick={handleInputOtp}
-                        color="primary"
-                        variant="contained"
-                        sx={{ my: 2 }}
-                      >
-                        Submit
-                      </LoadingButton>
+                      <Stack direction='row' alignItems="center" justifyContent='space-around' sx={{ marginBottom: "10px" }}>
+                        <Button
+                          type="button"
+                          onClick={handleInputOtp}
+                          variant="contained"
+                        >
+                          Submit
+                        </Button>
+
+                        <Button onClick={ResendOtp} sx={{ marginY: "20px" }} >
+                          Resend OTP
+                        </Button>
+
+                      </Stack>
 
                     </Box>
 
-                    <Typography sx={{ fontSize: "15px", fontWeight: "600", }}>
+                    <Typography sx={{ fontSize: "15px", fontWeight: "600", textAlign: "center" }}>
                       <NavLink
                         to="/session/signup"
                         style={{ color: "var(--blue-color)" }}

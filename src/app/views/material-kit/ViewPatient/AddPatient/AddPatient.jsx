@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
     number: Yup.string().required("Mobile Number is Required").max(10, "Mobile Number is Too Long")
         .phone('IN', true, "Phone Number is Invalid"),
     email: Yup.string().email('Invalid Email address').required('Email is required!'),
-    address: Yup.string().min(5).required("Address is Required"),
+    address: Yup.string().min(3).required("Address is Required"),
     date: Yup.string().required("Date is Required"),
     gender: Yup.string().required("Gender is Required"),
 });
@@ -49,8 +49,6 @@ const AddPatient = () => {
     const Url = `https://cliniceasy.in/restAPI/index.php/Home/savePatient`;
 
     const handleFormSubmit = (values) => {
-        localStorage.setItem('patientName', values.name);
-        localStorage.setItem('BookAppointmentNumber', values.number);
 
         const Data = {
             "hospital_id": HospitalId,
@@ -73,6 +71,8 @@ const AddPatient = () => {
         }).then(result => {
             result.json().then(resp => {
                 localStorage.setItem('patientId', resp.data.patient_id)
+                localStorage.setItem('patientName', values.name);
+                localStorage.setItem('BookAppointmentNumber', values.number);
             })
         }).then(() => {
             navigate('/book-new-appointment')

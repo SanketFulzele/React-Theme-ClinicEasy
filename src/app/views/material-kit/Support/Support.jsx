@@ -4,6 +4,7 @@ import React from 'react'
 import "./support.css";
 
 const Support = () => {
+
     const LogoContainer = {
         display: "flex",
         justifyContent: "center",

@@ -5,6 +5,8 @@ import HeadingComp from 'app/views/CommonComp/HeadingComp'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { FacebookIcon, FacebookShareButton, TwitterShareButton, TwitterIcon, WhatsappIcon, WhatsappShareButton, } from 'react-share';
+import AlertComp from 'app/views/CommonComp/AlertComp';
+
 
 const ShareUrl = `https://play.google.com/store/apps/details?id=com.Trickysys.myapplication.cliniceasy`;
 
@@ -27,6 +29,8 @@ const Share = () => {
         justifyContent: "center",
         flexDirection: "column",
     }
+
+    const ReferralCode = localStorage.getItem('ReferralCode');
 
     return (
         <Box>
@@ -72,11 +76,12 @@ const Share = () => {
                 <Typography variant='subtitle1' m={2}>Copy link here</Typography>
 
                 <CopyToClipboard text={ShareUrl} >
-                    <Button variant='outlined' size="large" endIcon={<ContentCopyIcon />}> Copy </Button>
+                    <Button variant='outlined' size="large" endIcon={<ContentCopyIcon />}> {ReferralCode} </Button>
                 </CopyToClipboard>
 
             </Box>
 
+            <AlertComp />
         </Box>
     )
 }

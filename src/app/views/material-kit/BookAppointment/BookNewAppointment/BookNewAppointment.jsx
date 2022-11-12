@@ -48,10 +48,9 @@ const BookNewAppointment = () => {
 
     const url = `https://cliniceasy.in/restAPI/index.php/Home/saveAppointment`;
 
+    const patientId = localStorage.getItem('patientId')
 
     const handleFormSubmit = (values) => {
-        const patientId = localStorage.getItem('patientId')
-        console.log(values);
 
         const data = {
             "hospital_id": HospitalId,
@@ -74,9 +73,7 @@ const BookNewAppointment = () => {
             result.json().then(resp => {
                 localStorage.setItem('BookAppointmentNumber', '')
                 localStorage.setItem('patientName', '')
-                localStorage.setItem('patientDate', '')
                 localStorage.setItem('patientId', '')
-                console.warn(resp)
                 alert(resp.message);
                 navigate('/')
             })

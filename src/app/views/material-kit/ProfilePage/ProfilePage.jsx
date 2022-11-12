@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Modal, Paper, Stack, TextField, Typography } from '@mui/material'
+import { Avatar, Box, Button, Modal, Paper, Stack, TextField, Typography } from '@mui/material'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import "yup-phone";
@@ -54,13 +54,20 @@ const ProfilePage = () => {
         right: "10px",
     }
 
-    const ProfilePicContainer = {
+    const AvatarBox = {
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 55,
+        marginTop: "-80px",
         borderRadius: "50%",
-        width: "120px",
-        height: "120px",
-        backgroundColor: "#ffffff",
-        marginTop: "-100px",
-        padding: "7px",
+        border: "5px solid white",
+    }
+    const AvatarIcon = {
+        cursor: "pointer",
+        width: "100px",
+        height: "100px",
     }
 
     const AdminInfoBox = {
@@ -158,14 +165,9 @@ const ProfilePage = () => {
                 </Box>
 
 
-
-
                 <Paper elevation={2} sx={AdminInfoBox}>
-                    <Box sx={ProfilePicContainer}>
-                        <img className='profilePic'
-                            // src="/assets/MySVG/dr-pic1.jpg"
-                            src="assets/MySVG/User5.png"
-                            alt="profile-pic-img" />
+                    <Box sx={AvatarBox} >
+                        <Avatar sx={AvatarIcon} />
                     </Box>
 
 

@@ -9,8 +9,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Span } from '../../../components/Typography';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useState } from 'react';
+
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.text.primary,
@@ -34,12 +33,12 @@ const TopbarContainer = styled(Box)(({ theme }) => ({
   justifyContent: 'space-between',
   background: theme.palette.primary.main,
   [theme.breakpoints.down('sm')]: {
-    paddingLeft: 16,
-    paddingRight: 16,
+    paddingLeft: 1,
+    paddingRight: 1,
   },
   [theme.breakpoints.down('xs')]: {
-    paddingLeft: 14,
-    paddingRight: 16,
+    paddingLeft: 1,
+    paddingRight: 1,
   },
 }));
 
@@ -66,11 +65,29 @@ const StyledItem = styled(MenuItem)(({ theme }) => ({
 }));
 
 const NavbarName = {
-  fontSize: { sm: 20, xs: 15 },
-  fontWeight: 800,
-  letterSpacing: { sm: "1px", xs: "" }
+  fontSize: { sm: "18px", xs: "15px" },
+  fontWeight: 600,
+  letterSpacing: { sm: "1px", xs: "" },
 }
 
+const UserNameBox = {
+  fontSize: { sm: "16px", xs: "13px" },
+  fontWeight: { sm: "400", lg: "600" }
+}
+
+const AvatarBox = {
+  cursor: "pointer",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: "50%",
+}
+const AvatarIcon = {
+  cursor: "pointer",
+  width: "35px",
+  height: "35px",
+  borderRadius: "50%",
+}
 
 
 
@@ -109,6 +126,8 @@ const Layout1Topbar = () => {
     localStorage.clear()
   }
 
+  const HospitalName = localStorage.getItem('HospitalName');
+
   return (
     <TopbarRoot>
       <TopbarContainer>
@@ -120,7 +139,7 @@ const Layout1Topbar = () => {
           </StyledIconButton>
         </Box>
 
-        <Box sx={NavbarName}>Chaudhary Hospital </Box>
+        <Box sx={NavbarName}> {HospitalName} </Box>
 
         <Box display="flex" alignItems="center">
 
@@ -129,12 +148,14 @@ const Layout1Topbar = () => {
               <UserMenu>
                 <Hidden xsDown>
                   <Span>
-                    {/* Hi <strong>{user.name}</strong> */}
-                    <strong> {UserName} </strong>
+                    <Box sx={UserNameBox}>
+                      {UserName}
+                    </Box>
                   </Span>
                 </Hidden>
-                <Avatar src='' sx={{ cursor: 'pointer' }} />
-                {/* <Avatar src={user.avatar} sx={{ cursor: 'pointer' }} /> */}
+                <Box sx={AvatarBox} >
+                  <Avatar sx={AvatarIcon} />
+                </Box>
               </UserMenu>
             }
           >
@@ -153,7 +174,6 @@ const Layout1Topbar = () => {
             </StyledItem>
 
             <StyledItem onClick={Logout}>
-              {/* <StyledItem onClick={logout}> */}
               <Icon> power_settings_new </Icon>
               <Span> Logout </Span>
             </StyledItem>

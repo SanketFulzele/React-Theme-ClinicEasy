@@ -92,7 +92,7 @@ const JwtRegister = () => {
             <Box p={4} height="100%" sx={{ textAlign: "center", }}>
 
               <Typography variant="h6" mb={4} gutterBottom>
-                Registration
+                Hospital Registration
               </Typography>
 
               <Formik

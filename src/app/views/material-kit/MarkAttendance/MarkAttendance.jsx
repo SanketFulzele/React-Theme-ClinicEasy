@@ -1,4 +1,4 @@
-import { Box, Button, Stack, TextField, Typography } from '@mui/material'
+import { Avatar, Box, Button, Stack, TextField, Typography } from '@mui/material'
 import React from 'react'
 import "./markAttendance.css";
 import HeadingComp from 'app/views/CommonComp/HeadingComp';
@@ -38,6 +38,17 @@ const MarkAttendance = () => {
     const [btnText, setBtnText] = useState(MarkAttendanceBtn);
 
 
+    const AvatarBox = {
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    }
+    const AvatarIcon = {
+        cursor: "pointer",
+        width: "100px",
+        height: "100px",
+    }
 
     const AttendanceBox = {
         borderBottom: "1px solid #000",
@@ -181,7 +192,9 @@ const MarkAttendance = () => {
             <HeadingComp heading="Mark Attendance" navigate="/" />
 
             <Box sx={AttendanceBox}>
-                <img src="/assets/MySVG/maleAva.svg" style={{ width: "100px" }} alt="Avatar-Img" />
+                <Box sx={AvatarBox} >
+                    <Avatar sx={AvatarIcon} />
+                </Box>
 
                 <Box sx={editContainer} onClick={handleOpen} className="Flex">
                     <EditIcon sx={{ color: "white" }} />
