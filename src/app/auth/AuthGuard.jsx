@@ -1,3 +1,56 @@
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+const AuthGuard = ({ children }) => {
+
+    const Navigate = useNavigate();
+
+    useEffect(() => {
+
+        const UserName = localStorage.getItem('UserName');
+
+        const authenticated = UserName;
+
+        if (!authenticated) {
+            Navigate('/session/signin');
+        }
+    })
+
+    return children
+
+};
+
+export default AuthGuard
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import useAuth from 'app/hooks/useAuth';
 // // import { flat } from 'app/utils/utils';
 // import { Navigate, useLocation } from 'react-router-dom';

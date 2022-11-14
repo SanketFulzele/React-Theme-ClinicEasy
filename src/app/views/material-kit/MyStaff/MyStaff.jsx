@@ -7,13 +7,46 @@ import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
 
 const HospitalId = localStorage.getItem('HospitalId');
 const UserId = localStorage.getItem('UserId');
 
+
+// ==== Search Component 
+
+const SearchContainer = {
+    backgroundColor: "rgba(231, 228, 224, 0.845)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "5px",
+}
+
+const SearchIconWrapper = {
+    width: '30px',
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: "10px",
+}
+
+
+const SearchInputContainer = {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+}
+// ==== Search Component 
+
 const MyStaff = () => {
 
     const [myStaff, setMyStaff] = useState([]);
+
+    const [searchText, setSearchText] = useState('');
 
     const navigate = useNavigate();
 
@@ -23,7 +56,7 @@ const MyStaff = () => {
         justifyContent: "center",
         flexDirection: { md: "row", xs: "column" },
         alignContent: "center",
-        marginY: "25px",
+        marginY: "20px",
     }
 
     const InfoBox = {
@@ -76,40 +109,64 @@ const MyStaff = () => {
         navigate('/staff-attendance')
     }
 
+    // ==== Search component ===
+
+    const filteredStaff = myStaff.filter(data => {
+        return (data.name).toLowerCase().includes(searchText.toLowerCase())
+    })
+
+    // ==== Search component ===
+
     return (
         <Box>
             <HeadingComp heading="My Staff" navigate="/" />
 
+            <Box className='Flex' mt={2}>
+                <Box sx={SearchContainer}>
+                    <Box sx={SearchIconWrapper}>
+                        <SearchIcon />
+                    </Box>
+                    <Box sx={SearchInputContainer}>
+                        <input type="text" placeholder="Search Staff..." className='search-field'
+                            onChange={(e) => setSearchText(e.target.value)} />
+                    </Box>
+                </Box>
+            </Box>
+
 
             <Box sx={InfoContainer}>
 
-                {myStaff.map((data) => {
-                    return (
-                        <Paper sx={InfoBox} elevation={3} key={data.id} onClick={() => {
-                            return (
-                                SendStaffData(data)
-                            )
-                        }} >
 
-                            <Stack direction="row" alignItems="center" mb={1}>
-                                <PortraitIcon /> <Typography variant='subtitle1' ml={1}> Name : {data.name}
-                                </Typography>
-                            </Stack>
-                            <Stack direction="row" alignItems="center" mb={1}>
-                                <SmartphoneIcon /> <Typography variant='subtitle1' ml={1}> Mobile Number : {data.mobile}
-                                </Typography>
-                            </Stack>
-                            <Stack direction="row" alignItems="center" mb={1}>
-                                <EmailIcon /> <Typography variant='subtitle1' ml={1}> Email : {data.email}
-                                </Typography>
-                            </Stack>
-                            <Stack direction="row" alignItems="center">
-                                <WorkOutlineIcon /> <Typography variant='subtitle1' ml={1}> Role : {data.role}
-                                </Typography>
-                            </Stack>
-                        </Paper>
-                    )
-                })}
+                {
+                    filteredStaff === '' ? "" :
+
+                        filteredStaff.map((data) => {
+                            return (
+                                <Paper sx={InfoBox} elevation={3} key={data.id} onClick={() => {
+                                    return (
+                                        SendStaffData(data)
+                                    )
+                                }} >
+
+                                    <Stack direction="row" alignItems="center" mb={1}>
+                                        <PortraitIcon /> <Typography variant='subtitle1' ml={1}> Name : {data.name}
+                                        </Typography>
+                                    </Stack>
+                                    <Stack direction="row" alignItems="center" mb={1}>
+                                        <SmartphoneIcon /> <Typography variant='subtitle1' ml={1}> Mobile Number : {data.mobile}
+                                        </Typography>
+                                    </Stack>
+                                    <Stack direction="row" alignItems="center" mb={1}>
+                                        <EmailIcon /> <Typography variant='subtitle1' ml={1}> Email : {data.email}
+                                        </Typography>
+                                    </Stack>
+                                    <Stack direction="row" alignItems="center">
+                                        <WorkOutlineIcon /> <Typography variant='subtitle1' ml={1}> Role : {data.role}
+                                        </Typography>
+                                    </Stack>
+                                </Paper>
+                            )
+                        })}
 
 
 

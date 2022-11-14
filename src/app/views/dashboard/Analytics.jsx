@@ -147,10 +147,10 @@ const Analytics = () => {
 
           <Stack justifyContent="center" alignItems="center">
 
-            <Typography variant="h5" sx={{ fontWeight: "800", fontSize: { sm: "40px", xs: "30px" } }} >
+            <Typography variant="h5" sx={{ fontWeight: "800", color: "#fff", fontSize: { sm: "40px", xs: "30px" } }} >
               {TodaysAppointment}
             </Typography>
-            <Typography variant="h5" sx={{ fontSize: { sm: "25px", xs: "17px" } }} mt={1}>
+            <Typography variant="h5" sx={{ fontSize: { sm: "25px", xs: "17px" }, color: "#fff", }} mt={1}>
               Today's Appointment
             </Typography>
 

@@ -25,19 +25,16 @@ const Support = () => {
         padding: "20px",
         width: { lg: "30vw", md: "50vw", sm: "70vw", xs: "90vw" },
     }
+
     return (
         <Box>
             <HeadingComp heading="Support" navigate="/" />
-
 
             <Box sx={LogoContainer}>
                 <Box sx={LogoBox}>
                     <img className='tricky-logo' src='/assets/MySVG/TrickySYSLogo.png' alt='trickySYS-logo' />
                 </Box>
             </Box>
-
-
-
 
             <Box sx={SupportContainer}>
 

@@ -1,5 +1,7 @@
+
+
 export const navigations = [
-  { name: 'Home', path: '/dashboard/default', icon: 'home' },
+  { name: 'Home', path: '/dashboard', icon: 'home' },
   { name: 'Book Appointment', path: '/book-appointment', icon: 'addbox' },
   { name: 'Mark Attendance', path: '/mark-attendance', icon: 'check' },
   { name: 'Appointment History', path: '/appointment-history', icon: 'event' },
@@ -7,7 +9,6 @@ export const navigations = [
   { name: "Today's Appointment", path: '/todays-appointment', icon: 'alarm' },
   { name: 'Create Staff', path: '/create-staff', icon: 'person' },
   { name: 'My Staff', path: '/my-staff', icon: 'group' },
-  // { name: 'My Report', path: '/my-report', icon: 'assignment' },
   { name: 'Share', path: '/share', icon: 'share' },
   { name: 'Give Feedback', path: '/give-feedback', icon: 'feedback' },
   { name: 'Support ', path: '/support', icon: 'info' },

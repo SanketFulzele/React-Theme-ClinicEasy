@@ -72,7 +72,10 @@ const NavbarName = {
 
 const UserNameBox = {
   fontSize: { sm: "16px", xs: "13px" },
-  fontWeight: { sm: "400", lg: "600" }
+  fontWeight: { xs: "400", sm: "600" },
+  '&:hover': {
+    backgroundColor: 'transparent !important',
+  },
 }
 
 const AvatarBox = {
@@ -122,8 +125,7 @@ const Layout1Topbar = () => {
   };
 
   const Logout = () => {
-    navigate('/session/signin')
-    localStorage.clear()
+    navigate('/logout')
   }
 
   const HospitalName = localStorage.getItem('HospitalName');
@@ -146,7 +148,7 @@ const Layout1Topbar = () => {
           <MatxMenu
             menuButton={
               <UserMenu>
-                <Hidden xsDown>
+                <Hidden xsDown >
                   <Span>
                     <Box sx={UserNameBox}>
                       {UserName}
@@ -160,7 +162,7 @@ const Layout1Topbar = () => {
             }
           >
             <StyledItem>
-              <Link to="/">
+              <Link to="/dashboard">
                 <Icon> home </Icon>
                 <Span> Home </Span>
               </Link>

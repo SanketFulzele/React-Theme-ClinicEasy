@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Stack, TextField, Typography } from '@mui/material'
+import { Avatar, Box, Button, Stack, TextField, Tooltip, Typography } from '@mui/material'
 import React from 'react'
 import "./markAttendance.css";
 import HeadingComp from 'app/views/CommonComp/HeadingComp';
@@ -13,6 +13,7 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 import "yup-phone";
 import ViewAttendance from './ViewAttendance/ViewAttendance';
+import { useEffect } from 'react';
 
 // form field validation schema
 const validationSchemaModal = Yup.object().shape({
@@ -26,7 +27,6 @@ const HospitalId = localStorage.getItem('HospitalId');
 const UserId = localStorage.getItem('UserId');
 const UserRole = localStorage.getItem("UserRole")
 
-localStorage.setItem('MarkAttendanceBtn', "Mark Attendance");
 
 const MarkAttendance = () => {
 
@@ -34,8 +34,21 @@ const MarkAttendance = () => {
     const [UserEmail, setUserEmail] = useState(localStorage.getItem('UserEmail'));
     const [UserMobile, setUserMobile] = useState(localStorage.getItem('UserMobile'));
 
-    const MarkAttendanceBtn = localStorage.getItem('MarkAttendanceBtn')
-    const [btnText, setBtnText] = useState(MarkAttendanceBtn);
+    const [btnText, setBtnText] = useState();
+
+
+    var TodayDate = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
+    const UpdatedDate = localStorage.getItem('UpdatedDate')
+
+    if (TodayDate !== UpdatedDate) {
+        localStorage.setItem("MarkAttendanceBtn", "")
+    }
+
+    useEffect(() => {
+        const MarkAttendanceBtn = localStorage.getItem('MarkAttendanceBtn')
+        setBtnText(MarkAttendanceBtn)
+    }, [])
+
 
 
     const AvatarBox = {
@@ -100,8 +113,7 @@ const MarkAttendance = () => {
 
     const DATA = {
         "hospital_id": HospitalId,
-        "user_id": "41",
-        // "user_id": UserId,
+        "user_id": UserId,
     }
     const OPTIONS = {
         method: 'POST',
@@ -112,17 +124,16 @@ const MarkAttendance = () => {
     }
     const handleTimeAttendance = () => {
 
-
         fetch(URL, OPTIONS)
             .then(res => {
                 res.json().then((result) => {
-                    console.warn(result);
                     if (result.message === "Attendance mark successfully") {
                         setBtnText('MARKED IN TIME ATTENDANCE')
-                        localStorage.setItem('MarkAttendanceBtn', "Marked In Time Attendance")
                     } else if (result.message === "Out time mark successfully") {
                         setBtnText('MARKED OUT TIME ATTENDANCE')
                         localStorage.setItem('MarkAttendanceBtn', "Marked Out Time Attendance")
+                        const UpdatedDate = new Date().toJSON().slice(0, 10).replace(/-/g, '/')
+                        localStorage.setItem('UpdatedDate', UpdatedDate)
                     }
                     alert(result.message);
                 })
@@ -197,7 +208,9 @@ const MarkAttendance = () => {
                 </Box>
 
                 <Box sx={editContainer} onClick={handleOpen} className="Flex">
-                    <EditIcon sx={{ color: "white" }} />
+                    <Tooltip title="Edit">
+                        <EditIcon sx={{ color: "white" }} />
+                    </Tooltip>
                 </Box>
 
                 <Modal
@@ -333,7 +346,7 @@ const MarkAttendance = () => {
             </Box>
 
             <Box className='Flex' mt={3}>
-                <Button variant='contained' onClick={handleTimeAttendance} > {btnText} </Button>
+                <Button variant='contained' onClick={handleTimeAttendance} > {btnText ? btnText : "Mark Attendance"} </Button>
             </Box>
 
             <ViewAttendance />

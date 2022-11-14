@@ -17,7 +17,6 @@ const Logout = () => {
     const navigate = useNavigate();
 
     const UserLogout = () => {
-        alert("Logout Successfully")
         localStorage.clear()
         navigate('/session/signin')
     }
@@ -54,13 +53,8 @@ const Logout = () => {
     }
     // Modal Styling
 
-
-    // setTimeout(() => {
-    //     navigate('/')
-    // }, 5000)
-
     return (
-        <div>
+        <div onClick={CancelLogout}>
             <Modal
                 open={open1}
                 onClose={handleClose1}

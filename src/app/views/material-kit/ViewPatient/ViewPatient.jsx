@@ -9,12 +9,44 @@ import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import "./viewPatient.css";
 import { useEffect } from 'react';
 import { useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
 
 const HospitalId = localStorage.getItem('HospitalId');
 const UserId = localStorage.getItem('UserId')
 
+
+// ==== Search Component 
+const SearchContainer = {
+    backgroundColor: "rgba(231, 228, 224, 0.845)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "5px",
+}
+
+const SearchIconWrapper = {
+    width: '30px',
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: "10px",
+}
+
+
+const SearchInputContainer = {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+}
+// ==== Search Component 
+
 const ViewPatient = () => {
     const [patientData, setPatientData] = useState([])
+
+    const [searchText, setSearchText] = useState('');
 
     const navigate = useNavigate();
 
@@ -115,6 +147,17 @@ const ViewPatient = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+
+
+
+    // ==== Search component ===
+
+    const filteredPatients = patientData.filter(data => {
+        return (data.name).toLowerCase().includes(searchText.toLowerCase())
+    })
+
+    // ==== Search component ===
+
     return (
         <Box>
             <Paper sx={ComponentHeadingBox}>
@@ -132,33 +175,50 @@ const ViewPatient = () => {
                 </Box>
             </Paper>
 
+            <Box className='Flex'>
+                <Box sx={SearchContainer}>
+                    <Box sx={SearchIconWrapper}>
+                        <SearchIcon />
+                    </Box>
+                    <Box sx={SearchInputContainer}>
+                        <input type="text" placeholder="Search Patient..." className='search-field'
+                            onChange={(e) => setSearchText(e.target.value)} />
+                    </Box>
+                </Box>
+            </Box>
+
+
+
+
 
             <Box sx={AppointHistoryBox}>
 
+                {
+                    filteredPatients === '' ? "" :
 
-                {patientData.map((data) => {
-                    return (
-                        <Paper sx={AppointHistoryInfo} key={data.id} onClick={() => {
+                        filteredPatients.map((data) => {
                             return (
-                                localStorage.setItem('PatientDetailsId', data.id),
-                                navigate("/patient-detail")
+                                <Paper sx={AppointHistoryInfo} key={data.id} onClick={() => {
+                                    return (
+                                        localStorage.setItem('PatientDetailsId', data.id),
+                                        navigate("/patient-detail")
+                                    )
+                                }} >
+                                    <Stack direction="row" alignItems="center" mb={1} >
+                                        <PortraitIcon /> <Typography variant='subtitle1' ml={1}> Patient Name : {data.name}
+                                        </Typography>
+                                    </Stack>
+                                    <Stack direction="row" alignItems="center" mb={1}>
+                                        <SmartphoneIcon /> <Typography variant='subtitle1' ml={1}> Mobile Number : {data.mobile}
+                                        </Typography>
+                                    </Stack>
+                                    <Stack direction="row" alignItems="center">
+                                        <CalendarMonthIcon /> <Typography variant='subtitle1' ml={1}> Added Date : {data.created}
+                                        </Typography>
+                                    </Stack>
+                                </Paper>
                             )
-                        }} >
-                            <Stack direction="row" alignItems="center" mb={1} >
-                                <PortraitIcon /> <Typography variant='subtitle1' ml={1}> Patient Name : {data.name}
-                                </Typography>
-                            </Stack>
-                            <Stack direction="row" alignItems="center" mb={1}>
-                                <SmartphoneIcon /> <Typography variant='subtitle1' ml={1}> Mobile Number : {data.mobile}
-                                </Typography>
-                            </Stack>
-                            <Stack direction="row" alignItems="center">
-                                <CalendarMonthIcon /> <Typography variant='subtitle1' ml={1}> Added Date : {data.created}
-                                </Typography>
-                            </Stack>
-                        </Paper>
-                    )
-                })
+                        })
                 }
 
             </Box>

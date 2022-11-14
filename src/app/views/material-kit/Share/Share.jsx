@@ -5,8 +5,6 @@ import HeadingComp from 'app/views/CommonComp/HeadingComp'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { FacebookIcon, FacebookShareButton, TwitterShareButton, TwitterIcon, WhatsappIcon, WhatsappShareButton, } from 'react-share';
-import AlertComp from 'app/views/CommonComp/AlertComp';
-
 
 const ShareUrl = `https://play.google.com/store/apps/details?id=com.Trickysys.myapplication.cliniceasy`;
 
@@ -14,6 +12,7 @@ const Share = () => {
 
     // const currentPageUrl = window.location.href;
     const currentPageUrl = `https://www.trickysys.com/`;
+
 
 
     const ClinicLogoBox = {
@@ -81,7 +80,7 @@ const Share = () => {
 
             </Box>
 
-            <AlertComp />
+
         </Box>
     )
 }

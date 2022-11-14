@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, Box, Button, Modal, Paper, Stack, TextField, Typography } from '@mui/material'
+import { Avatar, Box, Button, Modal, Paper, Stack, TextField, Tooltip, Typography } from '@mui/material'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import "yup-phone";
@@ -161,7 +161,9 @@ const ProfilePage = () => {
                 </Box>
 
                 <Box sx={editContainer} className="Flex" onClick={handleOpen}>
-                    <EditIcon sx={{ color: "white" }} />
+                    <Tooltip title='Edit'>
+                        <EditIcon sx={{ color: "white" }} />
+                    </Tooltip>
                 </Box>
 
 
