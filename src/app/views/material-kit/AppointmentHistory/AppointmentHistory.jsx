@@ -255,7 +255,7 @@ const AppointmentHistory = () => {
 
     return (
         <Box>
-            <HeadingComp heading="Appointment History" navigate="/" />
+            <HeadingComp heading="Appointment History" navigate="/dashboard" />
 
             <Box mt={3} mb={2} >
                 <Formik

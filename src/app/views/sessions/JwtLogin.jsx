@@ -17,6 +17,7 @@ const ContentBox = styled(Box)(() => ({
   padding: '32px',
   position: 'relative',
   background: 'rgba(0, 0, 0, 0.01)',
+  // transform: "translateY(80px)"
 }));
 
 const JWTRoot = styled(JustifyBox)(() => ({
@@ -29,6 +30,7 @@ const JWTRoot = styled(JustifyBox)(() => ({
     display: 'flex',
     borderRadius: 12,
     alignItems: 'center',
+    justifyContent: "center"
   },
 }));
 
@@ -56,7 +58,6 @@ const validationSchema = Yup.object().shape({
 const JwtLogin = () => {
   const navigate = useNavigate();
 
-  // const [RespOTP, setRespOTP] = useState();
   const [RespMsg, setRespMsg] = useState();
   const [RespSuccess, setRespSuccess] = useState();
 
@@ -108,7 +109,6 @@ const JwtLogin = () => {
           }).then(result => {
             result.json().then(resp => {
               setRespMsg(resp.message)
-              // setRespOTP(resp.otp)
               setRespSuccess(resp.success)
               alert(resp.otp)
             })
@@ -155,8 +155,8 @@ const JwtLogin = () => {
           localStorage.setItem('UserRole', resp.role)
           localStorage.setItem('HospitalId', resp.hospital_id)
 
-          // alert("Login Successfully")
-          navigate('/')
+
+          navigate('/dashboard')
         } else {
           setHideError(true);
         }
@@ -301,7 +301,7 @@ const JwtLogin = () => {
 
                     <Typography sx={{ fontSize: "15px", fontWeight: "600", textAlign: "center" }}>
                       <NavLink
-                        to="/session/signup"
+                        to="/signup"
                         style={{ color: "var(--blue-color)" }}
                       >
                         New Hospital Registration

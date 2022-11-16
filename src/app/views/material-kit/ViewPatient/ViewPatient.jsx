@@ -115,7 +115,7 @@ const ViewPatient = () => {
     }
 
     const BackToHome = () => {
-        navigate("/")
+        navigate("/dashboard")
     }
 
     const NavAddIcon = () => {

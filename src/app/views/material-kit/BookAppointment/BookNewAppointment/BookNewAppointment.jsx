@@ -75,14 +75,14 @@ const BookNewAppointment = () => {
                 localStorage.setItem('patientName', '')
                 localStorage.setItem('patientId', '')
                 alert(resp.message);
-                navigate('/')
+                navigate('/dashboard')
             })
         })
     }
 
     return (
         <Box>
-            <HeadingComp heading="Book Appointment" navigate="/" />
+            <HeadingComp heading="Book Appointment" navigate="/dashboard" />
 
 
             <Paper sx={NewAppointmentBox}>

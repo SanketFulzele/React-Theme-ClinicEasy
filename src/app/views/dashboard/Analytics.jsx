@@ -31,17 +31,42 @@ function Item(props) {
 const Analytics = () => {
   const [TodaysAppointment, setTodaysAppointment] = useState(0)
 
+  // const [Items, setItems] = useState([])
+
   let items = [
     {
-      image: "/assets/images/DashboardImg/carousel2.jpg"
+      image: "/assets/images/DashboardImg/carouselTwo.jpg"
     },
     {
-      image: "/assets/images/DashboardImg/carousel4.jpg"
+      image: "/assets/images/DashboardImg/carouselFour.jpg"
     },
     {
-      image: "/assets/images/DashboardImg/carousel5.jpg"
+      image: "/assets/images/DashboardImg/carouselFive.jpg"
     }
   ]
+
+  // ======= Banner Api Call ===========
+  // const Bannerurl = `https://cliniceasy.in/restAPI/index.php/Home/getAppBanners`
+
+  // const Bannerdata = {}
+
+  // const BannerOptions = {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'text/plain',
+  //   },
+  //   body: JSON.stringify(Bannerdata),
+  // }
+
+  // fetch(Bannerurl, BannerOptions)
+  //   .then(res => {
+  //     res.json().then((result) => {
+  //       setItems(result)
+  //     })
+  //   })
+
+
+  // ======= Banner Api Call ===========
 
   const CarouselContainer = {
     padding: { sm: "20px", xs: "10px" },
@@ -157,7 +182,7 @@ const Analytics = () => {
           </Stack>
 
           <Box sx={SVGBox}>
-            <img className='dashboardSvg' src='/assets/MySVG/d04.svg' alt='appointment-img' />
+            <img className='dashboardSvg' src='/assets/MySVG/dfour.svg' alt='appointment-img' />
             {/* <img className='dashboardSvg' src="/assets/images/DashboardImg/Appointment1.svg" alt='appointment-img' /> */}
           </Box>
 
@@ -169,7 +194,7 @@ const Analytics = () => {
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Box sx={DashboardBoxs} mr={2} onClick={NavBook} >
             <Box sx={SVGContainer}>
-              <img src='/assets/MySVG/dash05.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
+              <img src='/assets/MySVG/dashfive.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
             </Box>
             <Typography variant="subtitle1" mt={1} sx={{ textAlign: "center", }}>
               Book Appointment
@@ -178,7 +203,7 @@ const Analytics = () => {
 
           <Box sx={DashboardBoxs} onClick={NavMark}>
             <Box sx={SVGContainer}>
-              <img src='/assets/MySVG/d02.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
+              <img src='/assets/MySVG/dtwo.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
             </Box>
             <Typography variant="subtitle1" mt={1} sx={{ textAlign: "center", }}>
               Mark Attendance
@@ -190,7 +215,7 @@ const Analytics = () => {
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Box sx={DashboardBoxs} mr={2} onClick={NavHistory} >
             <Box sx={SVGContainer}>
-              <img src='/assets/MySVG/d01.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
+              <img src='/assets/MySVG/done.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
             </Box>
             <Typography variant="subtitle1" mt={1} sx={{ textAlign: "center", }}>
               Appointment History
@@ -199,7 +224,7 @@ const Analytics = () => {
 
           <Box sx={DashboardBoxs} onClick={NavPatient}>
             <Box sx={SVGContainer}>
-              <img src='/assets/MySVG/d03.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
+              <img src='/assets/MySVG/dthree.svg' className='dashboardSvg' alt='Book-Appointment-Img' />
             </Box>
             <Typography variant="subtitle1" mt={1} sx={{ textAlign: "center", }}>
               View Patient

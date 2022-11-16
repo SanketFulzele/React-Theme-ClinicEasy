@@ -68,7 +68,7 @@ const JwtRegister = () => {
     localStorage.setItem('RegOwnerName', ownerName)
     localStorage.setItem('RegPincode', pincode)
 
-    navigate('/session/admin-registration')
+    navigate('/admin-registration')
 
   };
 
@@ -204,7 +204,7 @@ const JwtRegister = () => {
                     <Typography sx={{ fontSize: "15px", }}>
                       Already Have an Account ?
                       <NavLink
-                        to="/session/signin"
+                        to="/signin"
                         style={{ color: "var(--blue-color)", fontWeight: "600", marginLeft: "7px" }}
                       >
                         Login

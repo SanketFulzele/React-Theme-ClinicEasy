@@ -200,7 +200,7 @@ const MarkAttendance = () => {
     return (
         <Box>
 
-            <HeadingComp heading="Mark Attendance" navigate="/" />
+            <HeadingComp heading="Mark Attendance" navigate="/dashboard" />
 
             <Box sx={AttendanceBox}>
                 <Box sx={AvatarBox} >

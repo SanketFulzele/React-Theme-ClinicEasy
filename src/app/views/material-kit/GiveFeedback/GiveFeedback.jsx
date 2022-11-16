@@ -69,7 +69,7 @@ const GiveFeedback = () => {
                 res.json().then((result) => {
                     return (
                         alert(result.message),
-                        navigate('/')
+                        navigate('/dashboard')
                     )
                 })
             })
@@ -78,7 +78,7 @@ const GiveFeedback = () => {
 
     return (
         <Box>
-            <HeadingComp heading="Feedback" navigate="/" />
+            <HeadingComp heading="Feedback" navigate="/dashboard" />
 
             <Box sx={FeedbackBox} >
 

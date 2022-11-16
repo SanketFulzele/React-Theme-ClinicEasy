@@ -94,10 +94,10 @@ const BookAppointment = () => {
     }
     return (
         <Box>
-            <HeadingComp heading="Book Appointment" navigate="/" />
+            <HeadingComp heading="Book Appointment" navigate="/dashboard" />
 
             <Box sx={BookAppointmentImgBox}>
-                <img className='BookAppointmentImg' src="/assets/images/BookAppointment/BookAppointmentGif.gif"
+                <img className='BookAppointmentImg' src="/assets/MySVG/BookAppointment/BookAppointmentGif.gif"
                     alt="Appointment-Img" />
             </Box>
 

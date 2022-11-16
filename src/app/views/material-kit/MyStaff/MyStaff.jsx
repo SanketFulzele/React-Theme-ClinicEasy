@@ -119,7 +119,7 @@ const MyStaff = () => {
 
     return (
         <Box>
-            <HeadingComp heading="My Staff" navigate="/" />
+            <HeadingComp heading="My Staff" navigate="/dashboard" />
 
             <Box className='Flex' mt={2}>
                 <Box sx={SearchContainer}>

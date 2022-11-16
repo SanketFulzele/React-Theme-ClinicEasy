@@ -82,7 +82,7 @@ const AddPatient = () => {
 
     return (
         <Box>
-            <HeadingComp heading="View Patient" navigate="/" />
+            <HeadingComp heading="View Patient" navigate="/dashboard" />
 
             <Paper sx={NewAppointmentBox}>
                 <Typography variant='h6' sx={BookAppointmentHeading}>

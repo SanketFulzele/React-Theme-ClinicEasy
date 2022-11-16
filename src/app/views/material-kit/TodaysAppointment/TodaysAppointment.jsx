@@ -74,7 +74,7 @@ const TodaysAppointment = () => {
         fontSize: "28px",
     }
     const BacktoHome = () => {
-        navigate("/")
+        navigate("/dashboard")
     }
 
     const NavAddIcon = () => {

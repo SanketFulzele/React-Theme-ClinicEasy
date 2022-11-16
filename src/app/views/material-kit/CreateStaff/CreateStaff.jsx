@@ -76,7 +76,7 @@ const CreateStaff = () => {
 
     return (
         <Box>
-            <HeadingComp heading="Create Staff" navigate="/" />
+            <HeadingComp heading="Create Staff" navigate="/dashboard" />
 
             <Box sx={FormContainer}>
                 <Paper sx={FormElements}>

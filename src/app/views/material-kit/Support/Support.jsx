@@ -28,7 +28,7 @@ const Support = () => {
 
     return (
         <Box>
-            <HeadingComp heading="Support" navigate="/" />
+            <HeadingComp heading="Support" navigate="/dashboard" />
 
             <Box sx={LogoContainer}>
                 <Box sx={LogoBox}>

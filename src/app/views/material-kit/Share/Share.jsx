@@ -33,7 +33,7 @@ const Share = () => {
 
     return (
         <Box>
-            <HeadingComp heading="Share" navigate="/" />
+            <HeadingComp heading="Share" navigate="/dashboard" />
 
             <Box sx={ClinicLogoBox}>
                 <img style={{ width: "150px" }} src="/assets/MySVG/ClinicEasyLogo.webp" alt="Logo" />

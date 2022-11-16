@@ -18,12 +18,12 @@ const Logout = () => {
 
     const UserLogout = () => {
         localStorage.clear()
-        navigate('/session/signin')
+        navigate('/signin')
     }
 
     const CancelLogout = () => {
         handleClose1()
-        navigate('/')
+        navigate('/dashboard')
     }
 
     // Modal Styling

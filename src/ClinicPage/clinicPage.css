@@ -1,0 +1,118 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.content-row {
+    display: flex;
+}
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50vw;
+    padding: 30px;
+    background-color: #396cf0;
+}
+
+.cliniceasy-logo {
+    width: 150px;
+    height: 150px;
+}
+
+.infoHeading {
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.infotext {
+    max-width: 500px;
+    color: #fff;
+    text-align: center;
+}
+
+.imgContainer{
+    width: 50vw;
+    position: relative;
+}
+
+.carousel-inner{
+    background-color: #396cf0;
+}
+
+.carouselText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    color: #fff;
+    opacity: 0.9;
+    font-size: 40px;
+}
+
+.carouselImg {
+    opacity: 0.7;
+}
+
+
+@media screen and (max-width: 1000px) {
+    
+    .cliniceasy-logo {
+        width: 80px;
+        height: 80px;
+    }
+
+    .infotext {
+        font-size: 12px;
+    }
+
+    .carouselText {
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .content-row {
+        flex-direction: column;
+    }
+
+    .pharma-row {
+        flex-direction: column-reverse;
+    }
+    .infoContainer {
+        padding: 30px 15px;
+        width: 100vw;
+        min-height: 250px;
+    }
+    
+    .imgContainer {
+        width: 100vw;
+    }
+
+    .carousel-inner{
+        max-height: 250px;
+    }
+
+    .carouselText {
+        font-size: 24px;
+    }
+   
+}
+
+
+
+
+
+
+
+
+
+.box {
+    width: 900px;
+    height: 500px;
+}

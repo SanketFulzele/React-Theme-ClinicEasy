@@ -26,6 +26,7 @@ const JWTRegister = styled(JustifyBox)(() => ({
         display: 'flex',
         borderRadius: 12,
         alignItems: 'center',
+        justifyContent: "center",
     },
 }));
 
@@ -84,7 +85,7 @@ const AdminRegistration = () => {
         }).then(result => {
             result.json().then(resp => {
                 alert(resp.message)
-                navigate('/session/signup')
+                navigate('/signup')
             })
         })
     };
