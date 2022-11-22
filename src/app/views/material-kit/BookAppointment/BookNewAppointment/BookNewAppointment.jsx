@@ -7,16 +7,6 @@ import "yup-phone";
 import HeadingComp from 'app/views/CommonComp/HeadingComp';
 import { useNavigate } from 'react-router-dom';
 
-// inital login credentials
-const initialValues = {
-    name: localStorage.getItem('patientName'),
-    number: localStorage.getItem('BookAppointmentNumber'),
-    date: "",
-    time: "",
-    shift: "",
-    desc: "",
-};
-
 // form field validation schema
 const validationSchema = Yup.object().shape({
     name: Yup.string().min(2).max(25).required("User Name is Required"),
@@ -25,7 +15,8 @@ const validationSchema = Yup.object().shape({
     date: Yup.string().required("Date is Required"),
     time: Yup.string().required("Time is Required"),
     shift: Yup.string().required("Shift Time is Required"),
-    desc: Yup.string().min(3).required("Description is Required"),
+    desc: Yup.string().min(3).max(200, "The Description Should be under 200 characters")
+        .required("Description is Required"),
 });
 
 const HospitalId = localStorage.getItem('HospitalId');
@@ -43,6 +34,16 @@ const BookNewAppointment = () => {
         textAlign: "center",
         color: "var(--blue-color)",
     }
+
+    // inital login credentials
+    const initialValues = {
+        name: localStorage.getItem('patientName'),
+        number: localStorage.getItem('BookAppointmentNumber'),
+        date: "",
+        time: "",
+        shift: "",
+        desc: "",
+    };
 
     const navigate = useNavigate();
 

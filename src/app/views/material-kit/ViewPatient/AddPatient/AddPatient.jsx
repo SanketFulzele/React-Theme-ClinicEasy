@@ -7,15 +7,7 @@ import "yup-phone";
 import HeadingComp from 'app/views/CommonComp/HeadingComp';
 import { useNavigate } from 'react-router-dom';
 
-// inital login credentials
-const initialValues = {
-    name: "",
-    number: localStorage.getItem('BookAppointmentNumber'),
-    email: "",
-    address: "",
-    date: "",
-    gender: "",
-};
+
 
 // form field validation schema
 const validationSchema = Yup.object().shape({
@@ -45,6 +37,16 @@ const AddPatient = () => {
         margin: "20px ",
         padding: "15px",
     }
+
+    // inital login credentials
+    const initialValues = {
+        name: "",
+        number: localStorage.getItem('BookAppointmentNumber'),
+        email: "",
+        address: "",
+        date: "",
+        gender: "",
+    };
 
     const Url = `https://cliniceasy.in/restAPI/index.php/Home/savePatient`;
 

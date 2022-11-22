@@ -17,18 +17,6 @@ import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
 
-
-let today = new Date();
-let dd = String(today.getDate()).padStart(2, '0');
-let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-let yyyy = today.getFullYear();
-today = yyyy + '-' + mm + '-' + dd;
-
-// inital login credentials
-const initialValues = {
-    date: today,
-};
-
 // form field validation schema
 const validationSchema = Yup.object().shape({
     date: Yup.string().required("Date is Required"),
@@ -48,6 +36,17 @@ const AppointmentHistory = () => {
     const [dateInfo, setDateInfo] = useState([]);
     const [error, setError] = useState();
     const [appointmentsId, setAppointmentsId] = useState();
+
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+
+    // inital login credentials
+    const initialValues = {
+        date: today,
+    };
 
     const AppointHistoryBox = {
         display: "flex",

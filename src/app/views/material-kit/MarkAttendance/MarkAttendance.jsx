@@ -23,11 +23,6 @@ const validationSchemaModal = Yup.object().shape({
     email: Yup.string().email('Invalid Email address').required('Email is Required !'),
 });
 
-const HospitalId = localStorage.getItem('HospitalId');
-const UserId = localStorage.getItem('UserId');
-const UserRole = localStorage.getItem("UserRole")
-
-
 const MarkAttendance = () => {
 
     const [UserName, setUserName] = useState(localStorage.getItem('UserName'));
@@ -35,6 +30,10 @@ const MarkAttendance = () => {
     const [UserMobile, setUserMobile] = useState(localStorage.getItem('UserMobile'));
 
     const [btnText, setBtnText] = useState();
+
+    const HospitalId = localStorage.getItem('HospitalId');
+    const UserId = localStorage.getItem('UserId');
+    const UserRole = localStorage.getItem("UserRole")
 
 
     var TodayDate = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
@@ -48,6 +47,8 @@ const MarkAttendance = () => {
         const MarkAttendanceBtn = localStorage.getItem('MarkAttendanceBtn')
         setBtnText(MarkAttendanceBtn)
     }, [])
+
+
 
 
 
