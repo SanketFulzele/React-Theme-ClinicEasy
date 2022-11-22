@@ -73,7 +73,6 @@ const ViewAttendance = () => {
                         setViewDate(result.data)
                         setError()
                     }
-                    // console.log(result.data)
                 })
             })
     }

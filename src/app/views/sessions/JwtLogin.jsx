@@ -17,7 +17,6 @@ const ContentBox = styled(Box)(() => ({
   padding: '32px',
   position: 'relative',
   background: 'rgba(0, 0, 0, 0.01)',
-  // transform: "translateY(80px)"
 }));
 
 const JWTRoot = styled(JustifyBox)(() => ({
@@ -25,7 +24,7 @@ const JWTRoot = styled(JustifyBox)(() => ({
   minHeight: '100% !important',
   '& .card': {
     maxWidth: 800,
-    minHeight: 400,
+    minHeight: 450,
     margin: '1rem',
     display: 'flex',
     borderRadius: 12,
@@ -34,7 +33,7 @@ const JWTRoot = styled(JustifyBox)(() => ({
   },
 }));
 
-// inital login credentials
+// initial login credentials
 const initialValues = {
   number: "",
   remember: true,
@@ -185,7 +184,6 @@ const JwtLogin = () => {
     }).then(result => {
       result.json().then(resp => {
         setRespMsg(resp.message)
-        // setRespOTP(resp.otp)
         setRespSuccess(resp.success)
         alert(resp.otp)
       })
@@ -203,7 +201,7 @@ const JwtLogin = () => {
       <Card className="card">
         <Grid container>
           <Grid item sm={6} xs={12}>
-            <JustifyBox p={4} height="100%" sx={{ minWidth: 320 }}>
+            <JustifyBox p={4} height="100%" sx={{ minWidth: "320px" }}>
               <img src="/assets/images/illustrations/login-img.jpg" width="100%" alt="" />
             </JustifyBox>
           </Grid>

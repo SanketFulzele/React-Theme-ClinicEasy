@@ -4,6 +4,10 @@ input[type=number]::-webkit-outer-spin-button {
 -webkit-appearance: none; margin: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .Flex {
     display: flex;
     align-items: center;

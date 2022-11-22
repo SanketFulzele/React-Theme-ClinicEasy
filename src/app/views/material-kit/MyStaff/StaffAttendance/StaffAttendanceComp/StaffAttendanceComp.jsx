@@ -42,6 +42,7 @@ const StaffAttendanceComp = () => {
     }
     const DateField = {
         marginRight: { sx: "30px", xs: "15px" },
+        minWidth: { xs: "110px" },
     }
     const handleFormSubmit = (values) => {
         console.log(values);

@@ -47,7 +47,7 @@ const Footer = () => {
             <Span sx={{ m: 'auto' }}></Span>
             <Paragraph sx={{ m: 0 }}>
               Design and Developed by
-              <a target="_blank" rel="noreferrer" href={FooterUrl}> TrickySYS </a>
+              <a target="_blank" rel="noreferrer" href={FooterUrl} style={{ textDecoration: "none", color: "white" }}> TrickySYS </a>
               | All Rights Reserved &copy; {year}
             </Paragraph>
           </FooterContent>
